@@ -1,0 +1,10 @@
+Package: sh.litten.nightly
+Name: Nightly
+Depends: mobilesubstrate
+Architecture: iphoneos-arm
+Description:
+Maintainer: Litten <hello@litten.sh>
+Author: Litten <hello@litten.sh>
+Section: Tweaks
+Version: 1.0-18+debug
+Installed-Size: 168
