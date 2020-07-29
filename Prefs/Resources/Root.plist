@@ -36,7 +36,7 @@
  			<key>VIOSub</key>
  			<string>musicApplicationSub</string>
  		</dict>
-		 <dict>
+		<dict>
  			<key>cell</key>
  			<string>PSLinkCell</string>
  			<key>label</key>
@@ -45,6 +45,16 @@
  			<string>VIOLockscreenSubPrefsListController</string>
  			<key>VIOSub</key>
  			<string>lockscreenSub</string>
+ 		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Homescreen</string>
+ 			<key>detail</key>
+ 			<string>VIOHomescreenSubPrefsListController</string>
+ 			<key>VIOSub</key>
+ 			<string>homescreenSub</string>
  		</dict>
 
 		<dict>

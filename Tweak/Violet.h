@@ -7,8 +7,10 @@ HBPreferences* preferences;
 extern BOOL enabled;
 extern BOOL enableMusicApplicationSection;
 extern BOOL enableLockscreenSection;
+extern BOOL enableHomescreenSection;
 
 UIImageView* lsArtworkBackgroundImageView;
+UIImageView* hsArtworkBackgroundImageView;
 UIImageView* musicArtworkBackgroundImageView;
 UIImage* currentArtwork;
 
@@ -33,6 +35,16 @@ BOOL hideQueueButtonSwitch = NO;
 // Lockscreen
 BOOL lockscreenArtworkBackgroundSwitch = NO;
 NSString* lockscreenArtworkBlurMode = @"0";
+BOOL hideCSRoutingButtonSwitch = NO;
+BOOL hideCSTimeControlSwitch = NO;
+BOOL hideCSElapsedTimeLabelSwitch = NO;
+BOOL hideCSRemainingTimeLabelSwitch = NO;
+BOOL hideCSMediaControlsSwitch = NO;
+BOOL hideCSVolumeSliderSwitch = NO;
+
+// Homescreen
+BOOL homescreenArtworkBackgroundSwitch = NO;
+NSString* homescreenArtworkBlurMode = @"0";
 
 @interface TimeControl : UISlider
 @end
@@ -50,4 +62,24 @@ NSString* lockscreenArtworkBlurMode = @"0";
 @end
 
 @interface CSCoverSheetViewController : UIViewController
+@end
+
+@interface MediaControlsRoutingButtonView : UIView
+@end
+
+@interface MediaControlsTimeControl : UISlider
+@end
+
+@interface MediaControlsTransportStackView : UIView
+@end
+
+@interface MediaControlsVolumeSlider : UISlider
+@end
+
+@interface SBIconController : UIViewController
+@end
+
+@interface SBMediaController : NSObject
++ (id)sharedInstance;
+- (BOOL)isPlaying;
 @end

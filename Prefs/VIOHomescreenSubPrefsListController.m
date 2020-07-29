@@ -1,8 +1,8 @@
-#import "VIOMusicApplicationSubPrefsListController.h"
+#import "VIOHomescreenSubPrefsListController.h"
 
-BOOL enableMusicApplicationSection = NO;
+BOOL enableHomescreenSection = NO;
 
-@implementation VIOMusicApplicationSubPrefsListController
+@implementation VIOHomescreenSubPrefsListController
 
 - (instancetype)init {
 
@@ -77,20 +77,20 @@ BOOL enableMusicApplicationSection = NO;
     HBPreferences *preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"]) {
-        enableMusicApplicationSection = YES;
-        [preferences setBool:enableMusicApplicationSection forKey:@"EnableMusicApplicationSection"];
+        enableHomescreenSection = YES;
+        [preferences setBool:enableHomescreenSection forKey:@"EnableHomescreenSection"];
         [self toggleCellState:YES];
-    } else if (![allKeys containsObject:@"EnableMusicApplicationSection"]) {
-        enableMusicApplicationSection = YES;
-        [preferences setBool:enableMusicApplicationSection forKey:@"EnableMusicApplicationSection"];
+    } else if (![allKeys containsObject:@"EnableHomescreenSection"]) {
+        enableHomescreenSection = YES;
+        [preferences setBool:enableHomescreenSection forKey:@"EnableHomescreenSection"];
         [self toggleCellState:YES];
-    } else if ([[preferences objectForKey:@"EnableMusicApplicationSection"] isEqual:@(NO)]) {
-        enableMusicApplicationSection = YES;
-        [preferences setBool:enableMusicApplicationSection forKey:@"EnableMusicApplicationSection"];
+    } else if ([[preferences objectForKey:@"EnableHomescreenSection"] isEqual:@(NO)]) {
+        enableHomescreenSection = YES;
+        [preferences setBool:enableHomescreenSection forKey:@"EnableHomescreenSection"];
         [self toggleCellState:YES];   
-    } else if ([[preferences objectForKey:@"EnableMusicApplicationSection"] isEqual:@(YES)]) {
-        enableMusicApplicationSection = NO;
-        [preferences setBool:enableMusicApplicationSection forKey:@"EnableMusicApplicationSection"];
+    } else if ([[preferences objectForKey:@"EnableHomescreenSection"] isEqual:@(YES)]) {
+        enableHomescreenSection = NO;
+        [preferences setBool:enableHomescreenSection forKey:@"EnableHomescreenSection"];
         [self toggleCellState:NO];
     }
 
@@ -106,13 +106,13 @@ BOOL enableMusicApplicationSection = NO;
     if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"]){
         [[self enableSwitch] setOn:NO animated:YES];
         [self toggleCellState:NO];
-    } else if (![allKeys containsObject:@"EnableMusicApplicationSection"]) {
+    } else if (![allKeys containsObject:@"EnableHomescreenSection"]) {
         [[self enableSwitch] setOn:NO animated:YES];
         [self toggleCellState:NO];
-    } else if ([[preferences objectForKey:@"EnableMusicApplicationSection"] isEqual:@(YES)]) {
+    } else if ([[preferences objectForKey:@"EnableHomescreenSection"] isEqual:@(YES)]) {
         [[self enableSwitch] setOn:YES animated:YES];
         [self toggleCellState:YES];
-    } else if ([[preferences objectForKey:@"EnableMusicApplicationSection"] isEqual:@(NO)]) {
+    } else if ([[preferences objectForKey:@"EnableHomescreenSection"] isEqual:@(NO)]) {
         [[self enableSwitch] setOn:NO animated:YES];
         [self toggleCellState:NO];
     }
@@ -128,11 +128,11 @@ BOOL enableMusicApplicationSection = NO;
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"]){
         [self toggleCellState:NO];
-    } else if (![allKeys containsObject:@"EnableMusicApplicationSection"]) {
+    } else if (![allKeys containsObject:@"EnableHomescreenSection"]) {
         [self toggleCellState:NO];
-    } else if ([[preferences objectForKey:@"EnableMusicApplicationSection"] isEqual:@(YES)]) {
+    } else if ([[preferences objectForKey:@"EnableHomescreenSection"] isEqual:@(YES)]) {
         [self toggleCellState:YES];
-    } else if ([[preferences objectForKey:@"EnableMusicApplicationSection"] isEqual:@(NO)]) {
+    } else if ([[preferences objectForKey:@"EnableHomescreenSection"] isEqual:@(NO)]) {
         [self toggleCellState:NO];
     }
 
@@ -143,37 +143,9 @@ BOOL enableMusicApplicationSection = NO;
     if (enable) {
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] enabled:YES];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:6 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:7 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:8 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:9 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:10 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:11 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:12 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:14 inSection:0] enabled:YES];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:15 inSection:0] enabled:YES];
     } else {
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] enabled:NO];
         [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:6 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:7 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:8 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:9 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:10 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:11 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:12 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:13 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:14 inSection:0] enabled:NO];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:15 inSection:0] enabled:NO];
     }
 
 }
