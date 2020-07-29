@@ -1,9 +1,9 @@
-Package: sh.litten.nightly
-Name: Nightly
-Depends: mobilesubstrate
+Package: love.litten.violet
+Name: Violet
+Depends: mobilesubstrate, preferenceloader, ws.hbang.common (>= 1.14), firmware (>= 13.0)
 Version: 1.0
 Architecture: iphoneos-arm
-Description:
-Maintainer: Litten <hello@litten.sh>
-Author: Litten <hello@litten.sh>
+Description: løve
+Maintainer: alexa <hiya@litten.love>
+Author: alexa <hiya@litten.love>
 Section: Tweaks

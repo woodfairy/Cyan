@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+
+        <dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Hiding</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideGrabberView</string>
+			<key>label</key>
+			<string>Hide Grabber</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideArtworkView</string>
+			<key>label</key>
+			<string>Hide Artwork</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideTitleLabel</string>
+			<key>label</key>
+			<string>Hide Song Title</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideSubtitleButton</string>
+			<key>label</key>
+			<string>Hide Artist Button</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideContextualActionsButton</string>
+			<key>label</key>
+			<string>Hide More Button</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideTimeControl</string>
+			<key>label</key>
+			<string>Hide Time Slider</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideKnobView</string>
+			<key>label</key>
+			<string>Hide Time Slider Knob</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideElapsedTimeLabel</string>
+			<key>label</key>
+			<string>Hide Elapsed Time Label</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideRemainingTimeLabel</string>
+			<key>label</key>
+			<string>Hide Remaining Time Label</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideVolumeSlider</string>
+			<key>label</key>
+			<string>Hide Volume Slider</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideMinImage</string>
+			<key>label</key>
+			<string>Hide Minimum Volume Image</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideMaxImage</string>
+			<key>label</key>
+			<string>Hide Maximum Volume Image</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideLyricsButton</string>
+			<key>label</key>
+			<string>Hide Lyrics Button</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideRouteButton</string>
+			<key>label</key>
+			<string>Hide AirPlay Button</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideQueueButton</string>
+			<key>label</key>
+			<string>Hide Queue Button</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideRouteLabel</string>
+			<key>label</key>
+			<string>Hide AirPlay Label</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+
+	</array>
+	<key>title</key>
+	<string>Violet</string>
+</dict>
+</plist>
