@@ -138,7 +138,7 @@ BOOL enableHomescreenSection;
 
 %group VioletLockscreen
 
-%hook CSCoverSheetViewController
+%hook CSCoverSheetViewController // iOS 13
 
 - (void)viewDidLoad { // add artwork background view
 
@@ -170,7 +170,7 @@ BOOL enableHomescreenSection;
 
 %end
 
-%hook SBDashBoardViewController
+%hook SBDashBoardViewController // iOS 12
 
 - (void)viewDidLoad { // add artwork background view
 
