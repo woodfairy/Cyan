@@ -13,6 +13,9 @@ UIImageView* lsArtworkBackgroundImageView;
 UIImageView* hsArtworkBackgroundImageView;
 UIImageView* musicArtworkBackgroundImageView;
 UIImage* currentArtwork;
+UIVisualEffectView* lsBlurView;
+UIBlurEffect* lsBlur;
+UIVisualEffectView* hsBlurView;
 UIBlurEffect* hsBlur;
 
 // Now Playing Elements
@@ -65,6 +68,9 @@ NSString* homescreenArtworkBlurMode = @"0";
 @interface CSCoverSheetViewController : UIViewController
 @end
 
+@interface SBDashBoardViewController : UIViewController
+@end
+
 @interface MediaControlsRoutingButtonView : UIView
 @end
 
@@ -78,9 +84,4 @@ NSString* homescreenArtworkBlurMode = @"0";
 @end
 
 @interface SBIconController : UIViewController
-@end
-
-@interface SBMediaController : NSObject
-+ (id)sharedInstance;
-- (BOOL)isPlaying;
 @end

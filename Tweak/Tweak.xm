@@ -50,12 +50,12 @@ BOOL enableHomescreenSection;
 
 %hook ContextualActionsButton
 
-- (void)didMoveToWindow { // hide airplay button
+- (void)setHidden:(BOOL)hidden { // hide airplay button
 
 	%orig;
 
 	if (hideContextualActionsButtonSwitch)
-		[self setHidden:YES];
+		%orig(YES);
 
 }
 
@@ -118,13 +118,15 @@ BOOL enableHomescreenSection;
 	if (hideGrabberViewSwitch)
 		[grabber setHidden:YES];
 
-	// if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] init];
-	// [musicArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
-	// [musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	// [musicArtworkBackgroundImageView setHidden:NO];
+	if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] init];
+	[musicArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
+	[musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+	[musicArtworkBackgroundImageView setHidden:NO];
+	[musicArtworkBackgroundImageView setClipsToBounds:YES];
+	// [musicArtworkBackgroundImageView setBackgroundColor:[UIColor purpleColor]];
 
-	// if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
-	// 	[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:4];
+	if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
+		[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:0];
 
 }
 
@@ -146,16 +148,51 @@ BOOL enableHomescreenSection;
 	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
 	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lsArtworkBackgroundImageView setHidden:YES];
+	[lsArtworkBackgroundImageView setClipsToBounds:YES];
 
 	if ([lockscreenArtworkBlurMode intValue] != 0) {
-		UIBlurEffect* blur;
-		if ([lockscreenArtworkBlurMode intValue] == 1)
-			blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-		else if ([lockscreenArtworkBlurMode intValue] == 2)
-			blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-		UIVisualEffectView* blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
-		[blurView setFrame:lsArtworkBackgroundImageView.bounds];
-		[lsArtworkBackgroundImageView addSubview:blurView];
+		if (!lsBlur) {
+			if ([lockscreenArtworkBlurMode intValue] == 1)
+				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+			else if ([lockscreenArtworkBlurMode intValue] == 2)
+				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			lsBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
+			[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
+			[lsBlurView setClipsToBounds:YES];
+			[lsArtworkBackgroundImageView addSubview:lsBlurView];
+		}
+	}
+
+	if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]])
+		[[self view] insertSubview:lsArtworkBackgroundImageView atIndex:0];
+
+}
+
+%end
+
+%hook SBDashBoardViewController
+
+- (void)viewDidLoad { // add artwork background view
+
+	%orig;
+
+	if (!lockscreenArtworkBackgroundSwitch) return;
+	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
+	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+	[lsArtworkBackgroundImageView setHidden:YES];
+	[lsArtworkBackgroundImageView setClipsToBounds:YES];
+
+	if ([lockscreenArtworkBlurMode intValue] != 0) {
+		if (!lsBlur) {
+			if ([lockscreenArtworkBlurMode intValue] == 1)
+				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+			else if ([lockscreenArtworkBlurMode intValue] == 2)
+				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			lsBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
+			[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
+			[lsBlurView setClipsToBounds:YES];
+			[lsArtworkBackgroundImageView addSubview:lsBlurView];
+		}
 	}
 
 	if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]])
@@ -240,18 +277,15 @@ BOOL enableHomescreenSection;
 
 %hook SBIconController
 
-- (void)viewWillAppear:(BOOL)animated { // add artwork background view
+- (void)viewDidLoad { // add artwork background view
 
 	%orig;
 
 	if (!homescreenArtworkBackgroundSwitch) return;
 	if (!hsArtworkBackgroundImageView) hsArtworkBackgroundImageView = [[UIImageView alloc] init];
-	[hsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
 	[hsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	if ([[%c(SBMediaController) sharedInstance] isPlaying])
-		[hsArtworkBackgroundImageView setHidden:NO];
-	else
-		[hsArtworkBackgroundImageView setHidden:YES];
+	[hsArtworkBackgroundImageView setHidden:YES];
+	[hsArtworkBackgroundImageView setClipsToBounds:YES];
 
 	if ([homescreenArtworkBlurMode intValue] != 0) {
 		if (!hsBlur) {
@@ -259,14 +293,23 @@ BOOL enableHomescreenSection;
 				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 			else if ([homescreenArtworkBlurMode intValue] == 2)
 				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-			UIVisualEffectView* blurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
-			[blurView setFrame:hsArtworkBackgroundImageView.bounds];
-			[hsArtworkBackgroundImageView addSubview:blurView];
+			hsBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
+			[hsBlurView setClipsToBounds:YES];
+			[hsArtworkBackgroundImageView addSubview:hsBlurView];
 		}
 	}
 
 	if (![hsArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:hsArtworkBackgroundImageView atIndex:0];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+
+	%orig;
+
+	[hsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
+	[hsBlurView setFrame:hsArtworkBackgroundImageView.bounds];
 
 }
 
@@ -294,8 +337,8 @@ BOOL enableHomescreenSection;
 						[lsArtworkBackgroundImageView setImage:currentArtwork];
 						[lsArtworkBackgroundImageView setHidden:NO];
 					}
-					// [musicArtworkBackgroundImageView setImage:currentArtwork];
-					// [musicArtworkBackgroundImageView setHidden:NO];
+					[musicArtworkBackgroundImageView setImage:currentArtwork];
+					[musicArtworkBackgroundImageView setHidden:NO];
 					if (homescreenArtworkBackgroundSwitch) {
 						[hsArtworkBackgroundImageView setImage:currentArtwork];
 						[hsArtworkBackgroundImageView setHidden:NO];
@@ -315,6 +358,9 @@ BOOL enableHomescreenSection;
 	[hsArtworkBackgroundImageView setHidden:YES];
 	[musicArtworkBackgroundImageView setHidden:YES];
 	currentArtwork = nil;
+	lsArtworkBackgroundImageView.image = nil;
+	hsArtworkBackgroundImageView.image = nil;
+	musicArtworkBackgroundImageView.image = nil;
 
 }
 
@@ -367,7 +413,7 @@ BOOL enableHomescreenSection;
 		if (enableMusicApplicationSection) %init(VioletMusicApplication, ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
 		if (enableLockscreenSection) %init(VioletLockscreen);
 		if (enableHomescreenSection) %init(VioletHomescreen);
-		if (enableLockscreenSection || enableHomescreenSection) %init(VioletData);
+		if (lockscreenArtworkBackgroundSwitch || homescreenArtworkBackgroundSwitch) %init(VioletData);
         return;
     }
 
