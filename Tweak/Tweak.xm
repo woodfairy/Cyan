@@ -240,7 +240,7 @@ BOOL enableHomescreenSection;
 
 %hook SBIconController
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated { // add artwork background view
 
 	%orig;
 
@@ -254,14 +254,15 @@ BOOL enableHomescreenSection;
 		[hsArtworkBackgroundImageView setHidden:YES];
 
 	if ([homescreenArtworkBlurMode intValue] != 0) {
-		UIBlurEffect* blur;
-		if ([homescreenArtworkBlurMode intValue] == 1)
-			blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-		else if ([homescreenArtworkBlurMode intValue] == 2)
-			blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-		UIVisualEffectView* blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
-		[blurView setFrame:hsArtworkBackgroundImageView.bounds];
-		[hsArtworkBackgroundImageView addSubview:blurView];
+		if (!hsBlur) {
+			if ([homescreenArtworkBlurMode intValue] == 1)
+				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+			else if ([homescreenArtworkBlurMode intValue] == 2)
+				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			UIVisualEffectView* blurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
+			[blurView setFrame:hsArtworkBackgroundImageView.bounds];
+			[hsArtworkBackgroundImageView addSubview:blurView];
+		}
 	}
 
 	if (![hsArtworkBackgroundImageView isDescendantOfView:[self view]])
@@ -273,9 +274,9 @@ BOOL enableHomescreenSection;
 
 %end
 
-// Others
+// Data
 
-%group VioletOthers
+%group VioletData
 
 %hook SBMediaController
 
@@ -283,19 +284,22 @@ BOOL enableHomescreenSection;
 
     %orig;
 
-	// if (!lockscreenArtworkBackgroundSwitch) return;
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
         NSDictionary* dict = (__bridge NSDictionary *)information;
         if (dict) {
             if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
 				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 				if (currentArtwork) {
-					[lsArtworkBackgroundImageView setImage:currentArtwork];
-					[lsArtworkBackgroundImageView setHidden:NO];
-					[musicArtworkBackgroundImageView setImage:currentArtwork];
-					[musicArtworkBackgroundImageView setHidden:NO];
-					[hsArtworkBackgroundImageView setImage:currentArtwork];
-					[hsArtworkBackgroundImageView setHidden:NO];
+					if (lockscreenArtworkBackgroundSwitch) {
+						[lsArtworkBackgroundImageView setImage:currentArtwork];
+						[lsArtworkBackgroundImageView setHidden:NO];
+					}
+					// [musicArtworkBackgroundImageView setImage:currentArtwork];
+					// [musicArtworkBackgroundImageView setHidden:NO];
+					if (homescreenArtworkBackgroundSwitch) {
+						[hsArtworkBackgroundImageView setImage:currentArtwork];
+						[hsArtworkBackgroundImageView setHidden:NO];
+					}
 				}
 			}
         }
@@ -310,6 +314,7 @@ BOOL enableHomescreenSection;
 	[lsArtworkBackgroundImageView setHidden:YES];
 	[hsArtworkBackgroundImageView setHidden:YES];
 	[musicArtworkBackgroundImageView setHidden:YES];
+	currentArtwork = nil;
 
 }
 
@@ -362,7 +367,7 @@ BOOL enableHomescreenSection;
 		if (enableMusicApplicationSection) %init(VioletMusicApplication, ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
 		if (enableLockscreenSection) %init(VioletLockscreen);
 		if (enableHomescreenSection) %init(VioletHomescreen);
-		if (enableLockscreenSection || enableHomescreenSection) %init(VioletOthers);
+		if (enableLockscreenSection || enableHomescreenSection) %init(VioletData);
         return;
     }
 

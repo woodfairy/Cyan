@@ -13,6 +13,7 @@ UIImageView* lsArtworkBackgroundImageView;
 UIImageView* hsArtworkBackgroundImageView;
 UIImageView* musicArtworkBackgroundImageView;
 UIImage* currentArtwork;
+UIBlurEffect* hsBlur;
 
 // Now Playing Elements
 BOOL hideGrabberViewSwitch = NO;
