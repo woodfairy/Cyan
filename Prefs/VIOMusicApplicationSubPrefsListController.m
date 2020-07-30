@@ -42,6 +42,24 @@ BOOL enableMusicApplicationSection = NO;
 
     [self setEnableSwitchState];
 
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/VioletMusicApp.disabled"]) return;
+    
+    [[self enableSwitch] setEnabled:NO];
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Violet"
+	message:@"Music App section disabled due to VioletMusicApp being disabled with iCleaner Pro"
+	preferredStyle:UIAlertControllerStyleAlert];
+	
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Okey" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+			
+        [[self navigationController] popViewControllerAnimated:YES];
+
+	}];
+
+	[alertController addAction:confirmAction];
+
+	[self presentViewController:alertController animated:YES completion:nil];
+
 }
 
 - (void)loadFromSpecifier:(PSSpecifier *)specifier {

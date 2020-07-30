@@ -111,9 +111,6 @@ BOOL enabled = NO;
 
     [self setEnableSwitchState];
 
-    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/Violet.disabled"])
-        [self disabledAlert];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -210,31 +207,6 @@ BOOL enabled = NO;
 	[resetAlert addAction:cancelAction];
 
 	[self presentViewController:resetAlert animated:YES completion:nil];
-
-}
-
-- (void)disabledAlert {
-
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Violet"
-	message:@"It Looks Like You Disabled Violet In iCleaner Pro, Violet Won't Work In This State"
-	preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *resetAction = [UIAlertAction actionWithTitle:@"Reset Preferences" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-
-        [self resetPreferences];
-
-	}];
-
-	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-
-        exit(0);
-
-	}];
-
-	[alertController addAction:resetAction];
-    [alertController addAction:cancelAction];
-
-	[self presentViewController:alertController animated:YES completion:nil];
 
 }
 
