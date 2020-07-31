@@ -72,6 +72,7 @@ BOOL enabled = NO;
     self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/VioletPrefs.bundle/Banner.png"];
     self.headerImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.headerImageView.clipsToBounds = YES;
 
     [self.headerView addSubview:self.headerImageView];
     [NSLayoutConstraint activateConstraints:@[

@@ -47,7 +47,7 @@ NSString* lockscreenArtworkOpacityValue = @"1.0";
 BOOL lockscreenPlayerArtworkBackgroundSwitch = NO;
 NSString* lockscreenPlayerArtworkBlurMode = @"0";
 NSString* lockscreenPlayerArtworkOpacityValue = @"1.0";
-NSString* lockscreenPlayerArtworkCornerRadiusValue = @"0.0";
+NSString* lockscreenPlayerArtworkCornerRadiusValue = @"10.0";
 BOOL hideLockscreenPlayerBackgroundSwitch = NO;
 BOOL hideCSRoutingButtonSwitch = NO;
 BOOL hideCSTimeControlSwitch = NO;
@@ -55,18 +55,18 @@ BOOL hideCSElapsedTimeLabelSwitch = NO;
 BOOL hideCSRemainingTimeLabelSwitch = NO;
 BOOL hideCSMediaControlsSwitch = NO;
 BOOL hideCSVolumeSliderSwitch = NO;
-BOOL roundLockScreenCompatibilitySwitch = NO;
+BOOL roundLockScreenCompatibilitySwitch = YES;
 
 // Homescreen
 BOOL homescreenArtworkBackgroundSwitch = NO;
 NSString* homescreenArtworkBlurMode = @"0";
 NSString* homescreenArtworkOpacityValue = @"1.0";
-BOOL coverEntireHomescreenSwitch = NO;
+BOOL coverEntireHomescreenSwitch = YES;
 
 // Control Center
 BOOL controlCenterArtworkBackgroundSwitch = NO;
 NSString* controlCenterArtworkBlurMode = @"0";
-NSString* controlCenterArtworkCornerRadiusValue = @"0.0";
+NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 
 @interface TimeControl : UISlider
 @end

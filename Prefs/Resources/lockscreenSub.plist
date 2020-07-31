@@ -164,7 +164,7 @@
 			<key>cell</key>
 			<string>PSSliderCell</string>
 			<key>default</key>
-			<real>0.0</real>
+			<real>10.0</real>
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
@@ -300,7 +300,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
