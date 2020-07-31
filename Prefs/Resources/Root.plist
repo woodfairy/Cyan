@@ -30,7 +30,7 @@
  			<key>cell</key>
  			<string>PSLinkCell</string>
  			<key>label</key>
- 			<string>Music Application</string>
+ 			<string>Music</string>
  			<key>detail</key>
  			<string>VIOMusicApplicationSubPrefsListController</string>
  			<key>VIOSub</key>
@@ -40,7 +40,7 @@
  			<key>cell</key>
  			<string>PSLinkCell</string>
  			<key>label</key>
- 			<string>Lockscreen - Player</string>
+ 			<string>Lockscreen</string>
  			<key>detail</key>
  			<string>VIOLockscreenSubPrefsListController</string>
  			<key>VIOSub</key>
@@ -55,6 +55,16 @@
  			<string>VIOHomescreenSubPrefsListController</string>
  			<key>VIOSub</key>
  			<string>homescreenSub</string>
+ 		</dict>
+		 <dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Control Center</string>
+ 			<key>detail</key>
+ 			<string>VIOControlCenterSubPrefsListController</string>
+ 			<key>VIOSub</key>
+ 			<string>controlCenterSub</string>
  		</dict>
 
 		<dict>

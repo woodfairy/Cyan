@@ -8,15 +8,19 @@ extern BOOL enabled;
 extern BOOL enableMusicApplicationSection;
 extern BOOL enableLockscreenSection;
 extern BOOL enableHomescreenSection;
+extern BOOL enableControlCenterSection;
 
+UIImage* currentArtwork;
 UIImageView* lsArtworkBackgroundImageView;
 UIImageView* hsArtworkBackgroundImageView;
-UIImageView* musicArtworkBackgroundImageView;
-UIImage* currentArtwork;
+UIImageView* lspArtworkBackgroundImageView;
+UIImageView* ccArtworkBackgroundImageView;
 UIVisualEffectView* lsBlurView;
 UIBlurEffect* lsBlur;
 UIVisualEffectView* hsBlurView;
 UIBlurEffect* hsBlur;
+UIVisualEffectView* lspBlurView;
+UIBlurEffect* lspBlur;
 
 // Now Playing Elements
 BOOL hideGrabberViewSwitch = NO;
@@ -39,6 +43,10 @@ BOOL hideQueueButtonSwitch = NO;
 // Lockscreen
 BOOL lockscreenArtworkBackgroundSwitch = NO;
 NSString* lockscreenArtworkBlurMode = @"0";
+BOOL lockscreenPlayerArtworkBackgroundSwitch = NO;
+NSString* lockscreenPlayerArtworkBlurMode = @"0";
+NSString* lspArtworkCornerRadiusValue = @"0.0";
+BOOL hideLockscreenPlayerBackgroundSwitch = NO;
 BOOL hideCSRoutingButtonSwitch = NO;
 BOOL hideCSTimeControlSwitch = NO;
 BOOL hideCSElapsedTimeLabelSwitch = NO;
@@ -49,6 +57,11 @@ BOOL hideCSVolumeSliderSwitch = NO;
 // Homescreen
 BOOL homescreenArtworkBackgroundSwitch = NO;
 NSString* homescreenArtworkBlurMode = @"0";
+
+// Control Center
+BOOL controlCenterArtworkBackgroundSwitch = NO;
+NSString* controlCenterArtworkBlurMode = @"0";
+NSString* ccArtworkCornerRadiusValue = @"0.0";
 
 @interface TimeControl : UISlider
 @end
@@ -71,6 +84,9 @@ NSString* homescreenArtworkBlurMode = @"0";
 @interface SBDashBoardViewController : UIViewController
 @end
 
+@interface CSAdjunctItemView : UIView
+@end
+
 @interface MediaControlsRoutingButtonView : UIView
 @end
 
@@ -83,5 +99,16 @@ NSString* homescreenArtworkBlurMode = @"0";
 @interface MediaControlsVolumeSlider : UISlider
 @end
 
+@interface MTMaterialView : UIView
+@end
+
+@interface UIView (Violet)
+@property(nonatomic, assign, readwrite)MTMaterialView* backgroundMaterialView;
+@end
+
 @interface SBIconController : UIViewController
+@end
+
+@interface CCUIContentModuleContainerViewController : UIViewController
+- (NSString *)moduleIdentifier;
 @end

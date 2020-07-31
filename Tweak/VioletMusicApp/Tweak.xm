@@ -116,16 +116,6 @@ BOOL enableMusicApplicationSection;
 	if (hideGrabberViewSwitch)
 		[grabber setHidden:YES];
 
-	if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] init];
-	[musicArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
-	[musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[musicArtworkBackgroundImageView setHidden:NO];
-	[musicArtworkBackgroundImageView setClipsToBounds:YES];
-	// [musicArtworkBackgroundImageView setBackgroundColor:[UIColor purpleColor]];
-
-	if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
-		[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:0];
-
 }
 
 %end
