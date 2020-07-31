@@ -20,6 +20,8 @@ BOOL enableControlCenterSection;
 	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lsArtworkBackgroundImageView setHidden:YES];
 	[lsArtworkBackgroundImageView setClipsToBounds:YES];
+	if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
 	if ([lockscreenArtworkBlurMode intValue] != 0) {
 		if (!lsBlur) {
