@@ -20,7 +20,8 @@ BOOL enableControlCenterSection;
 	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lsArtworkBackgroundImageView setHidden:YES];
 	[lsArtworkBackgroundImageView setClipsToBounds:YES];
-	if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+	[lsArtworkBackgroundImageView setAlpha:[lockscreenArtworkOpacityValue doubleValue]];
+	if (roundLockScreenCompatibilitySwitch & [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
 	if ([lockscreenArtworkBlurMode intValue] != 0) {
@@ -64,6 +65,9 @@ BOOL enableControlCenterSection;
 	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lsArtworkBackgroundImageView setHidden:YES];
 	[lsArtworkBackgroundImageView setClipsToBounds:YES];
+	[lsArtworkBackgroundImageView setAlpha:[lockscreenArtworkOpacityValue doubleValue]];
+	if (roundLockScreenCompatibilitySwitch & [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
 	if ([lockscreenArtworkBlurMode intValue] != 0) {
 		if (!lsBlur) {
@@ -109,7 +113,8 @@ BOOL enableControlCenterSection;
 	[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lspArtworkBackgroundImageView setHidden:NO];
 	[lspArtworkBackgroundImageView setClipsToBounds:YES];
-	[[lspArtworkBackgroundImageView layer] setCornerRadius:[lspArtworkCornerRadiusValue doubleValue]];
+	[lspArtworkBackgroundImageView setAlpha:[lockscreenPlayerArtworkOpacityValue doubleValue]];
+	[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
 
 	if ([lockscreenPlayerArtworkBlurMode intValue] != 0) {
 		if (!lspBlur) {
@@ -216,6 +221,7 @@ BOOL enableControlCenterSection;
 	[hsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[hsArtworkBackgroundImageView setHidden:YES];
 	[hsArtworkBackgroundImageView setClipsToBounds:YES];
+	[hsArtworkBackgroundImageView setAlpha:[homescreenArtworkOpacityValue doubleValue]];
 
 	if ([homescreenArtworkBlurMode intValue] != 0) {
 		if (!hsBlur) {
@@ -240,6 +246,7 @@ BOOL enableControlCenterSection;
 	%orig;
 
 	[hsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
+	if (coverEntireHomescreenSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
 	[hsBlurView setFrame:hsArtworkBackgroundImageView.bounds];
 	[hsBlurView setHidden:NO];
 
@@ -288,7 +295,7 @@ BOOL enableControlCenterSection;
 	%orig;
 
 	[ccArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
-	[[ccArtworkBackgroundImageView layer] setCornerRadius:[ccArtworkCornerRadiusValue doubleValue]];
+	[[ccArtworkBackgroundImageView layer] setCornerRadius:[controlCenterArtworkCornerRadiusValue doubleValue]];
 	// [hsBlurView setFrame:hsArtworkBackgroundImageView.bounds];
 	// [hsBlurView setHidden:NO];
 
@@ -342,17 +349,17 @@ BOOL enableControlCenterSection;
 	%orig;
 
 	[lsArtworkBackgroundImageView setHidden:YES];
-	[hsArtworkBackgroundImageView setHidden:YES];
 	[lspArtworkBackgroundImageView setHidden:YES];
+	[hsArtworkBackgroundImageView setHidden:YES];
 	[ccArtworkBackgroundImageView setHidden:YES];
 	[lsBlurView setHidden:YES];
-	[hsBlurView setHidden:YES];
 	[lspBlurView setHidden:YES];
+	[hsBlurView setHidden:YES];
 	// [ccBlurView setHidden:YES];
 	currentArtwork = nil;
 	lsArtworkBackgroundImageView.image = nil;
-	hsArtworkBackgroundImageView.image = nil;
 	lspArtworkBackgroundImageView.image = nil;
+	hsArtworkBackgroundImageView.image = nil;
 	ccArtworkBackgroundImageView.image = nil;
 
 }
@@ -374,9 +381,11 @@ BOOL enableControlCenterSection;
 	if (enableLockscreenSection) {
 		[preferences registerBool:&lockscreenArtworkBackgroundSwitch default:NO forKey:@"lockscreenArtworkBackground"];
 		[preferences registerObject:&lockscreenArtworkBlurMode default:@"0" forKey:@"lockscreenArtworkBlur"];
+		[preferences registerObject:&lockscreenArtworkOpacityValue default:@"1.0" forKey:@"lockscreenArtworkOpacity"];
 		[preferences registerBool:&lockscreenPlayerArtworkBackgroundSwitch default:NO forKey:@"lockscreenPlayerArtworkBackground"];
 		[preferences registerObject:&lockscreenPlayerArtworkBlurMode default:@"0" forKey:@"lockscreenPlayerArtworkBlur"];
-		[preferences registerObject:&lspArtworkCornerRadiusValue default:@"0.0" forKey:@"lspArtworkCornerRadius"];
+		[preferences registerObject:&lockscreenPlayerArtworkOpacityValue default:@"1.0" forKey:@"lockscreenPlayerArtworkOpacity"];
+		[preferences registerObject:&lockscreenPlayerArtworkCornerRadiusValue default:@"0.0" forKey:@"lockscreenPlayerArtworkCornerRadius"];
 		[preferences registerBool:&hideLockscreenPlayerBackgroundSwitch default:NO forKey:@"hideLockscreenPlayerBackground"];
 		[preferences registerBool:&hideCSRoutingButtonSwitch default:NO forKey:@"hideCSRoutingButton"];
 		[preferences registerBool:&hideCSTimeControlSwitch default:NO forKey:@"hideCSTimeControl"];
@@ -384,19 +393,22 @@ BOOL enableControlCenterSection;
 		[preferences registerBool:&hideCSRemainingTimeLabelSwitch default:NO forKey:@"hideCSRemainingTimeLabel"];
 		[preferences registerBool:&hideCSMediaControlsSwitch default:NO forKey:@"hideCSMediaControls"];
 		[preferences registerBool:&hideCSVolumeSliderSwitch default:NO forKey:@"hideCSVolumeSlider"];
+		[preferences registerBool:&roundLockScreenCompatibilitySwitch default:NO forKey:@"roundLockScreenCompatibility"];
 	}
 
 	// Homescreen
 	if (enableHomescreenSection) {
 		[preferences registerBool:&homescreenArtworkBackgroundSwitch default:NO forKey:@"homescreenArtworkBackground"];
 		[preferences registerObject:&homescreenArtworkBlurMode default:@"0" forKey:@"homescreenArtworkBlur"];
+		[preferences registerObject:&homescreenArtworkOpacityValue default:@"1.0" forKey:@"homescreenArtworkOpacity"];
+		[preferences registerBool:&coverEntireHomescreenSwitch default:NO forKey:@"coverEntireHomescreen"];
 	}
 
 	// Control Center
 	if (enableControlCenterSection) {
 		[preferences registerBool:&controlCenterArtworkBackgroundSwitch default:NO forKey:@"controlCenterArtworkBackground"];
 		[preferences registerObject:&controlCenterArtworkBlurMode default:@"0" forKey:@"controlCenterArtworkBlur"];
-		[preferences registerObject:&ccArtworkCornerRadiusValue default:@"0.0" forKey:@"ccArtworkCornerRadius"];
+		[preferences registerObject:&controlCenterArtworkCornerRadiusValue default:@"0.0" forKey:@"controlCenterArtworkCornerRadius"];
 	}
 
 	if (enabled) {

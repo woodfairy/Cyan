@@ -53,6 +53,32 @@
 			<key>PostNotification</key>
 			<string>love.litten.violetpreferences/ReloadPrefs</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Artwork Opacity</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>1.0</real>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>lockscreenArtworkOpacity</string>
+			<key>min</key>
+			<real>0.0</real>
+			<key>max</key>
+			<real>1.0</real>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
 
 		<dict>
 			<key>cell</key>
@@ -104,13 +130,45 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Artwork Opacity</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>1.0</real>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>lockscreenPlayerArtworkOpacity</string>
+			<key>min</key>
+			<real>0.0</real>
+			<key>max</key>
+			<real>1.0</real>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Artwork Corner Radius</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSSliderCell</string>
 			<key>default</key>
 			<real>0.0</real>
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>lspArtworkCornerRadius</string>
+			<string>lockscreenPlayerArtworkCornerRadius</string>
 			<key>min</key>
 			<real>0.0</real>
 			<key>max</key>
@@ -224,6 +282,31 @@
 			<string>hideCSVolumeSlider</string>
 			<key>label</key>
 			<string>Hide Volume Slider</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Compatibility</string>
+			<key>footerText</key>
+			<string>does not work with iPad</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>roundLockScreenCompatibility</string>
+			<key>label</key>
+			<string>RoundLockScreen Compatbility</string>
 			<key>PostNotification</key>
 			<string>love.litten.violetpreferences/ReloadPrefs</string>
 		</dict>

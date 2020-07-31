@@ -25,6 +25,10 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>What Do You Want To Customize?</string>
+			<key>footerText</key>
+			<string>some options may not require a respring</string>
+			<key>isStaticText</key>
+			<true/>
 		</dict>
 		<dict>
  			<key>cell</key>
