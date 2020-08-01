@@ -253,21 +253,23 @@ BOOL enableControlCenterSection;
 		[ccArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 		[ccArtworkBackgroundImageView setHidden:NO];
 		[ccArtworkBackgroundImageView setClipsToBounds:YES];
+		[ccArtworkBackgroundImageView setAlpha:[controlCenterArtworkOpacityValue doubleValue]];
 		[[ccArtworkBackgroundImageView layer] setCornerRadius:[controlCenterArtworkCornerRadiusValue doubleValue]];
 		[ccArtworkBackgroundImageView setImage:currentArtwork];
 
-		if ([controlCenterArtworkBlurMode intValue] != 0) {
-			if (!ccBlur) {
-				if ([controlCenterArtworkBlurMode intValue] == 1)
-					ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-				else if ([controlCenterArtworkBlurMode intValue] == 2)
-					ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+		// if ([controlCenterArtworkBlurMode intValue] != 0) {
+			// if (!ccBlur) {
+				// if ([controlCenterArtworkBlurMode intValue] == 1)
+				// 	ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+				// else if ([controlCenterArtworkBlurMode intValue] == 2)
+				// 	ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 				ccBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
 				[ccBlurView setClipsToBounds:YES];
+				[ccBlurView setFrame:ccArtworkBackgroundImageView.bounds];
 				[ccArtworkBackgroundImageView addSubview:ccBlurView];
-			}
+			// }
 			[ccBlurView setHidden:NO];
-		}
+		// }
 
 		if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:0];
@@ -395,6 +397,7 @@ BOOL enableControlCenterSection;
 	if (enableControlCenterSection) {
 		[preferences registerBool:&controlCenterArtworkBackgroundSwitch default:NO forKey:@"controlCenterArtworkBackground"];
 		[preferences registerObject:&controlCenterArtworkBlurMode default:@"0" forKey:@"controlCenterArtworkBlur"];
+		[preferences registerObject:&controlCenterArtworkOpacityValue default:@"1.0" forKey:@"controlCenterArtworkOpacity"];
 		[preferences registerObject:&controlCenterArtworkCornerRadiusValue default:@"20.0" forKey:@"controlCenterArtworkCornerRadius"];
 	}
 

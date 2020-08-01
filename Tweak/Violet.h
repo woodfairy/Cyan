@@ -68,6 +68,7 @@ BOOL coverEntireHomescreenSwitch = YES;
 // Control Center
 BOOL controlCenterArtworkBackgroundSwitch = NO;
 NSString* controlCenterArtworkBlurMode = @"0";
+NSString* controlCenterArtworkOpacityValue = @"1.0";
 NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 
 @interface TimeControl : UISlider
