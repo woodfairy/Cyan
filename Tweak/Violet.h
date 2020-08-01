@@ -21,6 +21,8 @@ UIVisualEffectView* hsBlurView;
 UIBlurEffect* hsBlur;
 UIVisualEffectView* lspBlurView;
 UIBlurEffect* lspBlur;
+UIVisualEffectView* ccBlurView;
+UIBlurEffect* ccBlur;
 
 // Now Playing Elements
 BOOL hideGrabberViewSwitch = NO;
@@ -116,4 +118,5 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 
 @interface CCUIContentModuleContainerViewController : UIViewController
 - (NSString *)moduleIdentifier;
+@property(nonatomic, retain)UIViewController* contentViewController;
 @end

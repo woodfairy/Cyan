@@ -47,7 +47,7 @@ BOOL enableControlCenterSection;
 	[lsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
 	[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
 	[lsBlurView setHidden:NO];
-	if (roundLockScreenCompatibilitySwitch & [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
 }
@@ -56,7 +56,7 @@ BOOL enableControlCenterSection;
 
 	%orig;
 
-	if (roundLockScreenCompatibilitySwitch & [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
 }
@@ -65,7 +65,7 @@ BOOL enableControlCenterSection;
 
 	%orig;
 
-	if (roundLockScreenCompatibilitySwitch & [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:0];
 
 }
@@ -82,29 +82,39 @@ BOOL enableControlCenterSection;
 	}
 
 	if (!lockscreenPlayerArtworkBackgroundSwitch) return;
-	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
+	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] init];
 	[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lspArtworkBackgroundImageView setHidden:NO];
 	[lspArtworkBackgroundImageView setClipsToBounds:YES];
 	[lspArtworkBackgroundImageView setAlpha:[lockscreenPlayerArtworkOpacityValue doubleValue]];
 	[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
 
-	// if ([lockscreenPlayerArtworkBlurMode intValue] != 0) {
-	// 	if (!lspBlur) {
-	// 		if ([lockscreenPlayerArtworkBlurMode intValue] == 1)
-	// 			lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-	// 		else if ([lockscreenPlayerArtworkBlurMode intValue] == 2)
-	// 			lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-	// 		lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
-	// 		[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
-	// 		[lspBlurView setClipsToBounds:YES];
-	// 		[lspArtworkBackgroundImageView addSubview:lspBlurView];
-	// 	}
-	// 	[lspBlurView setHidden:NO];
-	// }
+	if ([lockscreenPlayerArtworkBlurMode intValue] != 0) {
+		if (!lspBlur) {
+			if ([lockscreenPlayerArtworkBlurMode intValue] == 1)
+				lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+			else if ([lockscreenPlayerArtworkBlurMode intValue] == 2)
+				lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
+			[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
+			[lspBlurView setClipsToBounds:YES];
+			[lspArtworkBackgroundImageView addSubview:lspBlurView];
+		}
+		[lspBlurView setHidden:NO];
+	}
 
-	// if (![lspArtworkBackgroundImageView isDescendantOfView:self])
+	if (![lspArtworkBackgroundImageView isDescendantOfView:self])
 		[self insertSubview:lspArtworkBackgroundImageView atIndex:0];
+
+}
+
+- (void)willMoveToWindow:(id)arg1 {
+
+	%orig;
+
+	[lspArtworkBackgroundImageView setFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
+	[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
+	[lspBlurView setHidden:NO];
 
 }
 
@@ -233,29 +243,31 @@ BOOL enableControlCenterSection;
 
 %hook CCUIContentModuleContainerViewController
 
-- (void)viewDidLoad {
+- (void)viewWillAppear:(BOOL)animated {
 
 	%orig;
-
+	
 	if (!controlCenterArtworkBackgroundSwitch) return;
 	if ([[self moduleIdentifier] isEqual:@"com.apple.mediaremote.controlcenter.nowplaying"]) {
-		if (!ccArtworkBackgroundImageView) ccArtworkBackgroundImageView = [[UIImageView alloc] init];
+		if (!ccArtworkBackgroundImageView) ccArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.contentViewController.view.bounds];
 		[ccArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-		[ccArtworkBackgroundImageView setHidden:YES];
+		[ccArtworkBackgroundImageView setHidden:NO];
 		[ccArtworkBackgroundImageView setClipsToBounds:YES];
+		[[ccArtworkBackgroundImageView layer] setCornerRadius:[controlCenterArtworkCornerRadiusValue doubleValue]];
+		[ccArtworkBackgroundImageView setImage:currentArtwork];
 
-		// if ([homescreenArtworkBlurMode intValue] != 0) {
-		// 	if (!hsBlur) {
-		// 		if ([homescreenArtworkBlurMode intValue] == 1)
-		// 			hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-		// 		else if ([homescreenArtworkBlurMode intValue] == 2)
-		// 			hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-		// 		hsBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
-		// 		[hsBlurView setClipsToBounds:YES];
-		// 		[ccArtworkBackgroundImageView addSubview:hsBlurView];
-		// 	}
-		// 	[hsBlurView setHidden:NO];
-		// }
+		if ([controlCenterArtworkBlurMode intValue] != 0) {
+			if (!ccBlur) {
+				if ([controlCenterArtworkBlurMode intValue] == 1)
+					ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+				else if ([controlCenterArtworkBlurMode intValue] == 2)
+					ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+				ccBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
+				[ccBlurView setClipsToBounds:YES];
+				[ccArtworkBackgroundImageView addSubview:ccBlurView];
+			}
+			[ccBlurView setHidden:NO];
+		}
 
 		if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:0];
@@ -263,14 +275,12 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)setExpanded:(BOOL)arg1 {
 
 	%orig;
 
-	[ccArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
-	[[ccArtworkBackgroundImageView layer] setCornerRadius:[controlCenterArtworkCornerRadiusValue doubleValue]];
-	// [hsBlurView setFrame:hsArtworkBackgroundImageView.bounds];
-	// [hsBlurView setHidden:NO];
+	if (arg1 && [[self moduleIdentifier] isEqual:@"com.apple.mediaremote.controlcenter.nowplaying"])
+		[ccArtworkBackgroundImageView setHidden:YES];
 
 }
 
@@ -307,10 +317,12 @@ BOOL enableControlCenterSection;
 					if (homescreenArtworkBackgroundSwitch) {
 						[hsArtworkBackgroundImageView setImage:currentArtwork];
 						[hsArtworkBackgroundImageView setHidden:NO];
+						if ([homescreenArtworkBlurMode intValue] != 0) [hsBlurView setHidden:NO];
 					}
 					if (controlCenterArtworkBackgroundSwitch) {
 						[ccArtworkBackgroundImageView setImage:currentArtwork];
 						[ccArtworkBackgroundImageView setHidden:NO];
+						if ([controlCenterArtworkBlurMode intValue] != 0) [ccBlurView setHidden:NO];
 					}
 				}
 			}
@@ -330,7 +342,7 @@ BOOL enableControlCenterSection;
 	[lsBlurView setHidden:YES];
 	[lspBlurView setHidden:YES];
 	[hsBlurView setHidden:YES];
-	// [ccBlurView setHidden:YES];
+	[ccBlurView setHidden:YES];
 	currentArtwork = nil;
 	lsArtworkBackgroundImageView.image = nil;
 	lspArtworkBackgroundImageView.image = nil;
