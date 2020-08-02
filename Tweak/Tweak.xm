@@ -40,7 +40,7 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated { // set frame and roundlockscreen compatibility
 
 	%orig;
 
@@ -53,7 +53,7 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated { // roundlockscreen compatibility
 
 	%orig;
 
@@ -62,7 +62,7 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated { // roundlockscreen compatibility
 
 	%orig;
 
@@ -109,7 +109,7 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)willMoveToWindow:(id)arg1 {
+- (void)willMoveToWindow:(id)arg1 { // set frame
 
 	%orig;
 
@@ -156,7 +156,7 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated { // set frame
 
 	%orig;
 
@@ -175,7 +175,7 @@ BOOL enableControlCenterSection;
 
 %hook CCUIContentModuleContainerViewController
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated { // add artwork background view
 
 	%orig;
 	
@@ -195,7 +195,7 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)setExpanded:(BOOL)arg1 {
+- (void)setExpanded:(BOOL)arg1 { // hide artwork when expanded
 
 	%orig;
 

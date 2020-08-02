@@ -19,5 +19,6 @@
 - (void)setEnableSwitchState;
 - (void)resetPrompt;
 - (void)resetPreferences;
+- (void)respring;
 - (void)respringUtil;
 @end

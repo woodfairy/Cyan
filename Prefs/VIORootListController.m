@@ -2,9 +2,11 @@
 #import <Cephei/HBRespringController.h>
 #import "../Tweak/Violet.h"
 #import <spawn.h>
-#import "SparkAppListTableViewController.h"
 
 BOOL enabled = NO;
+
+UIBlurEffect* blur;
+UIVisualEffectView* blurView;
 
 @implementation VIORootListController
 
@@ -13,7 +15,7 @@ BOOL enabled = NO;
     self = [super init];
 
     if (self) {
-        VIOAppearanceSettings *appearanceSettings = [[VIOAppearanceSettings alloc] init];
+        VIOAppearanceSettings* appearanceSettings = [[VIOAppearanceSettings alloc] init];
         self.hb_appearanceSettings = appearanceSettings;
         self.enableSwitch = [[UISwitch alloc] init];
         self.enableSwitch.onTintColor = [UIColor colorWithRed: 0.64 green: 0.49 blue: 1.00 alpha: 1.00];
@@ -83,6 +85,7 @@ BOOL enabled = NO;
     ]];
 
     _table.tableHeaderView = self.headerView;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,6 +104,16 @@ BOOL enabled = NO;
     [self.navigationController.navigationController.navigationBar setShadowImage: [UIImage new]];
     self.navigationController.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationController.navigationBar.translucent = YES;
+
+    blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+    blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    [blurView setFrame:self.view.bounds];
+    [blurView setAlpha:1.0];
+    [[self view] addSubview:blurView];
+
+    [UIView animateWithDuration:.4 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [blurView setAlpha:0.0];
+    } completion:nil];
 
 }
 
@@ -152,19 +165,19 @@ BOOL enabled = NO;
     if (!([[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"])) {
         enabled = YES;
         [preferences setBool:enabled forKey:@"Enabled"];
-        [self respringUtil];
+        [self respring];
     } else if (!([allKeys containsObject:@"Enabled"])) {
         enabled = YES;
         [preferences setBool:enabled forKey:@"Enabled"];
-        [self respringUtil];
+        [self respring];
     } else if ([[preferences objectForKey:@"Enabled"] isEqual:@(NO)]) {
         enabled = YES;
         [preferences setBool:enabled forKey:@"Enabled"];
-        [self respringUtil];
+        [self respring];
     } else if ([[preferences objectForKey:@"Enabled"] isEqual:@(YES)]) {
         enabled = NO;
         [preferences setBool:enabled forKey:@"Enabled"];
-        [self respringUtil];
+        [self respring];
     }
 
 }
@@ -189,17 +202,15 @@ BOOL enabled = NO;
 
 - (void)resetPrompt {
 
-    UIAlertController *resetAlert = [UIAlertController alertControllerWithTitle:@"Violet"
+    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"Violet"
 	message:@"Do You Really Want To Reset Your Preferences?"
 	preferredStyle:UIAlertControllerStyleActionSheet];
 	
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yep" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-			
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Yep" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
         [self resetPreferences];
-
 	}];
 
-	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Nope" style:UIAlertActionStyleCancel handler:nil];
+	UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Nope" style:UIAlertActionStyleCancel handler:nil];
 
 	[resetAlert addAction:confirmAction];
 	[resetAlert addAction:cancelAction];
@@ -210,8 +221,8 @@ BOOL enabled = NO;
 
 - (void)resetPreferences {
 
-    HBPreferences *preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
-    for (NSString *key in [preferences dictionaryRepresentation]) {
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
+    for (NSString* key in [preferences dictionaryRepresentation]) {
         [preferences removeObjectForKey:key];
 
     }
@@ -221,10 +232,26 @@ BOOL enabled = NO;
 
 }
 
+- (void)respring {
+
+    blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+    blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    [blurView setFrame:self.view.bounds];
+    [blurView setAlpha:0.0];
+    [[self view] addSubview:blurView];
+
+    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [blurView setAlpha:1.0];
+    } completion:^(BOOL finished) {
+        [self respringUtil];
+    }];
+
+}
+
 - (void)respringUtil {
 
     pid_t pid;
-    const char *args[] = {"killall", "backboardd", NULL};
+    const char* args[] = {"killall", "backboardd", NULL};
 
     [HBRespringController respringAndReturnTo:[NSURL URLWithString:@"prefs:root=Violet"]];
 

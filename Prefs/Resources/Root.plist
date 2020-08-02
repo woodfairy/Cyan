@@ -83,7 +83,7 @@
 			<key>label</key>
 			<string>Respring</string>
 			<key>action</key>
-			<string>respringUtil</string>
+			<string>respring</string>
 		</dict>
 		<dict>
 			<key>cell</key>

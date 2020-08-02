@@ -1,5 +1,8 @@
 #import "VIOContributorsSubPrefsListController.h"
 
+UIBlurEffect* blur;
+UIVisualEffectView* blurView;
+
 @implementation VIOContributorsSubPrefsListController
 
 - (instancetype)init {
@@ -26,6 +29,16 @@
     [super viewWillAppear:animated];
 
     [self.navigationController.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+
+    blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+    blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    [blurView setFrame:self.view.bounds];
+    [blurView setAlpha:1.0];
+    [[self view] addSubview:blurView];
+
+    [UIView animateWithDuration:.4 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [blurView setAlpha:0.0];
+    } completion:nil];
 
 }
 

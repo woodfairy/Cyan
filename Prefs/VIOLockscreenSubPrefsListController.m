@@ -2,6 +2,9 @@
 
 BOOL enableLockscreenSection = NO;
 
+UIBlurEffect* blur;
+UIVisualEffectView* blurView;
+
 @implementation VIOLockscreenSubPrefsListController
 
 - (instancetype)init {
@@ -35,6 +38,16 @@ BOOL enableLockscreenSection = NO;
     [self.navigationController.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
     [self setCellState];
+
+    blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+    blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    [blurView setFrame:self.view.bounds];
+    [blurView setAlpha:1.0];
+    [[self view] addSubview:blurView];
+
+    [UIView animateWithDuration:.4 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [blurView setAlpha:0.0];
+    } completion:nil];
 
 }
 
