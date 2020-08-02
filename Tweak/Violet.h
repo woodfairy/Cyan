@@ -51,12 +51,6 @@ NSString* lockscreenPlayerArtworkBlurMode = @"0";
 NSString* lockscreenPlayerArtworkOpacityValue = @"1.0";
 NSString* lockscreenPlayerArtworkCornerRadiusValue = @"10.0";
 BOOL hideLockscreenPlayerBackgroundSwitch = NO;
-BOOL hideCSRoutingButtonSwitch = NO;
-BOOL hideCSTimeControlSwitch = NO;
-BOOL hideCSElapsedTimeLabelSwitch = NO;
-BOOL hideCSRemainingTimeLabelSwitch = NO;
-BOOL hideCSMediaControlsSwitch = NO;
-BOOL hideCSVolumeSliderSwitch = NO;
 BOOL roundLockScreenCompatibilitySwitch = YES;
 
 // Homescreen

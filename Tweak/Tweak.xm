@@ -47,7 +47,7 @@ BOOL enableControlCenterSection;
 	[lsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
 	[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
 	[lsBlurView setHidden:NO];
-	
+
 	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
@@ -189,19 +189,19 @@ BOOL enableControlCenterSection;
 		[[ccArtworkBackgroundImageView layer] setCornerRadius:[controlCenterArtworkCornerRadiusValue doubleValue]];
 		[ccArtworkBackgroundImageView setImage:currentArtwork];
 
-		// if ([controlCenterArtworkBlurMode intValue] != 0) {
-			// if (!ccBlur) {
-				// if ([controlCenterArtworkBlurMode intValue] == 1)
-				// 	ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-				// else if ([controlCenterArtworkBlurMode intValue] == 2)
-				// 	ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+		if ([controlCenterArtworkBlurMode intValue] != 0) {
+			if (!ccBlur) {
+				if ([controlCenterArtworkBlurMode intValue] == 1)
+					ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+				else if ([controlCenterArtworkBlurMode intValue] == 2)
+					ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 				ccBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
 				[ccBlurView setClipsToBounds:YES];
 				[ccBlurView setFrame:ccArtworkBackgroundImageView.bounds];
 				[ccArtworkBackgroundImageView addSubview:ccBlurView];
-			// }
+			}
 			[ccBlurView setHidden:NO];
-		// }
+		}
 
 		if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:0];
