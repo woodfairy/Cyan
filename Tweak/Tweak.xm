@@ -77,13 +77,22 @@ BOOL enableControlCenterSection;
 
 - (void)didMoveToWindow { // add artwork to lockscreen player
 
-	if (lockscreenPlayerArtworkBackgroundSwitch || hideLockscreenPlayerBackgroundSwitch) {
+	if (hideLockscreenPlayerBackgroundSwitch) {
 		UIView* platterView = MSHookIvar<UIView *>(self, "_platterView");
 		[[platterView backgroundMaterialView] setHidden:YES];
 	}
 
 	if (!lockscreenPlayerArtworkBackgroundSwitch) return;
-	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] init];
+
+	// what this is? i don't know
+	UIView* platterView = MSHookIvar<UIView *>(self, "_platterView");
+    MTMaterialView* MTView = MSHookIvar<MTMaterialView *>(platterView, "_backgroundView");
+    MTMaterialLayer* MTLayer = (MTMaterialLayer *)MTView.layer;
+    MTLayer.scale = 0;
+    [MTLayer mt_setColorMatrixDrivenOpacity:0 removingIfIdentity:false];
+    MTView.backgroundColor = [UIColor clearColor];
+
+	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
 	[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lspArtworkBackgroundImageView setHidden:NO];
 	[lspArtworkBackgroundImageView setClipsToBounds:YES];

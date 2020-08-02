@@ -88,6 +88,14 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 @interface MTMaterialView : UIView
 @end
 
+@interface CABackdropLayer : CALayer
+@property(assign)double scale;
+- (void)mt_setColorMatrixDrivenOpacity:(double)arg1 removingIfIdentity:(BOOL)arg2;
+@end
+
+@interface MTMaterialLayer : CABackdropLayer
+@end
+
 @interface UIView (Violet)
 @property(nonatomic, assign, readwrite)MTMaterialView* backgroundMaterialView;
 @end
