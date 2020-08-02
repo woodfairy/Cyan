@@ -16,7 +16,8 @@ BOOL enableControlCenterSection;
 	%orig;
 
 	if (!lockscreenArtworkBackgroundSwitch) return;
-	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] init];
+	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	lsArtworkBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lsArtworkBackgroundImageView setHidden:YES];
 	[lsArtworkBackgroundImageView setClipsToBounds:YES];
@@ -29,6 +30,8 @@ BOOL enableControlCenterSection;
 			else if ([lockscreenArtworkBlurMode intValue] == 2)
 				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 			lsBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
+			[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
+			lsBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 			[lsBlurView setClipsToBounds:YES];
 			[lsArtworkBackgroundImageView addSubview:lsBlurView];
 		}
@@ -40,13 +43,9 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)viewWillAppear:(BOOL)animated { // set frame and roundlockscreen compatibility
+- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
 
 	%orig;
-
-	[lsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
-	[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
-	[lsBlurView setHidden:NO];
 
 	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
@@ -84,15 +83,10 @@ BOOL enableControlCenterSection;
 
 	if (!lockscreenPlayerArtworkBackgroundSwitch) return;
 
-	// what this is? i don't know
-	UIView* platterView = MSHookIvar<UIView *>(self, "_platterView");
-    MTMaterialView* MTView = MSHookIvar<MTMaterialView *>(platterView, "_backgroundView");
-    MTMaterialLayer* MTLayer = (MTMaterialLayer *)MTView.layer;
-    MTLayer.scale = 0;
-    [MTLayer mt_setColorMatrixDrivenOpacity:0 removingIfIdentity:false];
-    MTView.backgroundColor = [UIColor clearColor];
+	[self clearMaterialViewBackground];
 
-	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
+	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+	lspArtworkBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lspArtworkBackgroundImageView setHidden:NO];
 	[lspArtworkBackgroundImageView setClipsToBounds:YES];
@@ -107,6 +101,7 @@ BOOL enableControlCenterSection;
 				lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 			lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
 			[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
+			lspBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 			[lspBlurView setClipsToBounds:YES];
 			[lspArtworkBackgroundImageView addSubview:lspBlurView];
 		}
@@ -118,14 +113,28 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)willMoveToWindow:(id)arg1 { // set frame
+-(void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection { // Fix for the MTView resetting when switching between light and dark mode
 
 	%orig;
 
-	[lspArtworkBackgroundImageView setFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
-	[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
-	[lspBlurView setHidden:NO];
+	if (self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle) {
+		[self performSelector:@selector(clearMaterialViewBackground)
+					withObject:nil
+					afterDelay:0.2];
+	}
+}
 
+%new
+
+- (void)clearMaterialViewBackground {
+
+	UIView* platterView = MSHookIvar<UIView *>(self, "_platterView");
+	MTMaterialView* MTView = MSHookIvar<MTMaterialView *>(platterView, "_backgroundView");
+	MTMaterialLayer* MTLayer = (MTMaterialLayer *)MTView.layer;
+	MTLayer.scale = 0;
+	[MTLayer mt_setColorMatrixDrivenOpacity:0 removingIfIdentity:false];
+	MTView.backgroundColor = [UIColor clearColor];
+	
 }
 
 %end
@@ -141,7 +150,9 @@ BOOL enableControlCenterSection;
 	%orig;
 
 	if (!homescreenArtworkBackgroundSwitch) return;
-	if (!hsArtworkBackgroundImageView) hsArtworkBackgroundImageView = [[UIImageView alloc] init];
+	if (!hsArtworkBackgroundImageView) hsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	if (coverEntireHomescreenSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
+	hsArtworkBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[hsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[hsArtworkBackgroundImageView setHidden:YES];
 	[hsArtworkBackgroundImageView setClipsToBounds:YES];
@@ -154,6 +165,8 @@ BOOL enableControlCenterSection;
 			else if ([homescreenArtworkBlurMode intValue] == 2)
 				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 			hsBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
+			[hsBlurView setFrame:hsArtworkBackgroundImageView.bounds];
+			hsBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 			[hsBlurView setClipsToBounds:YES];
 			[hsArtworkBackgroundImageView addSubview:hsBlurView];
 		}
@@ -162,17 +175,6 @@ BOOL enableControlCenterSection;
 
 	if (![hsArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:hsArtworkBackgroundImageView atIndex:0];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated { // set frame
-
-	%orig;
-
-	[hsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
-	if (coverEntireHomescreenSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
-	[hsBlurView setFrame:hsArtworkBackgroundImageView.bounds];
-	[hsBlurView setHidden:NO];
 
 }
 
