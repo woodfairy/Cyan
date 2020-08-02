@@ -47,6 +47,7 @@ BOOL enableControlCenterSection;
 	[lsArtworkBackgroundImageView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height)];
 	[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
 	[lsBlurView setHidden:NO];
+	
 	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
@@ -115,75 +116,6 @@ BOOL enableControlCenterSection;
 	[lspArtworkBackgroundImageView setFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
 	[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
 	[lspBlurView setHidden:NO];
-
-}
-
-%end
-
-%hook MediaControlsRoutingButtonView
-
-- (void)didMoveToWindow { // hide airplay button
-
-	%orig;
-
-	if (hideCSRoutingButtonSwitch)
-		[self setHidden:YES];
-
-}
-
-%end
-
-%hook MediaControlsTimeControl
-
-- (void)didMoveToWindow { // hide time slider
-
-	%orig;
-
-	if (hideCSTimeControlSwitch)
-		[self setHidden:YES];
-
-}
-
-- (void)layoutSubviews { // hide timer slider elements
-
-	%orig;
-
-	UILabel* csElapsedTimeLabel = MSHookIvar<UILabel *>(self, "_elapsedTimeLabel");
-	UILabel* csRemainingTimeLabel = MSHookIvar<UILabel *>(self, "_remainingTimeLabel");
-
-	if (hideCSElapsedTimeLabelSwitch)
-		[csElapsedTimeLabel setHidden:YES];
-	
-	if (hideCSRemainingTimeLabelSwitch)
-		[csRemainingTimeLabel setHidden:YES];
-
-}
-
-%end
-
-%hook MediaControlsContainerView
-
-- (void)didMoveToWindow { // hide media controls
-
-	%orig;
-
-	MediaControlsTransportStackView* mediaControls = MSHookIvar<MediaControlsTransportStackView *>(self, "_transportStackView");
-
-	if (hideCSMediaControlsSwitch)
-		[mediaControls setHidden:YES];
-
-}
-
-%end
-
-%hook MediaControlsVolumeSlider
-
-- (void)didMoveToWindow { // hide volume slider
-
-	%orig;
-
-	if (hideCSVolumeSliderSwitch)
-		[self setHidden:YES];
 
 }
 
@@ -376,12 +308,6 @@ BOOL enableControlCenterSection;
 		[preferences registerObject:&lockscreenPlayerArtworkOpacityValue default:@"1.0" forKey:@"lockscreenPlayerArtworkOpacity"];
 		[preferences registerObject:&lockscreenPlayerArtworkCornerRadiusValue default:@"10.0" forKey:@"lockscreenPlayerArtworkCornerRadius"];
 		[preferences registerBool:&hideLockscreenPlayerBackgroundSwitch default:NO forKey:@"hideLockscreenPlayerBackground"];
-		[preferences registerBool:&hideCSRoutingButtonSwitch default:NO forKey:@"hideCSRoutingButton"];
-		[preferences registerBool:&hideCSTimeControlSwitch default:NO forKey:@"hideCSTimeControl"];
-		[preferences registerBool:&hideCSElapsedTimeLabelSwitch default:NO forKey:@"hideCSElapsedTimeLabel"];
-		[preferences registerBool:&hideCSRemainingTimeLabelSwitch default:NO forKey:@"hideCSRemainingTimeLabel"];
-		[preferences registerBool:&hideCSMediaControlsSwitch default:NO forKey:@"hideCSMediaControls"];
-		[preferences registerBool:&hideCSVolumeSliderSwitch default:NO forKey:@"hideCSVolumeSlider"];
 		[preferences registerBool:&roundLockScreenCompatibilitySwitch default:YES forKey:@"roundLockScreenCompatibility"];
 	}
 

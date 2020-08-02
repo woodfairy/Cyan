@@ -137,9 +137,6 @@ BOOL enabled = NO;
             self.titleLabel.alpha = 1.0;
         }];
     }
-    
-    if (offsetY > 0) offsetY = 0;
-    self.headerImageView.frame = CGRectMake(0, offsetY, self.headerView.frame.size.width, 200 - offsetY);
 
 }
 

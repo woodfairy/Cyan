@@ -89,22 +89,7 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 @interface CSCoverSheetViewController : UIViewController
 @end
 
-@interface SBDashBoardViewController : UIViewController
-@end
-
 @interface CSAdjunctItemView : UIView
-@end
-
-@interface MediaControlsRoutingButtonView : UIView
-@end
-
-@interface MediaControlsTimeControl : UISlider
-@end
-
-@interface MediaControlsTransportStackView : UIView
-@end
-
-@interface MediaControlsVolumeSlider : UISlider
 @end
 
 @interface MTMaterialView : UIView

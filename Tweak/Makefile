@@ -12,7 +12,7 @@ $(TWEAK_NAME)_FRAMEWORKS = UIKit
 $(TWEAK_NAME)_PRIVATE_FRAMEWORKS = MediaRemote
 $(TWEAK_NAME)_EXTRA_FRAMEWORKS = Cephei
 
-SUBPROJECTS += VioletMusicApp
+SUBPROJECTS += VioletMusic
 
 include $(THEOS_MAKE_PATH)/aggregate.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
