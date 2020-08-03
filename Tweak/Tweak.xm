@@ -17,7 +17,7 @@ BOOL enableControlCenterSection;
 
 	if (!lockscreenArtworkBackgroundSwitch) return;
 	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-	lsArtworkBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[lsArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lsArtworkBackgroundImageView setHidden:YES];
 	[lsArtworkBackgroundImageView setClipsToBounds:YES];
@@ -82,11 +82,9 @@ BOOL enableControlCenterSection;
 	}
 
 	if (!lockscreenPlayerArtworkBackgroundSwitch) return;
-
 	[self clearMaterialViewBackground];
-
 	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
-	lspArtworkBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[lspArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[lspArtworkBackgroundImageView setHidden:NO];
 	[lspArtworkBackgroundImageView setClipsToBounds:YES];
@@ -113,27 +111,24 @@ BOOL enableControlCenterSection;
 
 }
 
--(void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection { // Fix for the MTView resetting when switching between light and dark mode
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection { // fix for the MTView resetting when switching between light and dark mode
 
 	%orig;
 
-	if (self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle) {
-		[self performSelector:@selector(clearMaterialViewBackground)
-					withObject:nil
-					afterDelay:0.2];
-	}
+	if (self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle)
+		[self performSelector:@selector(clearMaterialViewBackground) withObject:nil afterDelay:0.2];
+
 }
 
 %new
-
 - (void)clearMaterialViewBackground {
 
 	UIView* platterView = MSHookIvar<UIView *>(self, "_platterView");
 	MTMaterialView* MTView = MSHookIvar<MTMaterialView *>(platterView, "_backgroundView");
 	MTMaterialLayer* MTLayer = (MTMaterialLayer *)MTView.layer;
-	MTLayer.scale = 0;
+	[MTLayer setScale:0];
 	[MTLayer mt_setColorMatrixDrivenOpacity:0 removingIfIdentity:false];
-	MTView.backgroundColor = [UIColor clearColor];
+	[MTView setBackgroundColor:[UIColor clearColor]];
 	
 }
 
@@ -152,7 +147,7 @@ BOOL enableControlCenterSection;
 	if (!homescreenArtworkBackgroundSwitch) return;
 	if (!hsArtworkBackgroundImageView) hsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
 	if (coverEntireHomescreenSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
-	hsArtworkBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[hsArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[hsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[hsArtworkBackgroundImageView setHidden:YES];
 	[hsArtworkBackgroundImageView setClipsToBounds:YES];
