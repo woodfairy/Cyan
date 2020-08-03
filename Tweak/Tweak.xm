@@ -31,7 +31,7 @@ BOOL enableControlCenterSection;
 				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 			lsBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
 			[lsBlurView setFrame:lsArtworkBackgroundImageView.bounds];
-			lsBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			[lsBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[lsBlurView setClipsToBounds:YES];
 			[lsArtworkBackgroundImageView addSubview:lsBlurView];
 		}
@@ -99,7 +99,7 @@ BOOL enableControlCenterSection;
 				lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 			lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
 			[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
-			lspBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			[lspBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[lspBlurView setClipsToBounds:YES];
 			[lspArtworkBackgroundImageView addSubview:lspBlurView];
 		}
@@ -161,7 +161,7 @@ BOOL enableControlCenterSection;
 				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 			hsBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
 			[hsBlurView setFrame:hsArtworkBackgroundImageView.bounds];
-			hsBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			[hsBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[hsBlurView setClipsToBounds:YES];
 			[hsArtworkBackgroundImageView addSubview:hsBlurView];
 		}

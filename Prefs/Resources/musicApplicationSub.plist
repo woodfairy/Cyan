@@ -5,11 +5,86 @@
 	<key>items</key>
 	<array>
 
+	<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Now Playing Background</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>musicArtworkBackground</string>
+			<key>label</key>
+			<string>Artwork As Background</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>label</key>
+			<string>Blur:</string>
+			<key>key</key>
+			<string>musicArtworkBlur</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>None</string>
+				<string>Light</string>
+				<string>Dark</string>
+			</array>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Artwork Opacity</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>1.0</real>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>musicArtworkOpacity</string>
+			<key>min</key>
+			<real>0.0</real>
+			<key>max</key>
+			<real>1.0</real>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+
         <dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Hiding</string>
+			<string>Hiding - Now Playing</string>
 		</dict>
 		<dict>
 			<key>cell</key>

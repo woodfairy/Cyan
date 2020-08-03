@@ -9,7 +9,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Motivation</string>
+			<string>Motivation And Bug Fixes</string>
 		</dict>
 		<dict>
             <key>cell</key>
@@ -22,6 +22,25 @@
             <string>MrGcGamer</string>
             <key>user</key>
             <string>MrGcGamer</string>
+        </dict>
+
+        <dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Music App Help</string>
+		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>label</key>
+            <string>@DaveWijk</string>
+            <key>cellClass</key>
+            <string>HBTwitterCell</string>
+            <key>label</key>
+            <string>Dave van Wijk</string>
+            <key>user</key>
+            <string>DaveWijk</string>
         </dict>
 
         <dict>
@@ -60,6 +79,25 @@
             <string>Maxwell Dausch</string>
             <key>user</key>
             <string>M_Dausch</string>
+        </dict>
+
+        <dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Method To Disable Cells By</string>
+		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>label</key>
+            <string>@AnthoPak</string>
+            <key>cellClass</key>
+            <string>HBTwitterCell</string>
+            <key>label</key>
+            <string>Mr. Rager</string>
+            <key>user</key>
+            <string>AnthoPak</string>
         </dict>
 
         <dict>

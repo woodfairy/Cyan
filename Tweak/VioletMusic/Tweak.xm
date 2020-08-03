@@ -7,6 +7,82 @@ BOOL enableMusicApplicationSection;
 
 %group VioletMusicApplication
 
+%hook MusicNowPlayingControlsViewController
+
+- (void)viewDidLoad { // hide other elements and add artwork background (broken)
+
+	%orig;
+
+
+
+	if (!musicArtworkBackgroundSwitch) return;
+	if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	[musicArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+	[musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+	[musicArtworkBackgroundImageView setHidden:YES];
+	[musicArtworkBackgroundImageView setClipsToBounds:YES];
+	[musicArtworkBackgroundImageView setAlpha:[musicArtworkOpacityValue doubleValue]];
+
+	if ([musicArtworkBlurMode intValue] != 0) {
+		if (!musicBlur) {
+			if ([musicArtworkBlurMode intValue] == 1)
+				musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+			else if ([musicArtworkBlurMode intValue] == 2)
+				musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			musicBlurView = [[UIVisualEffectView alloc] initWithEffect:musicBlur];
+			[musicBlurView setFrame:musicArtworkBackgroundImageView.bounds];
+			[musicBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+			[musicBlurView setClipsToBounds:YES];
+			[musicArtworkBackgroundImageView addSubview:musicBlurView];
+		}
+		[musicBlurView setHidden:NO];
+	}
+
+	if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
+		[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:0];
+
+
+
+
+
+
+	UIView* grabber = MSHookIvar<UIView *>(self, "grabberView");
+	UILabel* titleLabel = MSHookIvar<UILabel *>(self, "titleLabel");
+	UIButton* subtitleButton = MSHookIvar<UIButton *>(self, "subtitleButton");
+	MPRouteButton* lyricsButton = MSHookIvar<MPRouteButton *>(self, "lyricsButton");
+	MPRouteButton* routeButton = MSHookIvar<MPRouteButton *>(self, "routeButton");
+	UILabel* routeLabel = MSHookIvar<UILabel *>(self, "routeLabel");
+	MPRouteButton* queueButton = MSHookIvar<MPRouteButton *>(self, "queueButton");
+
+	if (hideLyricsButtonSwitch)
+		[lyricsButton setHidden:YES];
+
+	if (hideRouteButtonSwitch)
+		[routeButton setHidden:YES];
+
+	if (hideRouteLabelSwitch)
+		[routeLabel setHidden:YES];
+
+	if (hideQueueButtonSwitch)
+		[queueButton setHidden:YES];
+
+	if (hideTitleLabelSwitch)
+		[titleLabel setHidden:YES];
+	
+	if (hideSubtitleButtonSwitch)
+		[subtitleButton setHidden:YES];
+
+	if (hideGrabberViewSwitch)
+		[grabber setHidden:YES];
+
+	for (UIView* subview in self.view.subviews) {
+        [subview setBackgroundColor:[UIColor clearColor]];
+	}
+
+}
+
+%end
+
 %hook ArtworkView
 
 - (void)didMoveToWindow { // hide artwork
@@ -26,8 +102,10 @@ BOOL enableMusicApplicationSection;
 
 	%orig;
 
-	if (hideTimeControlSwitch)
+	if (hideTimeControlSwitch) {
 		[self setHidden:YES];
+		return;
+	}
 
 	UIView* knob = MSHookIvar<UIView *>(self, "knobView");
 	UILabel* elapsedLabel = MSHookIvar<UILabel *>(self, "elapsedTimeLabel");
@@ -65,8 +143,10 @@ BOOL enableMusicApplicationSection;
 
 	%orig;
 
-	if (hideVolumeSliderSwitch)
+	if (hideVolumeSliderSwitch) {
 		[self setHidden:YES];
+		return;
+	}
 	
 	UIImageView* minImage = MSHookIvar<UIImageView *>(self, "_minValueImageView");
 	UIImageView* maxImage = MSHookIvar<UIImageView *>(self, "_maxValueImageView");
@@ -81,45 +161,6 @@ BOOL enableMusicApplicationSection;
 
 %end
 
-%hook MusicNowPlayingControlsViewController
-
-- (void)viewDidLoad { // hide other elements and add artwork background (broken)
-
-	%orig;
-
-	UIView* grabber = MSHookIvar<UIView *>(self, "grabberView");
-	UILabel* titleLabel = MSHookIvar<UILabel *>(self, "titleLabel");
-	UIButton* subtitleButton = MSHookIvar<UIButton *>(self, "subtitleButton");
-	MPRouteButton* lyricsButton = MSHookIvar<MPRouteButton *>(self, "lyricsButton");
-	MPRouteButton* routeButton = MSHookIvar<MPRouteButton *>(self, "routeButton");
-	UILabel* routeLabel = MSHookIvar<UILabel *>(self, "routeLabel");
-	MPRouteButton* queueButton = MSHookIvar<MPRouteButton *>(self, "queueButton");
-
-	if (hideLyricsButtonSwitch)
-		[lyricsButton setHidden:YES];
-
-	if (hideRouteButtonSwitch)
-		[routeButton setHidden:YES];
-
-	if (hideRouteLabelSwitch)
-		[routeLabel setHidden:YES];
-
-	if (hideQueueButtonSwitch)
-		[queueButton setHidden:YES];
-
-	if (hideTitleLabelSwitch)
-		[titleLabel setHidden:YES];
-	
-	if (hideSubtitleButtonSwitch)
-		[subtitleButton setHidden:YES];
-
-	if (hideGrabberViewSwitch)
-		[grabber setHidden:YES];
-
-}
-
-%end
-
 %end
 
 %ctor {
@@ -129,7 +170,10 @@ BOOL enableMusicApplicationSection;
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
 	[preferences registerBool:&enableMusicApplicationSection default:nil forKey:@"EnableMusicApplicationSection"];
 
-	// Now Playing Elements
+	// Music
+	[preferences registerBool:&musicArtworkBackgroundSwitch default:NO forKey:@"musicArtworkBackground"];
+	[preferences registerObject:&musicArtworkBlurMode default:@"0" forKey:@"musicArtworkBlur"];
+	[preferences registerObject:&musicArtworkOpacityValue default:@"1.0" forKey:@"musicArtworkOpacity"];
 	[preferences registerBool:&hideGrabberViewSwitch default:NO forKey:@"hideGrabberView"];
 	[preferences registerBool:&hideArtworkViewSwitch default:NO forKey:@"hideArtworkView"];
 	[preferences registerBool:&hideTimeControlSwitch default:NO forKey:@"hideTimeControl"];

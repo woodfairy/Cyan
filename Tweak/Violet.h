@@ -15,16 +15,20 @@ UIImageView* lsArtworkBackgroundImageView;
 UIImageView* hsArtworkBackgroundImageView;
 UIImageView* lspArtworkBackgroundImageView;
 UIImageView* ccArtworkBackgroundImageView;
+UIImageView* musicArtworkBackgroundImageView;
 UIVisualEffectView* lsBlurView;
 UIBlurEffect* lsBlur;
 UIVisualEffectView* hsBlurView;
 UIBlurEffect* hsBlur;
 UIVisualEffectView* lspBlurView;
 UIBlurEffect* lspBlur;
-UIVisualEffectView* ccBlurView;
-UIBlurEffect* ccBlur;
+UIVisualEffectView* musicBlurView;
+UIBlurEffect* musicBlur;
 
-// Now Playing Elements
+// Music
+BOOL musicArtworkBackgroundSwitch = NO;
+NSString* musicArtworkBlurMode = @"0";
+NSString* musicArtworkOpacityValue = @"1.0";
 BOOL hideGrabberViewSwitch = NO;
 BOOL hideArtworkViewSwitch = NO;
 BOOL hideTimeControlSwitch = NO;
