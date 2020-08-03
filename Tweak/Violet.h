@@ -65,6 +65,7 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 @interface MRPlatterViewController : UIViewController
 @property(nonatomic, copy)NSString* label;
 
+- (void)setMaterialViewBackground;
 - (void)clearMaterialViewBackground;
 @end
 
