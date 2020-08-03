@@ -235,46 +235,46 @@ BOOL enableControlCenterSection;
     %orig;
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-			if (information) {
-				NSDictionary* dict = (__bridge NSDictionary *)information;
-				if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-					currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
-					if (currentArtwork) {
-						if (lockscreenArtworkBackgroundSwitch) {
-							[lsArtworkBackgroundImageView setImage:currentArtwork];
-							[lsArtworkBackgroundImageView setHidden:NO];
-							if ([lockscreenArtworkBlurMode intValue] != 0) [lsBlurView setHidden:NO];
-						}
-						if (lockscreenPlayerArtworkBackgroundSwitch) {
-							[lspArtworkBackgroundImageView setImage:currentArtwork];
-							[lspArtworkBackgroundImageView setHidden:NO];
-							if ([lockscreenPlayerArtworkBlurMode intValue] != 0) [lspBlurView setHidden:NO];
-						}
-						if (homescreenArtworkBackgroundSwitch) {
-							[hsArtworkBackgroundImageView setImage:currentArtwork];
-							[hsArtworkBackgroundImageView setHidden:NO];
-							if ([homescreenArtworkBlurMode intValue] != 0) [hsBlurView setHidden:NO];
-						}
-						if (controlCenterArtworkBackgroundSwitch) {
-							[ccArtworkBackgroundImageView setImage:currentArtwork];
-							[ccArtworkBackgroundImageView setHidden:NO];
-						}
+		if (information) {
+			NSDictionary* dict = (__bridge NSDictionary *)information;
+			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
+				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
+				if (currentArtwork) {
+					if (lockscreenArtworkBackgroundSwitch) {
+						[lsArtworkBackgroundImageView setImage:currentArtwork];
+						[lsArtworkBackgroundImageView setHidden:NO];
+						if ([lockscreenArtworkBlurMode intValue] != 0) [lsBlurView setHidden:NO];
+					}
+					if (lockscreenPlayerArtworkBackgroundSwitch) {
+						[lspArtworkBackgroundImageView setImage:currentArtwork];
+						[lspArtworkBackgroundImageView setHidden:NO];
+						if ([lockscreenPlayerArtworkBlurMode intValue] != 0) [lspBlurView setHidden:NO];
+					}
+					if (homescreenArtworkBackgroundSwitch) {
+						[hsArtworkBackgroundImageView setImage:currentArtwork];
+						[hsArtworkBackgroundImageView setHidden:NO];
+						if ([homescreenArtworkBlurMode intValue] != 0) [hsBlurView setHidden:NO];
+					}
+					if (controlCenterArtworkBackgroundSwitch) {
+						[ccArtworkBackgroundImageView setImage:currentArtwork];
+						[ccArtworkBackgroundImageView setHidden:NO];
 					}
 				}
-      } else {
-				[lsArtworkBackgroundImageView setHidden:YES];
-				[lspArtworkBackgroundImageView setHidden:YES];
-				[hsArtworkBackgroundImageView setHidden:YES];
-				[ccArtworkBackgroundImageView setHidden:YES];
-				[lsBlurView setHidden:YES];
-				[lspBlurView setHidden:YES];
-				[hsBlurView setHidden:YES];
-				currentArtwork = nil;
-				lsArtworkBackgroundImageView.image = nil;
-				lspArtworkBackgroundImageView.image = nil;
-				hsArtworkBackgroundImageView.image = nil;
-				ccArtworkBackgroundImageView.image = nil;
 			}
+      	} else {
+			[lsArtworkBackgroundImageView setHidden:YES];
+			[lspArtworkBackgroundImageView setHidden:YES];
+			[hsArtworkBackgroundImageView setHidden:YES];
+			[ccArtworkBackgroundImageView setHidden:YES];
+			[lsBlurView setHidden:YES];
+			[lspBlurView setHidden:YES];
+			[hsBlurView setHidden:YES];
+			currentArtwork = nil;
+			lsArtworkBackgroundImageView.image = nil;
+			lspArtworkBackgroundImageView.image = nil;
+			hsArtworkBackgroundImageView.image = nil;
+			ccArtworkBackgroundImageView.image = nil;
+		}
   });
     
 }
