@@ -226,7 +226,7 @@ BOOL enableControlCenterSection;
 
 // Data
 
-%group VioletData
+%group VioletSpringBoardData
 
 %hook SBMediaController
 
@@ -324,7 +324,7 @@ BOOL enableControlCenterSection;
 		if (enableLockscreenSection) %init(VioletLockscreen);
 		if (enableHomescreenSection) %init(VioletHomescreen);
 		if (enableControlCenterSection) %init(ControlCenter);
-		%init(VioletData);
+		%init(VioletSpringBoardData);
         return;
     }
 
