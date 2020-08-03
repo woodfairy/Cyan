@@ -1,4 +1,4 @@
-#import "../Violet.h"
+#import "VioletMusic.h"
 
 BOOL enabled;
 BOOL enableMusicApplicationSection;
@@ -9,17 +9,41 @@ BOOL enableMusicApplicationSection;
 
 %hook MusicNowPlayingControlsViewController
 
-- (void)viewDidLoad { // hide other elements and add artwork background (broken)
+%new
+- (void)setArtwork { // get and set the artwork
+
+	MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
+		NSDictionary* dict = (__bridge NSDictionary *)information;
+		if (dict) {
+			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
+				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
+				if (currentArtwork) {
+					if (musicArtworkBackgroundSwitch) {
+						[musicArtworkBackgroundImageView setImage:currentArtwork];
+						[musicArtworkBackgroundImageView setHidden:NO];
+						if ([musicArtworkBlurMode intValue] != 0) [musicBlurView setHidden:NO];
+					}
+				}
+			}
+      	}
+  	});
+
+}
+
+- (void)viewDidLoad { // add artwork background and hide other elements
 
 	%orig;
 
-
+	for (UIView* subview in self.view.subviews) { // remove the background color of the controls view
+        [subview setBackgroundColor:[UIColor clearColor]];
+	}
 
 	if (!musicArtworkBackgroundSwitch) return;
 	if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	[musicArtworkBackgroundImageView setFrame:self.view.bounds];
 	[musicArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[musicArtworkBackgroundImageView setHidden:YES];
+	[musicArtworkBackgroundImageView setHidden:NO];
 	[musicArtworkBackgroundImageView setClipsToBounds:YES];
 	[musicArtworkBackgroundImageView setAlpha:[musicArtworkOpacityValue doubleValue]];
 
@@ -40,11 +64,6 @@ BOOL enableMusicApplicationSection;
 
 	if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:0];
-
-
-
-
-
 
 	UIView* grabber = MSHookIvar<UIView *>(self, "grabberView");
 	UILabel* titleLabel = MSHookIvar<UILabel *>(self, "titleLabel");
@@ -75,11 +94,17 @@ BOOL enableMusicApplicationSection;
 	if (hideGrabberViewSwitch)
 		[grabber setHidden:YES];
 
-	for (UIView* subview in self.view.subviews) {
-        [subview setBackgroundColor:[UIColor clearColor]];
-	}
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
 
 }
+
+// - (void)viewDidDisappear:(BOOL)animated {
+
+// 	%orig;
+
+// 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+
+// }
 
 %end
 
@@ -193,7 +218,7 @@ BOOL enableMusicApplicationSection;
 
 	if (enabled) {
 		if (enableMusicApplicationSection) %init(VioletMusicApplication, ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
-        return;
+		return;
     }
 
 }
