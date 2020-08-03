@@ -87,7 +87,8 @@ BOOL enableControlCenterSection;
 		}
 
 		if (!lockscreenPlayerArtworkBackgroundSwitch) return;
-		[self clearMaterialViewBackground];
+		if (currentArtwork) [self clearMaterialViewBackground];
+		else [self setMaterialViewBackground];
 		if (!lspArtworkBackgroundImageView) {
 			lspArtworkBackgroundImageView = [[UIImageView alloc] init];
 			[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
@@ -123,8 +124,10 @@ BOOL enableControlCenterSection;
 
 	%orig;
 
-	if ([self.label isEqualToString:@"MRPlatter-CoverSheet"] && self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle)
-		[self performSelector:@selector(clearMaterialViewBackground) withObject:nil afterDelay:0.2];
+	if ([self.label isEqualToString:@"MRPlatter-CoverSheet"] && self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle) {
+		if (currentArtwork) [self performSelector:@selector(clearMaterialViewBackground) withObject:nil afterDelay:0.2];
+		else [self performSelector:@selector(setMaterialViewBackground) withObject:nil afterDelay:0.2];
+	}
 
 }
 
@@ -139,6 +142,19 @@ BOOL enableControlCenterSection;
 	[MTLayer setScale:0];
 	[MTLayer mt_setColorMatrixDrivenOpacity:0 removingIfIdentity:false];
 	[MTView setBackgroundColor:[UIColor clearColor]];
+
+}
+
+%new
+- (void)setMaterialViewBackground {
+
+	UIView *AdjunctItemView = self.view.superview.superview.superview.superview;
+
+	UIView* platterView = MSHookIvar<UIView *>(AdjunctItemView, "_platterView");
+	MTMaterialView* MTView = MSHookIvar<MTMaterialView *>(platterView, "_backgroundView");
+	MTMaterialLayer* MTLayer = (MTMaterialLayer *)MTView.layer;
+	[MTLayer setScale:1];
+	[MTLayer mt_setColorMatrixDrivenOpacity:1 removingIfIdentity:false];
 
 }
 
@@ -260,8 +276,14 @@ BOOL enableControlCenterSection;
 						[ccArtworkBackgroundImageView setHidden:NO];
 					}
 				}
+			} else { // No artwork
+				currentArtwork = nil;
+				lsArtworkBackgroundImageView.image = nil;
+				lspArtworkBackgroundImageView.image = nil;
+				hsArtworkBackgroundImageView.image = nil;
+				ccArtworkBackgroundImageView.image = nil;
 			}
-      	} else {
+    } else {
 			[lsArtworkBackgroundImageView setHidden:YES];
 			[lspArtworkBackgroundImageView setHidden:YES];
 			[hsArtworkBackgroundImageView setHidden:YES];
