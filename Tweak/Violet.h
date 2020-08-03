@@ -86,7 +86,9 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 @interface CSCoverSheetViewController : UIViewController
 @end
 
-@interface CSAdjunctItemView : UIView
+@interface MRPlatterViewController : UIViewController
+@property (nonatomic,copy) NSString * label;
+
 - (void)clearMaterialViewBackground;
 @end
 
