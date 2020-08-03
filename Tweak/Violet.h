@@ -83,6 +83,7 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 @end
 
 @interface CSAdjunctItemView : UIView
+- (void)clearMaterialViewBackground ;
 @end
 
 @interface MTMaterialView : UIView
