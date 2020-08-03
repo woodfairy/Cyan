@@ -72,50 +72,56 @@ BOOL enableControlCenterSection;
 
 %end
 
-%hook CSAdjunctItemView
+%hook MRPlatterViewController
 
-- (void)didMoveToWindow { // add artwork to lockscreen player
+- (void)viewWillAppear:(BOOL)arg1 {
 
-	if (hideLockscreenPlayerBackgroundSwitch) {
-		UIView* platterView = MSHookIvar<UIView *>(self, "_platterView");
-		[[platterView backgroundMaterialView] setHidden:YES];
-	}
+	%orig;
 
-	if (!lockscreenPlayerArtworkBackgroundSwitch) return;
-	[self clearMaterialViewBackground];
-	if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
-	[lspArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[lspArtworkBackgroundImageView setHidden:NO];
-	[lspArtworkBackgroundImageView setClipsToBounds:YES];
-	[lspArtworkBackgroundImageView setAlpha:[lockscreenPlayerArtworkOpacityValue doubleValue]];
-	[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
+	if ([self.label isEqualToString:@"MRPlatter-CoverSheet"]) {
+		UIView *AdjunctItemView = self.view.superview.superview.superview.superview;
 
-	if ([lockscreenPlayerArtworkBlurMode intValue] != 0) {
-		if (!lspBlur) {
-			if ([lockscreenPlayerArtworkBlurMode intValue] == 1)
-				lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-			else if ([lockscreenPlayerArtworkBlurMode intValue] == 2)
-				lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-			lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
-			[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
-			[lspBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			[lspBlurView setClipsToBounds:YES];
-			[lspArtworkBackgroundImageView addSubview:lspBlurView];
+		if (hideLockscreenPlayerBackgroundSwitch) {
+			UIView* platterView = MSHookIvar<UIView *>(AdjunctItemView, "_platterView");
+			[[platterView backgroundMaterialView] setHidden:YES];
 		}
-		[lspBlurView setHidden:NO];
+
+		if (!lockscreenPlayerArtworkBackgroundSwitch) return;
+		[self clearMaterialViewBackground];
+		if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:AdjunctItemView.bounds];
+		[lspArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+		[lspArtworkBackgroundImageView setHidden:NO];
+		[lspArtworkBackgroundImageView setClipsToBounds:YES];
+		[lspArtworkBackgroundImageView setAlpha:[lockscreenPlayerArtworkOpacityValue doubleValue]];
+		[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
+		[lspArtworkBackgroundImageView setImage:currentArtwork];
+
+		if ([lockscreenPlayerArtworkBlurMode intValue] != 0) {
+			if (!lspBlur) {
+				if ([lockscreenPlayerArtworkBlurMode intValue] == 1)
+					lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+				else if ([lockscreenPlayerArtworkBlurMode intValue] == 2)
+					lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+				lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
+				[lspBlurView setFrame:lspArtworkBackgroundImageView.bounds];
+				[lspBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+				[lspBlurView setClipsToBounds:YES];
+				[lspArtworkBackgroundImageView addSubview:lspBlurView];
+			}
+			[lspBlurView setHidden:NO];
+		}
+
+		if (![lspArtworkBackgroundImageView isDescendantOfView:AdjunctItemView])
+			[AdjunctItemView insertSubview:lspArtworkBackgroundImageView atIndex:0];
+			
 	}
-
-	if (![lspArtworkBackgroundImageView isDescendantOfView:self])
-		[self insertSubview:lspArtworkBackgroundImageView atIndex:0];
-
 }
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection { // fix for the MTView resetting when switching between light and dark mode
 
 	%orig;
 
-	if (self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle)
+	if ([self.label isEqualToString:@"MRPlatter-CoverSheet"] && self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle)
 		[self performSelector:@selector(clearMaterialViewBackground) withObject:nil afterDelay:0.2];
 
 }
@@ -123,13 +129,15 @@ BOOL enableControlCenterSection;
 %new
 - (void)clearMaterialViewBackground {
 
-	UIView* platterView = MSHookIvar<UIView *>(self, "_platterView");
+	UIView *AdjunctItemView = self.view.superview.superview.superview.superview;
+
+	UIView* platterView = MSHookIvar<UIView *>(AdjunctItemView, "_platterView");
 	MTMaterialView* MTView = MSHookIvar<MTMaterialView *>(platterView, "_backgroundView");
 	MTMaterialLayer* MTLayer = (MTMaterialLayer *)MTView.layer;
 	[MTLayer setScale:0];
 	[MTLayer mt_setColorMatrixDrivenOpacity:0 removingIfIdentity:false];
 	[MTView setBackgroundColor:[UIColor clearColor]];
-	
+
 }
 
 %end
@@ -225,34 +233,34 @@ BOOL enableControlCenterSection;
     %orig;
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-        NSDictionary* dict = (__bridge NSDictionary *)information;
-        if (dict) {
-            if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
-				if (currentArtwork) {
-					if (lockscreenArtworkBackgroundSwitch) {
-						[lsArtworkBackgroundImageView setImage:currentArtwork];
-						[lsArtworkBackgroundImageView setHidden:NO];
-						if ([lockscreenArtworkBlurMode intValue] != 0) [lsBlurView setHidden:NO];
-					}
-					if (lockscreenPlayerArtworkBackgroundSwitch) {
-						[lspArtworkBackgroundImageView setImage:currentArtwork];
-						[lspArtworkBackgroundImageView setHidden:NO];
-						if ([lockscreenPlayerArtworkBlurMode intValue] != 0) [lspBlurView setHidden:NO];
-					}
-					if (homescreenArtworkBackgroundSwitch) {
-						[hsArtworkBackgroundImageView setImage:currentArtwork];
-						[hsArtworkBackgroundImageView setHidden:NO];
-						if ([homescreenArtworkBlurMode intValue] != 0) [hsBlurView setHidden:NO];
-					}
-					if (controlCenterArtworkBackgroundSwitch) {
-						[ccArtworkBackgroundImageView setImage:currentArtwork];
-						[ccArtworkBackgroundImageView setHidden:NO];
+			NSDictionary* dict = (__bridge NSDictionary *)information;
+			if (dict) {
+				if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
+					currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
+					if (currentArtwork) {
+						if (lockscreenArtworkBackgroundSwitch) {
+							[lsArtworkBackgroundImageView setImage:currentArtwork];
+							[lsArtworkBackgroundImageView setHidden:NO];
+							if ([lockscreenArtworkBlurMode intValue] != 0) [lsBlurView setHidden:NO];
+						}
+						if (lockscreenPlayerArtworkBackgroundSwitch) {
+							[lspArtworkBackgroundImageView setImage:currentArtwork];
+							[lspArtworkBackgroundImageView setHidden:NO];
+							if ([lockscreenPlayerArtworkBlurMode intValue] != 0) [lspBlurView setHidden:NO];
+						}
+						if (homescreenArtworkBackgroundSwitch) {
+							[hsArtworkBackgroundImageView setImage:currentArtwork];
+							[hsArtworkBackgroundImageView setHidden:NO];
+							if ([homescreenArtworkBlurMode intValue] != 0) [hsBlurView setHidden:NO];
+						}
+						if (controlCenterArtworkBackgroundSwitch) {
+							[ccArtworkBackgroundImageView setImage:currentArtwork];
+							[ccArtworkBackgroundImageView setHidden:NO];
+						}
 					}
 				}
-			}
-        }
-    });
+      }
+  });
     
 }
 
