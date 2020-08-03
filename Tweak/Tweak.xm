@@ -113,10 +113,10 @@ BOOL enableControlCenterSection;
 		}
 
 		if (![lspArtworkBackgroundImageView isDescendantOfView:AdjunctItemView])
-			[AdjunctItemView insertSubview:lspArtworkBackgroundImageView atIndex:0];
-			
+			[AdjunctItemView insertSubview:lspArtworkBackgroundImageView atIndex:0];		
 	}
 }
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection { // fix for the MTView resetting when switching between light and dark mode
 
 	%orig;
