@@ -74,7 +74,7 @@ BOOL enableControlCenterSection;
 
 %hook MRPlatterViewController
 
-- (void)viewWillAppear:(BOOL)arg1 {
+- (void)viewDidLayoutSubviews {
 
 	%orig;
 
@@ -88,11 +88,13 @@ BOOL enableControlCenterSection;
 
 		if (!lockscreenPlayerArtworkBackgroundSwitch) return;
 		[self clearMaterialViewBackground];
-		if (!lspArtworkBackgroundImageView) lspArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:AdjunctItemView.bounds];
-		[lspArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-		[lspArtworkBackgroundImageView setHidden:NO];
-		[lspArtworkBackgroundImageView setClipsToBounds:YES];
+		if (!lspArtworkBackgroundImageView) {
+			lspArtworkBackgroundImageView = [[UIImageView alloc] init];
+			[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+			[lspArtworkBackgroundImageView setHidden:NO];
+			[lspArtworkBackgroundImageView setClipsToBounds:YES];
+		}
+		[lspArtworkBackgroundImageView setFrame:AdjunctItemView.bounds];
 		[lspArtworkBackgroundImageView setAlpha:[lockscreenPlayerArtworkOpacityValue doubleValue]];
 		[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
 		[lspArtworkBackgroundImageView setImage:currentArtwork];
@@ -233,8 +235,8 @@ BOOL enableControlCenterSection;
     %orig;
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
-			NSDictionary* dict = (__bridge NSDictionary *)information;
-			if (dict) {
+			if (information) {
+				NSDictionary* dict = (__bridge NSDictionary *)information;
 				if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
 					currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 					if (currentArtwork) {
@@ -259,28 +261,22 @@ BOOL enableControlCenterSection;
 						}
 					}
 				}
-      }
+      } else {
+				[lsArtworkBackgroundImageView setHidden:YES];
+				[lspArtworkBackgroundImageView setHidden:YES];
+				[hsArtworkBackgroundImageView setHidden:YES];
+				[ccArtworkBackgroundImageView setHidden:YES];
+				[lsBlurView setHidden:YES];
+				[lspBlurView setHidden:YES];
+				[hsBlurView setHidden:YES];
+				currentArtwork = nil;
+				lsArtworkBackgroundImageView.image = nil;
+				lspArtworkBackgroundImageView.image = nil;
+				hsArtworkBackgroundImageView.image = nil;
+				ccArtworkBackgroundImageView.image = nil;
+			}
   });
     
-}
-
-- (void)_setNowPlayingApplication:(id)arg1 { // hide background artwork when now playing app was closed
-
-	%orig;
-
-	[lsArtworkBackgroundImageView setHidden:YES];
-	[lspArtworkBackgroundImageView setHidden:YES];
-	[hsArtworkBackgroundImageView setHidden:YES];
-	[ccArtworkBackgroundImageView setHidden:YES];
-	[lsBlurView setHidden:YES];
-	[lspBlurView setHidden:YES];
-	[hsBlurView setHidden:YES];
-	currentArtwork = nil;
-	lsArtworkBackgroundImageView.image = nil;
-	lspArtworkBackgroundImageView.image = nil;
-	hsArtworkBackgroundImageView.image = nil;
-	ccArtworkBackgroundImageView.image = nil;
-
 }
 
 %end
