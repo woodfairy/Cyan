@@ -286,20 +286,6 @@
 			<key>PostNotification</key>
 			<string>love.litten.violetpreferences/ReloadPrefs</string>
 		</dict>
-        <dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<false/>
-			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
-			<key>key</key>
-			<string>hideQueueButton</string>
-			<key>label</key>
-			<string>Hide Queue Button</string>
-			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
-		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
@@ -311,6 +297,20 @@
 			<string>hideRouteLabel</string>
 			<key>label</key>
 			<string>Hide AirPlay Label</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>hideQueueButton</string>
+			<key>label</key>
+			<string>Hide Queue Button</string>
 			<key>PostNotification</key>
 			<string>love.litten.violetpreferences/ReloadPrefs</string>
 		</dict>

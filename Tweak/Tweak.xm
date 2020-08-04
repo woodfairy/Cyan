@@ -43,33 +43,6 @@ BOOL enableControlCenterSection;
 
 }
 
-- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
-
-	%orig;
-
-	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
-		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
-
-}
-
-- (void)viewWillDisappear:(BOOL)animated { // roundlockscreen compatibility
-
-	%orig;
-
-	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
-		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated { // roundlockscreen compatibility
-
-	%orig;
-
-	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
-		[[lsArtworkBackgroundImageView layer] setCornerRadius:0];
-
-}
-
 %end
 
 %hook MRPlatterViewController
@@ -275,6 +248,7 @@ BOOL enableControlCenterSection;
 						[ccArtworkBackgroundImageView setImage:currentArtwork];
 						[ccArtworkBackgroundImageView setHidden:NO];
 					}
+					if (hideXenHTMLWidgetsSwitch) [[NSNotificationCenter defaultCenter] postNotificationName:@"violetHideXenHTML" object:nil];
 				}
 			} else { // no artwork
 				currentArtwork = nil;
@@ -296,9 +270,73 @@ BOOL enableControlCenterSection;
 			[lspArtworkBackgroundImageView setImage:nil];
 			[hsArtworkBackgroundImageView setImage:nil];
 			[ccArtworkBackgroundImageView setImage:nil];
+			if (hideXenHTMLWidgetsSwitch) [[NSNotificationCenter defaultCenter] postNotificationName:@"violetShowXenHTML" object:nil];
 		}
   	});
     
+}
+
+%end
+
+%end
+
+%group TweakCompatibility
+
+%hook CSCoverSheetViewController
+
+- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
+
+	if (hideXenHTMLWidgetsSwitch && [[%c(SBMediaController) sharedInstance] isPlaying])
+		if (hideXenHTMLWidgetsSwitch) [[NSNotificationCenter defaultCenter] postNotificationName:@"violetHideXenHTML" object:nil];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated { // roundlockscreen compatibility
+
+	%orig;
+
+	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
+		[[lsArtworkBackgroundImageView layer] setCornerRadius:0];
+
+}
+
+%end
+
+%hook XENHWidgetLayerContainerView
+
+- (void)initWithFrame:(CGRect)frame {
+
+	if (hideXenHTMLWidgetsSwitch) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleXenHVisibility:) name:@"violetHideXenHTML" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleXenHVisibility:) name:@"violetShowXenHTML" object:nil];
+	}
+
+	return %orig;
+
+}
+
+%new
+- (void)toggleXenHVisibility:(NSNotification *)notification {
+
+	if ([notification.name isEqual:@"violetHideXenHTML"])
+		[self setHidden:YES];
+	else if ([notification.name isEqual:@"violetShowXenHTML"])
+		[self setHidden:NO];
+	
 }
 
 %end
@@ -325,6 +363,7 @@ BOOL enableControlCenterSection;
 		[preferences registerObject:&lockscreenPlayerArtworkCornerRadiusValue default:@"10.0" forKey:@"lockscreenPlayerArtworkCornerRadius"];
 		[preferences registerBool:&hideLockscreenPlayerBackgroundSwitch default:NO forKey:@"hideLockscreenPlayerBackground"];
 		[preferences registerBool:&roundLockScreenCompatibilitySwitch default:NO forKey:@"roundLockScreenCompatibility"];
+		[preferences registerBool:&hideXenHTMLWidgetsSwitch default:NO forKey:@"hideXenHTMLWidgets"];
 	}
 
 	// Homescreen
@@ -347,6 +386,10 @@ BOOL enableControlCenterSection;
 		if (enableHomescreenSection) %init(VioletHomescreen);
 		if (enableControlCenterSection) %init(ControlCenter);
 		%init(VioletSpringBoardData);
+		if (roundLockScreenCompatibilitySwitch || hideXenHTMLWidgetsSwitch) {
+			if (hideXenHTMLWidgetsSwitch) dlopen("/Library/MobileSubstrate/DynamicLibraries/XenHTML_Loader.dylib", RTLD_NOW);
+			%init(TweakCompatibility);
+		}
         return;
     }
 

@@ -32,6 +32,7 @@ NSString* lockscreenPlayerArtworkOpacityValue = @"1.0";
 NSString* lockscreenPlayerArtworkCornerRadiusValue = @"10.0";
 BOOL hideLockscreenPlayerBackgroundSwitch = NO;
 BOOL roundLockScreenCompatibilitySwitch = NO;
+BOOL hideXenHTMLWidgetsSwitch = NO;
 
 // Homescreen
 BOOL homescreenArtworkBackgroundSwitch = NO;
@@ -74,4 +75,13 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 @interface CCUIContentModuleContainerViewController : UIViewController
 - (NSString *)moduleIdentifier;
 @property(nonatomic, retain)UIViewController* contentViewController;
+@end
+
+@interface SBMediaControlle : NSObject
++ (id)sharedInstance;
+- (BOOL)isPlaying;
+@end
+
+@interface XENHWidgetLayerContainerView : UIView
+- (void)toggleXenHVisibility;
 @end
