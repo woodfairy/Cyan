@@ -34,11 +34,11 @@ BOOL enableMusicApplicationSection;
 
 	%orig;
 
-	for (UIView* subview in self.view.subviews) { // remove the background color of the controls view
+	for (UIView* subview in [[self view] subviews]) { // remove the background color of the controls view
         [subview setBackgroundColor:[UIColor clearColor]];
 	}
 
-	if (!musicArtworkBackgroundSwitch) {
+	if (musicArtworkBackgroundSwitch) {
 		if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
 		[musicArtworkBackgroundImageView setFrame:self.view.bounds];
 		[musicArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -64,7 +64,8 @@ BOOL enableMusicApplicationSection;
 
 		if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:0];
-			
+
+		[[NSNotificationCenter defaultCenter] removeObserver:self];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
 	}
 

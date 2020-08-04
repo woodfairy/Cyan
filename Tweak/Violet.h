@@ -31,7 +31,7 @@ NSString* lockscreenPlayerArtworkBlurMode = @"0";
 NSString* lockscreenPlayerArtworkOpacityValue = @"1.0";
 NSString* lockscreenPlayerArtworkCornerRadiusValue = @"10.0";
 BOOL hideLockscreenPlayerBackgroundSwitch = NO;
-BOOL roundLockScreenCompatibilitySwitch = YES;
+BOOL roundLockScreenCompatibilitySwitch = NO;
 
 // Homescreen
 BOOL homescreenArtworkBackgroundSwitch = NO;
@@ -44,27 +44,11 @@ BOOL controlCenterArtworkBackgroundSwitch = NO;
 NSString* controlCenterArtworkOpacityValue = @"1.0";
 NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 
-@interface TimeControl : UISlider
-@end
-
-@interface ContextualActionsButton : UIButton
-@end
-
-@interface _TtCC16MusicApplication32NowPlayingControlsViewController12VolumeSlider : UISlider
-@end
-
-@interface MusicNowPlayingControlsViewController : UIViewController
-@end
-
-@interface MPRouteButton : UIButton
-@end
-
 @interface CSCoverSheetViewController : UIViewController
 @end
 
 @interface MRPlatterViewController : UIViewController
 @property(nonatomic, copy)NSString* label;
-
 - (void)setMaterialViewBackground;
 - (void)clearMaterialViewBackground;
 @end

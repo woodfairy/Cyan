@@ -7,7 +7,7 @@ BOOL enableSpotifyApplicationSection;
 
 %group VioletSpotify
 
-%hook SPTNowPlayingBackgroundViewController
+%hook SPTNowPlayingViewController
 
 %new
 - (void)setArtwork { // get and set the artwork
@@ -36,7 +36,6 @@ BOOL enableSpotifyApplicationSection;
 
 	if (!spotifyArtworkBackgroundSwitch) return;
 	if (!spotifyArtworkBackgroundImageView) spotifyArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-	[spotifyArtworkBackgroundImageView setFrame:self.view.bounds];
 	[spotifyArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[spotifyArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[spotifyArtworkBackgroundImageView setHidden:NO];
@@ -59,8 +58,7 @@ BOOL enableSpotifyApplicationSection;
 	}
 
 	if (![spotifyArtworkBackgroundImageView isDescendantOfView:[self view]])
-		// [[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:5];
-		[[self view] addSubview:spotifyArtworkBackgroundImageView];
+		[[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:0];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
 

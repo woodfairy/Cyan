@@ -17,6 +17,6 @@ BOOL spotifyArtworkBackgroundSwitch = NO;
 NSString* spotifyArtworkBlurMode = @"0";
 NSString* spotifyArtworkOpacityValue = @"1.0";
 
-@interface SPTNowPlayingBackgroundViewController : UIViewController
+@interface SPTNowPlayingViewController : UIViewController
 - (void)setArtwork;
 @end

@@ -33,6 +33,10 @@ BOOL hideRouteButtonSwitch = NO;
 BOOL hideRouteLabelSwitch = NO;
 BOOL hideQueueButtonSwitch = NO;
 
+@interface MusicNowPlayingControlsViewController : UIViewController
+- (void)setArtwork;
+@end
+
 @interface TimeControl : UISlider
 @end
 
@@ -40,10 +44,6 @@ BOOL hideQueueButtonSwitch = NO;
 @end
 
 @interface _TtCC16MusicApplication32NowPlayingControlsViewController12VolumeSlider : UISlider
-@end
-
-@interface MusicNowPlayingControlsViewController : UIViewController
-- (void)setArtwork;
 @end
 
 @interface MPRouteButton : UIButton

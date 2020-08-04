@@ -228,7 +228,7 @@ UIVisualEffectView* blurView;
     }
     
     [self.enableSwitch setOn:NO animated: YES];
-    [self respringUtil];
+    [self respring];
 
 }
 
