@@ -278,12 +278,12 @@ BOOL enableControlCenterSection;
 				}
 			} else { // No artwork
 				currentArtwork = nil;
-				lsArtworkBackgroundImageView.image = nil;
-				lspArtworkBackgroundImageView.image = nil;
-				hsArtworkBackgroundImageView.image = nil;
-				ccArtworkBackgroundImageView.image = nil;
+				[lsArtworkBackgroundImageView setImage:nil];
+				[lspArtworkBackgroundImageView setImage:nil];
+				[hsArtworkBackgroundImageView setImage:nil];
+				[ccArtworkBackgroundImageView setImage:nil];
 			}
-    } else {
+		} else {
 			[lsArtworkBackgroundImageView setHidden:YES];
 			[lspArtworkBackgroundImageView setHidden:YES];
 			[hsArtworkBackgroundImageView setHidden:YES];
@@ -292,12 +292,12 @@ BOOL enableControlCenterSection;
 			[lspBlurView setHidden:YES];
 			[hsBlurView setHidden:YES];
 			currentArtwork = nil;
-			lsArtworkBackgroundImageView.image = nil;
-			lspArtworkBackgroundImageView.image = nil;
-			hsArtworkBackgroundImageView.image = nil;
-			ccArtworkBackgroundImageView.image = nil;
+			[lsArtworkBackgroundImageView setImage:nil];
+			[lspArtworkBackgroundImageView setImage:nil];
+			[hsArtworkBackgroundImageView setImage:nil];
+			[ccArtworkBackgroundImageView setImage:nil];
 		}
-  });
+  	});
     
 }
 

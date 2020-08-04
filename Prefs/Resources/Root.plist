@@ -44,6 +44,16 @@
  			<key>cell</key>
  			<string>PSLinkCell</string>
  			<key>label</key>
+ 			<string>Spotify</string>
+ 			<key>detail</key>
+ 			<string>VIOSpotifyApplicationSubPrefsListController</string>
+ 			<key>VIOSub</key>
+ 			<string>spotifyApplicationSub</string>
+ 		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
  			<string>Lockscreen</string>
  			<key>detail</key>
  			<string>VIOLockscreenSubPrefsListController</string>

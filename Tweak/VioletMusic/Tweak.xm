@@ -5,7 +5,7 @@ BOOL enableMusicApplicationSection;
 
 // Music Application
 
-%group VioletMusicApplication
+%group VioletMusic
 
 %hook MusicNowPlayingControlsViewController
 
@@ -38,32 +38,35 @@ BOOL enableMusicApplicationSection;
         [subview setBackgroundColor:[UIColor clearColor]];
 	}
 
-	if (!musicArtworkBackgroundSwitch) return;
-	if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-	[musicArtworkBackgroundImageView setFrame:self.view.bounds];
-	[musicArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[musicArtworkBackgroundImageView setHidden:NO];
-	[musicArtworkBackgroundImageView setClipsToBounds:YES];
-	[musicArtworkBackgroundImageView setAlpha:[musicArtworkOpacityValue doubleValue]];
+	if (!musicArtworkBackgroundSwitch) {
+		if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+		[musicArtworkBackgroundImageView setFrame:self.view.bounds];
+		[musicArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+		[musicArtworkBackgroundImageView setHidden:NO];
+		[musicArtworkBackgroundImageView setClipsToBounds:YES];
+		[musicArtworkBackgroundImageView setAlpha:[musicArtworkOpacityValue doubleValue]];
 
-	if ([musicArtworkBlurMode intValue] != 0) {
-		if (!musicBlur) {
-			if ([musicArtworkBlurMode intValue] == 1)
-				musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-			else if ([musicArtworkBlurMode intValue] == 2)
-				musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-			musicBlurView = [[UIVisualEffectView alloc] initWithEffect:musicBlur];
-			[musicBlurView setFrame:musicArtworkBackgroundImageView.bounds];
-			[musicBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			[musicBlurView setClipsToBounds:YES];
-			[musicArtworkBackgroundImageView addSubview:musicBlurView];
+		if ([musicArtworkBlurMode intValue] != 0) {
+			if (!musicBlur) {
+				if ([musicArtworkBlurMode intValue] == 1)
+					musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+				else if ([musicArtworkBlurMode intValue] == 2)
+					musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+				musicBlurView = [[UIVisualEffectView alloc] initWithEffect:musicBlur];
+				[musicBlurView setFrame:musicArtworkBackgroundImageView.bounds];
+				[musicBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+				[musicBlurView setClipsToBounds:YES];
+				[musicArtworkBackgroundImageView addSubview:musicBlurView];
+			}
+			[musicBlurView setHidden:NO];
 		}
-		[musicBlurView setHidden:NO];
-	}
 
-	if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
-		[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:0];
+		if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
+			[[self view] insertSubview:musicArtworkBackgroundImageView atIndex:0];
+			
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
+	}
 
 	UIView* grabber = MSHookIvar<UIView *>(self, "grabberView");
 	UILabel* titleLabel = MSHookIvar<UILabel *>(self, "titleLabel");
@@ -94,17 +97,7 @@ BOOL enableMusicApplicationSection;
 	if (hideGrabberViewSwitch)
 		[grabber setHidden:YES];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
-
 }
-
-// - (void)viewDidDisappear:(BOOL)animated {
-
-// 	%orig;
-
-// 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-// }
 
 %end
 
@@ -217,7 +210,7 @@ BOOL enableMusicApplicationSection;
 	[preferences registerBool:&hideQueueButtonSwitch default:NO forKey:@"hideQueueButton"];
 
 	if (enabled) {
-		if (enableMusicApplicationSection) %init(VioletMusicApplication, ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
+		if (enableMusicApplicationSection) %init(VioletMusic, ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
 		return;
     }
 
