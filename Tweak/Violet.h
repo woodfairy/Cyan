@@ -76,12 +76,3 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 - (NSString *)moduleIdentifier;
 @property(nonatomic, retain)UIViewController* contentViewController;
 @end
-
-@interface SBMediaControlle : NSObject
-+ (id)sharedInstance;
-- (BOOL)isPlaying;
-@end
-
-@interface XENHWidgetLayerContainerView : UIView
-- (void)toggleXenHVisibility;
-@end

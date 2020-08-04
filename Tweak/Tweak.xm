@@ -248,7 +248,6 @@ BOOL enableControlCenterSection;
 						[ccArtworkBackgroundImageView setImage:currentArtwork];
 						[ccArtworkBackgroundImageView setHidden:NO];
 					}
-					if (hideXenHTMLWidgetsSwitch) [[NSNotificationCenter defaultCenter] postNotificationName:@"violetHideXenHTML" object:nil];
 				}
 			} else { // no artwork
 				currentArtwork = nil;
@@ -270,7 +269,6 @@ BOOL enableControlCenterSection;
 			[lspArtworkBackgroundImageView setImage:nil];
 			[hsArtworkBackgroundImageView setImage:nil];
 			[ccArtworkBackgroundImageView setImage:nil];
-			if (hideXenHTMLWidgetsSwitch) [[NSNotificationCenter defaultCenter] postNotificationName:@"violetShowXenHTML" object:nil];
 		}
   	});
     
@@ -280,19 +278,18 @@ BOOL enableControlCenterSection;
 
 %end
 
+// Tweak Compatibility
+
 %group TweakCompatibility
 
 %hook CSCoverSheetViewController
 
-- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
+- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility and xen html notification
 
 	%orig;
 
 	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
-
-	if (hideXenHTMLWidgetsSwitch && [[%c(SBMediaController) sharedInstance] isPlaying])
-		if (hideXenHTMLWidgetsSwitch) [[NSNotificationCenter defaultCenter] postNotificationName:@"violetHideXenHTML" object:nil];
 
 }
 
@@ -318,25 +315,13 @@ BOOL enableControlCenterSection;
 
 %hook XENHWidgetLayerContainerView
 
-- (void)initWithFrame:(CGRect)frame {
+- (void)didMoveToWindow {
 
-	if (hideXenHTMLWidgetsSwitch) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleXenHVisibility:) name:@"violetHideXenHTML" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleXenHVisibility:) name:@"violetShowXenHTML" object:nil];
-	}
+	%orig;
 
-	return %orig;
-
-}
-
-%new
-- (void)toggleXenHVisibility:(NSNotification *)notification {
-
-	if ([notification.name isEqual:@"violetHideXenHTML"])
+	if (hideXenHTMLWidgetsSwitch && [[%c(SBMediaController) sharedInstance] isPlaying])
 		[self setHidden:YES];
-	else if ([notification.name isEqual:@"violetShowXenHTML"])
-		[self setHidden:NO];
-	
+
 }
 
 %end
@@ -386,10 +371,7 @@ BOOL enableControlCenterSection;
 		if (enableHomescreenSection) %init(VioletHomescreen);
 		if (enableControlCenterSection) %init(ControlCenter);
 		%init(VioletSpringBoardData);
-		if (roundLockScreenCompatibilitySwitch || hideXenHTMLWidgetsSwitch) {
-			if (hideXenHTMLWidgetsSwitch) dlopen("/Library/MobileSubstrate/DynamicLibraries/XenHTML_Loader.dylib", RTLD_NOW);
-			%init(TweakCompatibility);
-		}
+		if (roundLockScreenCompatibilitySwitch || hideXenHTMLWidgetsSwitch) %init(TweakCompatibility);
         return;
     }
 
