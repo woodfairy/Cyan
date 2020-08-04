@@ -276,7 +276,7 @@ BOOL enableControlCenterSection;
 						[ccArtworkBackgroundImageView setHidden:NO];
 					}
 				}
-			} else { // No artwork
+			} else { // no artwork
 				currentArtwork = nil;
 				[lsArtworkBackgroundImageView setImage:nil];
 				[lspArtworkBackgroundImageView setImage:nil];

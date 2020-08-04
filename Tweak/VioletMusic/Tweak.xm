@@ -24,6 +24,9 @@ BOOL enableMusicApplicationSection;
 						if ([musicArtworkBlurMode intValue] != 0) [musicBlurView setHidden:NO];
 					}
 				}
+			} else { // no artwork
+				[musicArtworkBackgroundImageView setImage:nil];
+				[musicArtworkBackgroundImageView setHidden:YES];
 			}
       	}
   	});
@@ -37,6 +40,8 @@ BOOL enableMusicApplicationSection;
 	for (UIView* subview in [[self view] subviews]) { // remove the background color of the controls view
         [subview setBackgroundColor:[UIColor clearColor]];
 	}
+
+	[self setArtwork];
 
 	if (musicArtworkBackgroundSwitch) {
 		if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];

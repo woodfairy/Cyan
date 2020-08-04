@@ -12,17 +12,16 @@ BOOL enableSpotifyApplicationSection;
 %new
 - (void)setArtwork { // get and set the artwork
 
+	if (!spotifyArtworkBackgroundSwitch) return;
 	MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
 		NSDictionary* dict = (__bridge NSDictionary *)information;
 		if (dict) {
 			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
 				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 				if (currentArtwork) {
-					if (spotifyArtworkBackgroundSwitch) {
-						[spotifyArtworkBackgroundImageView setImage:currentArtwork];
-						[spotifyArtworkBackgroundImageView setHidden:NO];
-						if ([spotifyArtworkBlurMode intValue] != 0) [spotifyBlurView setHidden:NO];
-					}
+					[spotifyArtworkBackgroundImageView setImage:currentArtwork];
+					[spotifyArtworkBackgroundImageView setHidden:NO];
+					if ([spotifyArtworkBlurMode intValue] != 0) [spotifyBlurView setHidden:NO];
 				}
 			}
       	}
@@ -60,7 +59,45 @@ BOOL enableSpotifyApplicationSection;
 	if (![spotifyArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:0];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:@"violetUpdateArtwork" object:nil]; // add notification to dynamically change artwork
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+
+	%orig;
+
+	[self setArtwork];
+
+}
+
+%end
+
+// workaround as the media remote notification doesn't work in spotify for some reason
+
+%hook SPTNowPlayingNextTrackButton
+
+- (void)touchesEnded:(id)arg1 withEvent:(id)arg2 {
+
+	%orig;
+
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.7 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"violetUpdateArtwork" object:nil];
+    });
+
+}
+
+%end
+
+%hook SPTNowPlayingPreviousTrackButton
+
+- (void)touchesEnded:(id)arg1 withEvent:(id)arg2 {
+
+	%orig;
+
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.7 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"violetUpdateArtwork" object:nil];
+    });
 
 }
 
