@@ -78,7 +78,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 @interface SBIconController : UIViewController
 @end
 
-@interface CCUIModularControlCenterViewController : UIViewController
+@interface CCUIModularControlCenterOverlayViewController : UIViewController
 @end
 
 @interface CCUIContentModuleContainerViewController : UIViewController

@@ -178,9 +178,9 @@ BOOL enableControlCenterSection;
 
 %group ControlCenter
 
-%hook CCUIModularControlCenterViewController
+%hook CCUIModularControlCenterOverlayViewController
 
-- (void)viewDidLoad {
+- (void)viewWillAppear:(BOOL)animated {
 
 	%orig;
 
@@ -188,7 +188,7 @@ BOOL enableControlCenterSection;
 	if (!ccArtworkBackgroundImageView) ccArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
 	[ccArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[ccArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[ccArtworkBackgroundImageView setHidden:YES];
+	[ccArtworkBackgroundImageView setHidden:NO];
 	[ccArtworkBackgroundImageView setClipsToBounds:YES];
 	[ccArtworkBackgroundImageView setAlpha:[controlCenterArtworkOpacityValue doubleValue]];
 
@@ -209,6 +209,14 @@ BOOL enableControlCenterSection;
 
 	if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:1];
+
+}
+
+- (void)dismissAnimated:(BOOL)arg1 withCompletionHandler:(id)arg2 {
+
+	%orig;
+
+	[ccArtworkBackgroundImageView setHidden:YES];
 
 }
 
