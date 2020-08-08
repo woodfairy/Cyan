@@ -14,6 +14,7 @@ UIImageView* lsArtworkBackgroundImageView;
 UIImageView* hsArtworkBackgroundImageView;
 UIImageView* lspArtworkBackgroundImageView;
 UIImageView* ccArtworkBackgroundImageView;
+UIImageView* ccmArtworkBackgroundImageView;
 UIImageView* musicArtworkBackgroundImageView;
 UIVisualEffectView* lsBlurView;
 UIBlurEffect* lsBlur;
@@ -21,6 +22,8 @@ UIVisualEffectView* hsBlurView;
 UIBlurEffect* hsBlur;
 UIVisualEffectView* lspBlurView;
 UIBlurEffect* lspBlur;
+UIVisualEffectView* ccBlurView;
+UIBlurEffect* ccBlur;
 
 // Lockscreen
 BOOL lockscreenArtworkBackgroundSwitch = NO;
@@ -38,12 +41,15 @@ BOOL hideXenHTMLWidgetsSwitch = NO;
 BOOL homescreenArtworkBackgroundSwitch = NO;
 NSString* homescreenArtworkBlurMode = @"0";
 NSString* homescreenArtworkOpacityValue = @"1.0";
-BOOL coverEntireHomescreenSwitch = YES;
+BOOL zoomedViewSwitch = YES;
 
 // Control Center
 BOOL controlCenterArtworkBackgroundSwitch = NO;
+NSString* controlCenterArtworkBlurMode = @"0";
 NSString* controlCenterArtworkOpacityValue = @"1.0";
-NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
+BOOL controlCenterModuleArtworkBackgroundSwitch = NO;
+NSString* controlCenterModuleArtworkOpacityValue = @"1.0";
+NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 @interface CSCoverSheetViewController : UIViewController
 @end
@@ -72,13 +78,17 @@ NSString* controlCenterArtworkCornerRadiusValue = @"20.0";
 @interface SBIconController : UIViewController
 @end
 
+@interface CCUIModularControlCenterViewController : UIViewController
+@end
+
 @interface CCUIContentModuleContainerViewController : UIViewController
-- (NSString *)moduleIdentifier;
 @property(nonatomic, retain)UIViewController* contentViewController;
+- (NSString *)moduleIdentifier;
 @end
 
 @interface SBMediaController : NSObject
 + (id)sharedInstance;
+- (BOOL)isPaused;
 - (BOOL)isPlaying;
 @end
 

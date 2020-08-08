@@ -145,7 +145,7 @@ BOOL enableControlCenterSection;
 
 	if (!homescreenArtworkBackgroundSwitch) return;
 	if (!hsArtworkBackgroundImageView) hsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-	if (coverEntireHomescreenSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
+	if (zoomedViewSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
 	[hsArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[hsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[hsArtworkBackgroundImageView setHidden:YES];
@@ -178,24 +178,60 @@ BOOL enableControlCenterSection;
 
 %group ControlCenter
 
+%hook CCUIModularControlCenterViewController
+
+- (void)viewDidLoad {
+
+	%orig;
+
+	if (!controlCenterArtworkBackgroundSwitch) return;
+	if (!ccArtworkBackgroundImageView) ccArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	[ccArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+	[ccArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+	[ccArtworkBackgroundImageView setHidden:YES];
+	[ccArtworkBackgroundImageView setClipsToBounds:YES];
+	[ccArtworkBackgroundImageView setAlpha:[controlCenterArtworkOpacityValue doubleValue]];
+
+	if ([controlCenterArtworkBlurMode intValue] != 0) {
+		if (!ccBlur) {
+			if ([controlCenterArtworkBlurMode intValue] == 1)
+				ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+			else if ([controlCenterArtworkBlurMode intValue] == 2)
+				ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			ccBlurView = [[UIVisualEffectView alloc] initWithEffect:ccBlur];
+			[ccBlurView setFrame:ccArtworkBackgroundImageView.bounds];
+			[ccBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+			[ccBlurView setClipsToBounds:YES];
+			[ccArtworkBackgroundImageView addSubview:ccBlurView];
+		}
+		[ccBlurView setHidden:NO];
+	}
+
+	if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
+		[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:1];
+
+}
+
+%end
+
 %hook CCUIContentModuleContainerViewController
 
 - (void)viewWillAppear:(BOOL)animated { // add artwork background view
 
 	%orig;
 	
-	if (!controlCenterArtworkBackgroundSwitch) return;
+	if (!controlCenterModuleArtworkBackgroundSwitch) return;
 	if ([[self moduleIdentifier] isEqual:@"com.apple.mediaremote.controlcenter.nowplaying"]) {
-		if (!ccArtworkBackgroundImageView) ccArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.contentViewController.view.bounds];
-		[ccArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-		[ccArtworkBackgroundImageView setHidden:NO];
-		[ccArtworkBackgroundImageView setClipsToBounds:YES];
-		[ccArtworkBackgroundImageView setAlpha:[controlCenterArtworkOpacityValue doubleValue]];
-		[[ccArtworkBackgroundImageView layer] setCornerRadius:[controlCenterArtworkCornerRadiusValue doubleValue]];
-		[ccArtworkBackgroundImageView setImage:currentArtwork];
+		if (!ccmArtworkBackgroundImageView) ccmArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.contentViewController.view.bounds];
+		[ccmArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+		[ccmArtworkBackgroundImageView setHidden:NO];
+		[ccmArtworkBackgroundImageView setClipsToBounds:YES];
+		[ccmArtworkBackgroundImageView setAlpha:[controlCenterModuleArtworkOpacityValue doubleValue]];
+		[[ccmArtworkBackgroundImageView layer] setCornerRadius:[controlCenterModuleArtworkCornerRadiusValue doubleValue]];
+		[ccmArtworkBackgroundImageView setImage:currentArtwork];
 
-		if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
-			[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:0];
+		if (![ccmArtworkBackgroundImageView isDescendantOfView:[self view]])
+			[[self view] insertSubview:ccmArtworkBackgroundImageView atIndex:0];
 	}
 
 }
@@ -205,7 +241,7 @@ BOOL enableControlCenterSection;
 	%orig;
 
 	if (arg1 && [[self moduleIdentifier] isEqual:@"com.apple.mediaremote.controlcenter.nowplaying"])
-		[ccArtworkBackgroundImageView setHidden:YES];
+		[ccmArtworkBackgroundImageView setHidden:YES];
 
 }
 
@@ -248,6 +284,9 @@ BOOL enableControlCenterSection;
 						[ccArtworkBackgroundImageView setImage:currentArtwork];
 						[ccArtworkBackgroundImageView setHidden:NO];
 					}
+					if (controlCenterModuleArtworkBackgroundSwitch) {
+						[ccmArtworkBackgroundImageView setImage:currentArtwork];
+					}
 				}
 			} else { // no artwork
 				currentArtwork = nil;
@@ -255,20 +294,24 @@ BOOL enableControlCenterSection;
 				[lspArtworkBackgroundImageView setImage:nil];
 				[hsArtworkBackgroundImageView setImage:nil];
 				[ccArtworkBackgroundImageView setImage:nil];
+				[ccmArtworkBackgroundImageView setImage:nil];
 			}
 		} else {
 			[lsArtworkBackgroundImageView setHidden:YES];
 			[lspArtworkBackgroundImageView setHidden:YES];
 			[hsArtworkBackgroundImageView setHidden:YES];
 			[ccArtworkBackgroundImageView setHidden:YES];
+			[ccmArtworkBackgroundImageView setHidden:YES];
 			[lsBlurView setHidden:YES];
 			[lspBlurView setHidden:YES];
 			[hsBlurView setHidden:YES];
+			[ccBlurView setHidden:YES];
 			currentArtwork = nil;
 			[lsArtworkBackgroundImageView setImage:nil];
 			[lspArtworkBackgroundImageView setImage:nil];
 			[hsArtworkBackgroundImageView setImage:nil];
 			[ccArtworkBackgroundImageView setImage:nil];
+			[ccmArtworkBackgroundImageView setImage:nil];
 		}
   	});
     
@@ -319,7 +362,7 @@ BOOL enableControlCenterSection;
 
 	%orig;
 
-	if (hideXenHTMLWidgetsSwitch && [[%c(SBMediaController) sharedInstance] isPlaying])
+	if (hideXenHTMLWidgetsSwitch && ([[%c(SBMediaController) sharedInstance] isPlaying] || [[%c(SBMediaController) sharedInstance] isPaused]))
 		[self setHidden:YES];
 
 }
@@ -356,14 +399,17 @@ BOOL enableControlCenterSection;
 		[preferences registerBool:&homescreenArtworkBackgroundSwitch default:NO forKey:@"homescreenArtworkBackground"];
 		[preferences registerObject:&homescreenArtworkBlurMode default:@"0" forKey:@"homescreenArtworkBlur"];
 		[preferences registerObject:&homescreenArtworkOpacityValue default:@"1.0" forKey:@"homescreenArtworkOpacity"];
-		[preferences registerBool:&coverEntireHomescreenSwitch default:YES forKey:@"coverEntireHomescreen"];
+		[preferences registerBool:&zoomedViewSwitch default:YES forKey:@"zoomedView"];
 	}
 
 	// Control Center
 	if (enableControlCenterSection) {
 		[preferences registerBool:&controlCenterArtworkBackgroundSwitch default:NO forKey:@"controlCenterArtworkBackground"];
+		[preferences registerObject:&controlCenterArtworkBlurMode default:@"0" forKey:@"controlCenterArtworkBlur"];
 		[preferences registerObject:&controlCenterArtworkOpacityValue default:@"1.0" forKey:@"controlCenterArtworkOpacity"];
-		[preferences registerObject:&controlCenterArtworkCornerRadiusValue default:@"20.0" forKey:@"controlCenterArtworkCornerRadius"];
+		[preferences registerBool:&controlCenterModuleArtworkBackgroundSwitch default:NO forKey:@"controlCenterModuleArtworkBackground"];
+		[preferences registerObject:&controlCenterModuleArtworkOpacityValue default:@"1.0" forKey:@"controlCenterModuleArtworkOpacity"];
+		[preferences registerObject:&controlCenterModuleArtworkCornerRadiusValue default:@"20.0" forKey:@"controlCenterModuleArtworkCornerRadius"];
 	}
 
 	if (enabled) {

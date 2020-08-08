@@ -87,9 +87,9 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>coverEntireHomescreen</string>
+			<string>zoomedView</string>
 			<key>label</key>
-			<string>Cover Entire Screen</string>
+			<string>Zoomed View</string>
 			<key>PostNotification</key>
 			<string>love.litten.violetpreferences/ReloadPrefs</string>
 		</dict>

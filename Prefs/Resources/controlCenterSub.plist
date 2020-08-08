@@ -5,11 +5,11 @@
 	<key>items</key>
 	<array>
 
-        <dict>
+		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Module Background</string>
+			<string>Background</string>
 		</dict>
         <dict>
 			<key>cell</key>
@@ -22,6 +22,34 @@
 			<string>controlCenterArtworkBackground</string>
 			<key>label</key>
 			<string>Artwork As Background</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>label</key>
+			<string>Blur:</string>
+			<key>key</key>
+			<string>controlCenterArtworkBlur</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>None</string>
+				<string>Light</string>
+				<string>Dark</string>
+			</array>
 			<key>PostNotification</key>
 			<string>love.litten.violetpreferences/ReloadPrefs</string>
 		</dict>
@@ -51,6 +79,53 @@
 			<key>PostNotification</key>
 			<string>love.litten.violetpreferences/ReloadPrefs</string>
 		</dict>
+
+        <dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Module Background</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>controlCenterModuleArtworkBackground</string>
+			<key>label</key>
+			<string>Artwork As Background</string>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Artwork Opacity</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>1.0</real>
+			<key>defaults</key>
+			<string>love.litten.violetpreferences</string>
+			<key>key</key>
+			<string>controlCenterModuleArtworkOpacity</string>
+			<key>min</key>
+			<real>0.0</real>
+			<key>max</key>
+			<real>1.0</real>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>love.litten.violetpreferences/ReloadPrefs</string>
+		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
@@ -65,7 +140,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>controlCenterArtworkCornerRadius</string>
+			<string>controlCenterModuleArtworkCornerRadius</string>
 			<key>min</key>
 			<real>0.0</real>
 			<key>max</key>
