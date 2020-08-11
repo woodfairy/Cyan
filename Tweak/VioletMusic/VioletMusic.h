@@ -37,6 +37,9 @@ BOOL hideQueueButtonSwitch = NO;
 - (void)setArtwork;
 @end
 
+@interface _TtCC16MusicApplication29NowPlayingQueueViewController14CollectionView : UIView
+@end
+
 @interface TimeControl : UISlider
 @end
 

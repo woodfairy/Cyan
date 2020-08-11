@@ -107,6 +107,30 @@ BOOL enableMusicApplicationSection;
 
 %end
 
+%hook QueueNextUpHeaderView
+
+- (void)layoutSubviews {
+
+	%orig;
+
+	[self setBackgroundColor:[UIColor clearColor]];
+
+}
+
+%end
+
+%hook QueueHistoryView
+
+- (void)layoutSubviews {
+
+	%orig;
+
+	[self setBackgroundColor:[UIColor clearColor]];
+
+}
+
+%end
+
 %hook ArtworkView
 
 - (void)didMoveToWindow { // hide artwork
@@ -216,7 +240,7 @@ BOOL enableMusicApplicationSection;
 	[preferences registerBool:&hideQueueButtonSwitch default:NO forKey:@"hideQueueButton"];
 
 	if (enabled) {
-		if (enableMusicApplicationSection) %init(VioletMusic, ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
+		if (enableMusicApplicationSection) %init(VioletMusic, QueueNextUpHeaderView=objc_getClass("MusicApplication.NowPlayingQueueHeaderView"), QueueHistoryView=objc_getClass("MusicApplication.NowPlayingHistoryHeaderView"), ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
 		return;
     }
 
