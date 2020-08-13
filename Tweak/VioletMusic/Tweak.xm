@@ -44,8 +44,8 @@ BOOL enableMusicApplicationSection;
 	[self setArtwork];
 
 	if (musicArtworkBackgroundSwitch) {
-		if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-		[musicArtworkBackgroundImageView setFrame:self.view.bounds];
+		if (!musicArtworkBackgroundImageView) musicArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
+		[musicArtworkBackgroundImageView setFrame:[[self view] bounds]];
 		[musicArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 		[musicArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 		[musicArtworkBackgroundImageView setHidden:NO];
@@ -59,7 +59,7 @@ BOOL enableMusicApplicationSection;
 				else if ([musicArtworkBlurMode intValue] == 2)
 					musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 				musicBlurView = [[UIVisualEffectView alloc] initWithEffect:musicBlur];
-				[musicBlurView setFrame:musicArtworkBackgroundImageView.bounds];
+				[musicBlurView setFrame:[musicArtworkBackgroundImageView bounds]];
 				[musicBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 				[musicBlurView setClipsToBounds:YES];
 				[musicArtworkBackgroundImageView addSubview:musicBlurView];

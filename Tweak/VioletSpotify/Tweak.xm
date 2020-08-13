@@ -34,7 +34,7 @@ BOOL enableSpotifyApplicationSection;
 	%orig;
 
 	if (!spotifyArtworkBackgroundSwitch) return;
-	if (!spotifyArtworkBackgroundImageView) spotifyArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	if (!spotifyArtworkBackgroundImageView) spotifyArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
 	[spotifyArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[spotifyArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[spotifyArtworkBackgroundImageView setHidden:NO];
@@ -48,7 +48,7 @@ BOOL enableSpotifyApplicationSection;
 			else if ([spotifyArtworkBlurMode intValue] == 2)
 				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 			spotifyBlurView = [[UIVisualEffectView alloc] initWithEffect:spotifyBlur];
-			[spotifyBlurView setFrame:spotifyArtworkBackgroundImageView.bounds];
+			[spotifyBlurView setFrame:[spotifyArtworkBackgroundImageView bounds]];
 			[spotifyBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[spotifyBlurView setClipsToBounds:YES];
 			[spotifyArtworkBackgroundImageView addSubview:spotifyBlurView];
@@ -76,7 +76,7 @@ BOOL enableSpotifyApplicationSection;
 
 %hook SPTNowPlayingCoverArtCell
 
-- (void)didMoveToWindow { // hide time slider
+- (void)didMoveToWindow { // hide artwork
 
 	%orig;
 
@@ -282,7 +282,7 @@ BOOL enableSpotifyApplicationSection;
 
 %hook SPTCanvasNowPlayingContentLayerCellCollectionViewCell
 
-- (void)didMoveToWindow { // hide song title, artist name, playlist title
+- (void)didMoveToWindow { // hide canvas
 
 	%orig;
 
