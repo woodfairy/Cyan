@@ -59,7 +59,8 @@ BOOL enableSpotifyApplicationSection;
 	if (![spotifyArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:0];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:@"violetUpdateArtwork" object:nil]; // add notification to dynamically change artwork
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
 
 }
 
@@ -73,17 +74,27 @@ BOOL enableSpotifyApplicationSection;
 
 %end
 
-// workaround as the media remote notification doesn't work in spotify for some reason
+%hook SPTNowPlayingCoverArtCell
 
-%hook SPTNowPlayingNextTrackButton
-
-- (void)touchesEnded:(id)arg1 withEvent:(id)arg2 {
+- (void)didMoveToWindow { // hide time slider
 
 	%orig;
 
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.7 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"violetUpdateArtwork" object:nil];
-    });
+	if (hideArtworkSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingNextTrackButton
+
+- (void)didMoveToWindow { // hide next track button
+
+	%orig;
+
+	if (hideNextTrackButtonSwitch)
+		[self setHidden:YES];
 
 }
 
@@ -91,13 +102,192 @@ BOOL enableSpotifyApplicationSection;
 
 %hook SPTNowPlayingPreviousTrackButton
 
-- (void)touchesEnded:(id)arg1 withEvent:(id)arg2 {
+- (void)didMoveToWindow { // hide previous track button
 
 	%orig;
 
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.7 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"violetUpdateArtwork" object:nil];
-    });
+	if (hidePreviousTrackButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingPlayButtonV2
+
+- (void)didMoveToWindow { // hide play/pause button
+
+	%orig;
+
+	if (hidePlayButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingShuffleButton
+
+- (void)didMoveToWindow { // hide shuffle button
+
+	%orig;
+
+	if (hideShuffleButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingRepeatButton
+
+- (void)didMoveToWindow { // hide repeat button
+
+	%orig;
+
+	if (hideRepeatButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTGaiaDevicesAvailableViewImplementation
+
+- (void)didMoveToWindow { // hide devices button
+
+	%orig;
+
+	if (hideDevicesButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingQueueButton
+
+- (void)didMoveToWindow { // hide queue button
+
+	%orig;
+
+	if (hideDevicesButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingSliderV2
+
+- (void)didMoveToWindow { // hide time slider
+
+	%orig;
+
+	if (hideTimeSliderSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingDurationViewV2
+
+- (void)didMoveToWindow { // hide remaining and elapsed time label
+
+	%orig;
+
+	if (hideRemainingTimeLabelSwitch) {
+		UILabel* remainingTimeLabel = MSHookIvar<UILabel *>(self, "_timeRemainingLabel");
+		[remainingTimeLabel setHidden:YES];
+	}
+
+	if (hideElapsedTimeLabelSwitch) {
+		UILabel* elapsedTimeLabel = MSHookIvar<UILabel *>(self, "_timeTakenLabel");
+		[elapsedTimeLabel setHidden:YES];
+	}
+
+}
+
+%end
+
+%hook SPTNowPlayingAnimatedLikeButton
+
+- (void)didMoveToWindow { // hide like button
+
+	%orig;
+
+	if (hideLikeButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingTitleButton
+
+- (void)didMoveToWindow { // hide back button
+
+	%orig;
+
+	if (hideBackButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTContextMenuAccessoryButton
+
+- (void)didMoveToWindow { // hide context button
+
+	%orig;
+
+	if (hideContextButtonSwitch)
+		[self setHidden:YES];
+
+}
+
+%end
+
+%hook SPTNowPlayingNavigationBarViewV2
+
+- (void)didMoveToWindow { // hide playlist title
+
+	%orig;
+
+	if (hidePlaylistTitleSwitch) {
+		SPTNowPlayingMarqueeLabel* title = MSHookIvar<SPTNowPlayingMarqueeLabel *>(self, "_titleLabel");
+		[title setHidden:YES];
+	}
+
+}
+
+%end
+
+%hook SPTNowPlayingMarqueeLabel
+
+- (void)didMoveToWindow { // hide song title, artist name, playlist title
+
+	%orig;
+
+	if (hideSongTitleSwitch) {
+		UILabel* songTitle = MSHookIvar<UILabel *>(self, "_label");
+		[songTitle setHidden:YES];
+	}
+
+}
+
+%end
+
+%hook SPTCanvasNowPlayingContentLayerCellCollectionViewCell
+
+- (void)didMoveToWindow { // hide song title, artist name, playlist title
+
+	%orig;
+
+	if (hideCanvasSwitch)
+		[self setHidden:YES];
 
 }
 
@@ -116,6 +306,23 @@ BOOL enableSpotifyApplicationSection;
 	[preferences registerBool:&spotifyArtworkBackgroundSwitch default:NO forKey:@"spotifyArtworkBackground"];
 	[preferences registerObject:&spotifyArtworkBlurMode default:@"0" forKey:@"spotifyArtworkBlur"];
 	[preferences registerObject:&spotifyArtworkOpacityValue default:@"1.0" forKey:@"spotifyArtworkOpacity"];
+	[preferences registerBool:&hideArtworkSwitch default:NO forKey:@"hideArtwork"];
+	[preferences registerBool:&hideNextTrackButtonSwitch default:NO forKey:@"hideNextTrackButton"];
+	[preferences registerBool:&hidePreviousTrackButtonSwitch default:NO forKey:@"hidePreviousTrackButton"];
+	[preferences registerBool:&hidePlayButtonSwitch default:NO forKey:@"hidePlayButton"];
+	[preferences registerBool:&hideShuffleButtonSwitch default:NO forKey:@"hideShuffleButton"];
+	[preferences registerBool:&hideRepeatButtonSwitch default:NO forKey:@"hideRepeatButton"];
+	[preferences registerBool:&hideDevicesButtonSwitch default:NO forKey:@"hideDevicesButton"];
+	[preferences registerBool:&hideQueueButtonSwitch default:NO forKey:@"hideQueueButton"];
+	[preferences registerBool:&hideSongTitleSwitch default:NO forKey:@"hideSongTitle"];
+	[preferences registerBool:&hideTimeSliderSwitch default:NO forKey:@"hideTimeSlider"];
+	[preferences registerBool:&hideRemainingTimeLabelSwitch default:NO forKey:@"hideRemainingTimeLabel"];
+	[preferences registerBool:&hideElapsedTimeLabelSwitch default:NO forKey:@"hideElapsedTimeLabel"];
+	[preferences registerBool:&hideLikeButtonSwitch default:NO forKey:@"hideLikeButton"];
+	[preferences registerBool:&hideBackButtonSwitch default:NO forKey:@"hideBackButton"];
+	[preferences registerBool:&hideContextButtonSwitch default:NO forKey:@"hideContextButton"];
+	[preferences registerBool:&hidePlaylistTitleSwitch default:NO forKey:@"hidePlaylistTitle"];
+	[preferences registerBool:&hideCanvasSwitch default:NO forKey:@"hideCanvas"];
 
 	if (enabled) {
 		if (enableSpotifyApplicationSection) %init(VioletSpotify);

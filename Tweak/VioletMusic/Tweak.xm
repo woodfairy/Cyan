@@ -109,7 +109,7 @@ BOOL enableMusicApplicationSection;
 
 %hook QueueNextUpHeaderView
 
-- (void)layoutSubviews {
+- (void)layoutSubviews { // hide next up header background
 
 	%orig;
 
@@ -121,7 +121,7 @@ BOOL enableMusicApplicationSection;
 
 %hook QueueHistoryView
 
-- (void)layoutSubviews {
+- (void)layoutSubviews { // hide history header background
 
 	%orig;
 
