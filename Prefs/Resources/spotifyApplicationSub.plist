@@ -94,7 +94,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideArtwork</string>
+			<string>spotifyHideArtwork</string>
 			<key>label</key>
 			<string>Hide Artwork</string>
 			<key>PostNotification</key>
@@ -108,7 +108,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideNextTrackButton</string>
+			<string>spotifyHideNextTrackButton</string>
 			<key>label</key>
 			<string>Hide Next Track Button</string>
 			<key>PostNotification</key>
@@ -122,7 +122,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hidePreviousTrackButton</string>
+			<string>spotifyHidePreviousTrackButton</string>
 			<key>label</key>
 			<string>Hide Previous Track Button</string>
 			<key>PostNotification</key>
@@ -136,7 +136,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hidePlayButton</string>
+			<string>spotifyHidePlayButton</string>
 			<key>label</key>
 			<string>Hide Play/Pause Button</string>
 			<key>PostNotification</key>
@@ -150,7 +150,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideShuffleButton</string>
+			<string>spotifyHideShuffleButton</string>
 			<key>label</key>
 			<string>Hide Shuffle Button</string>
 			<key>PostNotification</key>
@@ -164,7 +164,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideRepeatButton</string>
+			<string>spotifyHideRepeatButton</string>
 			<key>label</key>
 			<string>Hide Repeat Button</string>
 			<key>PostNotification</key>
@@ -178,7 +178,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideDevicesButton</string>
+			<string>spotifyHideDevicesButton</string>
 			<key>label</key>
 			<string>Hide Devices Button</string>
 			<key>PostNotification</key>
@@ -192,7 +192,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideQueueButton</string>
+			<string>spotifyHideQueueButton</string>
 			<key>label</key>
 			<string>Hide Queue Button</string>
 			<key>PostNotification</key>
@@ -206,7 +206,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideSongTitle</string>
+			<string>spotifyHideSongTitle</string>
 			<key>label</key>
 			<string>Hide Song Title, Artist Name, Playlist Title</string>
 			<key>PostNotification</key>
@@ -220,7 +220,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideTimeSlider</string>
+			<string>spotifyHideTimeSlider</string>
 			<key>label</key>
 			<string>Hide Time Slider</string>
 			<key>PostNotification</key>
@@ -234,7 +234,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideRemainingTimeLabel</string>
+			<string>spotifyHideRemainingTimeLabel</string>
 			<key>label</key>
 			<string>Hide Remaining Time Label</string>
 			<key>PostNotification</key>
@@ -248,7 +248,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideElapsedTimeLabel</string>
+			<string>spotifyHideElapsedTimeLabel</string>
 			<key>label</key>
 			<string>Hide Elapsed Time Label</string>
 			<key>PostNotification</key>
@@ -262,7 +262,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideLikeButton</string>
+			<string>spotifyHideLikeButton</string>
 			<key>label</key>
 			<string>Hide Like Button</string>
 			<key>PostNotification</key>
@@ -276,7 +276,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideBackButton</string>
+			<string>spotifyHideBackButton</string>
 			<key>label</key>
 			<string>Hide Back Button</string>
 			<key>PostNotification</key>
@@ -290,7 +290,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideContextButton</string>
+			<string>spotifyHideContextButton</string>
 			<key>label</key>
 			<string>Hide Context Button</string>
 			<key>PostNotification</key>
@@ -304,7 +304,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hidePlaylistTitle</string>
+			<string>spotifyHidePlaylistTitle</string>
 			<key>label</key>
 			<string>Hide Playlist Title</string>
 			<key>PostNotification</key>
@@ -318,7 +318,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideCanvas</string>
+			<string>spotifyHideCanvas</string>
 			<key>label</key>
 			<string>Hide Canvas</string>
 			<key>PostNotification</key>
