@@ -24,6 +24,7 @@ UIVisualEffectView* lspBlurView;
 UIBlurEffect* lspBlur;
 UIVisualEffectView* ccBlurView;
 UIBlurEffect* ccBlur;
+UIView* dimView;
 
 // Lockscreen
 BOOL lockscreenArtworkBackgroundSwitch = NO;
@@ -33,6 +34,7 @@ BOOL lockscreenPlayerArtworkBackgroundSwitch = NO;
 NSString* lockscreenPlayerArtworkBlurMode = @"0";
 NSString* lockscreenPlayerArtworkOpacityValue = @"1.0";
 NSString* lockscreenPlayerArtworkCornerRadiusValue = @"10.0";
+BOOL lockscreenArtworkDimSwitch = NO;
 BOOL hideLockscreenPlayerBackgroundSwitch = NO;
 BOOL roundLockScreenCompatibilitySwitch = NO;
 BOOL hideXenHTMLWidgetsSwitch = NO;

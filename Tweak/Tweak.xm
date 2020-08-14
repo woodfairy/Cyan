@@ -88,6 +88,19 @@ BOOL enableControlCenterSection;
 			[lspBlurView setHidden:NO];
 		}
 
+		if (lockscreenArtworkDimSwitch) {
+			if (!dimView) dimView = [[UIView alloc] init];
+			[dimView setFrame:[lspArtworkBackgroundImageView bounds]];
+			[lspBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+			[lspBlurView setClipsToBounds:YES];
+			[dimView setBackgroundColor:[UIColor blackColor]];
+			[dimView setAlpha:0.5];
+			[dimView setHidden:NO];
+
+			if (![dimView isDescendantOfView:lspArtworkBackgroundImageView])
+				[lspArtworkBackgroundImageView addSubview:dimView];
+		}
+
 		if (![lspArtworkBackgroundImageView isDescendantOfView:AdjunctItemView])
 			[AdjunctItemView insertSubview:lspArtworkBackgroundImageView atIndex:0];		
 	}
@@ -396,6 +409,7 @@ BOOL enableControlCenterSection;
 		[preferences registerObject:&lockscreenPlayerArtworkBlurMode default:@"0" forKey:@"lockscreenPlayerArtworkBlur"];
 		[preferences registerObject:&lockscreenPlayerArtworkOpacityValue default:@"1.0" forKey:@"lockscreenPlayerArtworkOpacity"];
 		[preferences registerObject:&lockscreenPlayerArtworkCornerRadiusValue default:@"10.0" forKey:@"lockscreenPlayerArtworkCornerRadius"];
+		[preferences registerBool:&lockscreenArtworkDimSwitch default:NO forKey:@"lockscreenArtworkDim"];
 		[preferences registerBool:&hideLockscreenPlayerBackgroundSwitch default:NO forKey:@"hideLockscreenPlayerBackground"];
 		[preferences registerBool:&roundLockScreenCompatibilitySwitch default:NO forKey:@"roundLockScreenCompatibility"];
 		[preferences registerBool:&hideXenHTMLWidgetsSwitch default:NO forKey:@"hideXenHTMLWidgets"];

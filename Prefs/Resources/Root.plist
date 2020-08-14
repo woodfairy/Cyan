@@ -151,25 +151,12 @@
 			<key>url</key>
 			<string>https://repo.litten.love/depictions/ava/</string>
 		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Nita</string>
-			<key>subtitle</key>
-			<string>Replace your carrier with a weather emoji</string>
-			<key>icon</key>
-			<string>Nita.png</string>
-			<key>url</key>
-			<string>https://repo.litten.love/depictions/nta/</string>
-		</dict>
 
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Violet By Litten
-Artworks By taki</string>
+			<string>Violet By Litten, Artworks By taki</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
@@ -177,11 +164,11 @@ Artworks By taki</string>
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Donate To Litten</string>
+			<string>Discord</string>
 			<key>subtitle</key>
-			<string>Appreciated 💝</string>
+			<string>Chat with us 👾</string>
 			<key>url</key>
-			<string>https://paypal.me/Litteeen</string>
+			<string>https://discord.com/invite/fPHN8KG</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -193,12 +180,22 @@ Artworks By taki</string>
 			<key>url</key>
 			<string>https://github.com/Litteeen/Violet</string>
 		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Donate To Litten</string>
+			<key>subtitle</key>
+			<string>Appreciated 💝</string>
+			<key>url</key>
+			<string>https://paypal.me/Litteeen</string>
+		</dict>
 
 		<dict>
 			<key>cell</key>
 			<key>PSGroupCell</key>
 			<key>footerText</key>
-			<string>Made With 💜</string>
+			<string>princess of daydreaming</string>
 			<key>isStaticText</key>
 			<true/>
 			<key>footerAlignment</key>
