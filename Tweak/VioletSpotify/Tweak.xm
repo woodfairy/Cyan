@@ -60,7 +60,7 @@ BOOL enableSpotifyApplicationSection;
 		[[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:0];
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:(__bridge NSString *)kMRMediaRemoteNowPlayingInfoDidChangeNotification object:nil]; // add notification to dynamically change artwork
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:@"Violet-setSpotifyArtwork" object:nil]; // add notification observer to dynamically change artwork
 
 }
 
@@ -288,6 +288,18 @@ BOOL enableSpotifyApplicationSection;
 
 	if (hideCanvasSwitch)
 		[self setHidden:YES];
+
+}
+
+%end
+
+%hook MPNowPlayingInfoCenter
+
+- (void)setNowPlayingInfo:(id)arg1 { // post notification to dynamically change artwork
+	
+	%orig;
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"Violet-setSpotifyArtwork" object:nil];
 
 }
 
