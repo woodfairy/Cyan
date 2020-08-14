@@ -98,7 +98,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideGrabberView</string>
+			<string>musicHideGrabberView</string>
 			<key>label</key>
 			<string>Hide Grabber</string>
 			<key>PostNotification</key>
@@ -112,7 +112,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideArtworkView</string>
+			<string>musicHideArtworkView</string>
 			<key>label</key>
 			<string>Hide Artwork</string>
 			<key>PostNotification</key>
@@ -126,7 +126,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideTitleLabel</string>
+			<string>musicHideTitleLabel</string>
 			<key>label</key>
 			<string>Hide Song Title</string>
 			<key>PostNotification</key>
@@ -140,7 +140,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideSubtitleButton</string>
+			<string>musicHideSubtitleButton</string>
 			<key>label</key>
 			<string>Hide Artist Button</string>
 			<key>PostNotification</key>
@@ -154,7 +154,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideContextualActionsButton</string>
+			<string>musicHideContextualActionsButton</string>
 			<key>label</key>
 			<string>Hide More Button</string>
 			<key>PostNotification</key>
@@ -168,7 +168,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideTimeControl</string>
+			<string>musicHideTimeControl</string>
 			<key>label</key>
 			<string>Hide Time Slider</string>
 			<key>PostNotification</key>
@@ -182,7 +182,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideKnobView</string>
+			<string>musicHideKnobView</string>
 			<key>label</key>
 			<string>Hide Time Slider Knob</string>
 			<key>PostNotification</key>
@@ -196,7 +196,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideElapsedTimeLabel</string>
+			<string>musicHideElapsedTimeLabel</string>
 			<key>label</key>
 			<string>Hide Elapsed Time Label</string>
 			<key>PostNotification</key>
@@ -210,7 +210,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideRemainingTimeLabel</string>
+			<string>musicHideRemainingTimeLabel</string>
 			<key>label</key>
 			<string>Hide Remaining Time Label</string>
 			<key>PostNotification</key>
@@ -224,7 +224,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideVolumeSlider</string>
+			<string>musicHideVolumeSlider</string>
 			<key>label</key>
 			<string>Hide Volume Slider</string>
 			<key>PostNotification</key>
@@ -238,7 +238,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideMinImage</string>
+			<string>musicHideMinImage</string>
 			<key>label</key>
 			<string>Hide Minimum Volume Image</string>
 			<key>PostNotification</key>
@@ -252,7 +252,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideMaxImage</string>
+			<string>musicHideMaxImage</string>
 			<key>label</key>
 			<string>Hide Maximum Volume Image</string>
 			<key>PostNotification</key>
@@ -266,7 +266,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideLyricsButton</string>
+			<string>musicHideLyricsButton</string>
 			<key>label</key>
 			<string>Hide Lyrics Button</string>
 			<key>PostNotification</key>
@@ -280,7 +280,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideRouteButton</string>
+			<string>musicHideRouteButton</string>
 			<key>label</key>
 			<string>Hide AirPlay Button</string>
 			<key>PostNotification</key>
@@ -294,7 +294,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideRouteLabel</string>
+			<string>musicHideRouteLabel</string>
 			<key>label</key>
 			<string>Hide AirPlay Label</string>
 			<key>PostNotification</key>
@@ -308,7 +308,7 @@
 			<key>defaults</key>
 			<string>love.litten.violetpreferences</string>
 			<key>key</key>
-			<string>hideQueueButton</string>
+			<string>musicHideQueueButton</string>
 			<key>label</key>
 			<string>Hide Queue Button</string>
 			<key>PostNotification</key>
