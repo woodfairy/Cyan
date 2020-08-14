@@ -270,8 +270,8 @@ BOOL enableControlCenterSection;
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
 		if (information) {
 			NSDictionary* dict = (__bridge NSDictionary *)information;
+			currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 				if (currentArtwork) {
 					if (lockscreenArtworkBackgroundSwitch) {
 						[lsArtworkBackgroundImageView setImage:currentArtwork];
@@ -296,13 +296,6 @@ BOOL enableControlCenterSection;
 						[ccmArtworkBackgroundImageView setImage:currentArtwork];
 					}
 				}
-			} else { // no artwork
-				currentArtwork = nil;
-				[lsArtworkBackgroundImageView setImage:nil];
-				[lspArtworkBackgroundImageView setImage:nil];
-				[hsArtworkBackgroundImageView setImage:nil];
-				[ccArtworkBackgroundImageView setImage:nil];
-				[ccmArtworkBackgroundImageView setImage:nil];
 			}
 		} else {
 			[lsArtworkBackgroundImageView setHidden:YES];
