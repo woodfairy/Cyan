@@ -47,7 +47,7 @@ BOOL enableControlCenterSection;
 
 %hook MRPlatterViewController
 
-- (void)viewDidLayoutSubviews { // add artwork background view
+- (void)viewDidAppear:(BOOL)animated { // add artwork background view
 
 	%orig;
 
