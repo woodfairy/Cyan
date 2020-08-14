@@ -107,6 +107,26 @@ BOOL enableMusicApplicationSection;
 
 %end
 
+%hook MusicLyricsBackgroundView
+
+-(void)setAlpha:(CGFloat)arg1 {
+	if (arg1 > 0) {
+		[UIView animateWithDuration:0.2 animations:^{
+      musicArtworkBackgroundImageView.alpha = 0;
+    }];
+		musicArtworkBackgroundImageView.hidden = YES;
+	} else {
+		theTransportView.superview.hidden = YES;
+		[UIView animateWithDuration:0.2 animations:^{
+      musicArtworkBackgroundImageView.alpha = 1;
+    }];
+		musicArtworkBackgroundImageView.hidden = NO;
+	}
+	%orig;
+}
+
+%end
+
 %hook QueueNextUpHeaderView
 
 - (void)layoutSubviews { // hide next up header background
