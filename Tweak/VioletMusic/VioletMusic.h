@@ -11,6 +11,7 @@ UIImage* currentArtwork;
 UIImageView* musicArtworkBackgroundImageView;
 UIVisualEffectView* musicBlurView;
 UIBlurEffect* musicBlur;
+UIView *theTransportView;
 
 // Music
 BOOL musicArtworkBackgroundSwitch = NO;
@@ -44,6 +45,9 @@ BOOL hideQueueButtonSwitch = NO;
 @end
 
 @interface ContextualActionsButton : UIButton
+@end
+
+@interface TransportView : UIView
 @end
 
 @interface _TtCC16MusicApplication32NowPlayingControlsViewController12VolumeSlider : UISlider

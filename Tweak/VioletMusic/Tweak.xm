@@ -105,6 +105,56 @@ BOOL enableMusicApplicationSection;
 
 }
 
+- (void)viewDidLayoutSubviews {
+
+	%orig;
+
+	UIView *bottomContainerView = MSHookIvar<UIView *>(self, "bottomContainerView");
+
+	[bottomContainerView setBackgroundColor:[UIColor clearColor]];
+
+}
+
+%end
+
+%hook MusicLyricsBackgroundView
+
+-(void)setAlpha:(CGFloat)arg1 {
+	if (arg1 > 0) {
+		[UIView animateWithDuration:0.2 animations:^{
+      musicArtworkBackgroundImageView.alpha = 0;
+    }];
+		musicArtworkBackgroundImageView.hidden = YES;
+	} else {
+		theTransportView.superview.hidden = YES;
+		[UIView animateWithDuration:0.2 animations:^{
+      musicArtworkBackgroundImageView.alpha = 1;
+    }];
+		musicArtworkBackgroundImageView.hidden = NO;
+	}
+	%orig;
+}
+
+%end
+
+%hook MusicLyricsBackgroundViewX
+
+-(void)setAlpha:(CGFloat)arg1 {
+	if (arg1 > 0) {
+		[UIView animateWithDuration:0.2 animations:^{
+      musicArtworkBackgroundImageView.alpha = 0;
+    }];
+		musicArtworkBackgroundImageView.hidden = YES;
+	} else {
+		theTransportView.superview.hidden = YES;
+		[UIView animateWithDuration:0.2 animations:^{
+      musicArtworkBackgroundImageView.alpha = 1;
+    }];
+		musicArtworkBackgroundImageView.hidden = NO;
+	}
+	%orig;
+}
+
 %end
 
 %hook QueueNextUpHeaderView
@@ -240,7 +290,7 @@ BOOL enableMusicApplicationSection;
 	[preferences registerBool:&hideQueueButtonSwitch default:NO forKey:@"musicHideQueueButton"];
 
 	if (enabled) {
-		if (enableMusicApplicationSection) %init(VioletMusic, QueueNextUpHeaderView=objc_getClass("MusicApplication.NowPlayingQueueHeaderView"), QueueHistoryView=objc_getClass("MusicApplication.NowPlayingHistoryHeaderView"), ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"));
+		if (enableMusicApplicationSection) %init(VioletMusic, QueueNextUpHeaderView=objc_getClass("MusicApplication.NowPlayingQueueHeaderView"), QueueHistoryView=objc_getClass("MusicApplication.NowPlayingHistoryHeaderView"), ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"), MusicLyricsBackgroundViewX=objc_getClass("MusicApplication.LyricsBackgroundView"));
 		return;
     }
 
