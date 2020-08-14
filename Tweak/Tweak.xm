@@ -145,7 +145,7 @@ BOOL enableControlCenterSection;
 
 	if (!homescreenArtworkBackgroundSwitch) return;
 	if (!hsArtworkBackgroundImageView) hsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
-	if (zoomedViewSwitch) [hsArtworkBackgroundImageView bounds] = CGRectInset([hsArtworkBackgroundImageView frame], -50, -50);
+	if (zoomedViewSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
 	[hsArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[hsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[hsArtworkBackgroundImageView setHidden:YES];

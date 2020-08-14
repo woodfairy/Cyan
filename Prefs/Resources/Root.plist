@@ -131,30 +131,6 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Nita</string>
-			<key>subtitle</key>
-			<string>Replace your carrier with a weather emoji</string>
-			<key>icon</key>
-			<string>Nita.png</string>
-			<key>url</key>
-			<string>https://repo.litten.love/depictions/nta/</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>Butterfly</string>
-			<key>subtitle</key>
-			<string>Text Selection, But Colorful</string>
-			<key>icon</key>
-			<string>Butterfly.png</string>
-			<key>url</key>
-			<string>https://repo.litten.love/depictions/bty/</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
 			<string>Dress</string>
 			<key>subtitle</key>
 			<string>Dress up your lockscreen</string>
@@ -162,6 +138,30 @@
 			<string>Dress.png</string>
 			<key>url</key>
 			<string>https://repo.litten.love/depictions/drs/</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Avrora</string>
+			<key>subtitle</key>
+			<string>Make some of your app labels useful</string>
+			<key>icon</key>
+			<string>Avrora.png</string>
+			<key>url</key>
+			<string>https://repo.litten.love/depictions/ava/</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Nita</string>
+			<key>subtitle</key>
+			<string>Replace your carrier with a weather emoji</string>
+			<key>icon</key>
+			<string>Nita.png</string>
+			<key>url</key>
+			<string>https://repo.litten.love/depictions/nta/</string>
 		</dict>
 
 		<dict>

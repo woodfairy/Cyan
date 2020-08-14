@@ -7,6 +7,18 @@ BOOL enableSpotifyApplicationSection;
 
 %group VioletSpotify
 
+%hook MPNowPlayingInfoCenter
+
+- (void)setNowPlayingInfo:(id)arg1 { // post notification to dynamically change artwork
+	
+	%orig;
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"Violet-setSpotifyArtwork" object:nil];
+
+}
+
+%end
+
 %hook SPTNowPlayingViewController
 
 %new
@@ -288,18 +300,6 @@ BOOL enableSpotifyApplicationSection;
 
 	if (hideCanvasSwitch)
 		[self setHidden:YES];
-
-}
-
-%end
-
-%hook MPNowPlayingInfoCenter
-
-- (void)setNowPlayingInfo:(id)arg1 { // post notification to dynamically change artwork
-	
-	%orig;
-
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"Violet-setSpotifyArtwork" object:nil];
 
 }
 
