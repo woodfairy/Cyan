@@ -105,11 +105,11 @@ BOOL enableMusicApplicationSection;
 
 }
 
-- (void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews { // hide controls view background color
 
 	%orig;
 
-	UIView *bottomContainerView = MSHookIvar<UIView *>(self, "bottomContainerView");
+	UIView* bottomContainerView = MSHookIvar<UIView *>(self, "bottomContainerView");
 
 	[bottomContainerView setBackgroundColor:[UIColor clearColor]];
 
@@ -119,63 +119,65 @@ BOOL enableMusicApplicationSection;
 
 %hook MusicLyricsBackgroundView
 
--(void)setAlpha:(CGFloat)arg1 {
-	if (arg1 > 0) {
+- (void)setAlpha:(CGFloat)alpha { // hide violet when lyrics view is enabled - iOS >= 13.4
+
+	if (alpha > 0) {
 		[UIView animateWithDuration:0.2 animations:^{
-      musicArtworkBackgroundImageView.alpha = 0;
-    }];
-		musicArtworkBackgroundImageView.hidden = YES;
+    		[musicArtworkBackgroundImageView setAlpha:0.0];
+    	}];
+		[musicArtworkBackgroundImageView setHidden:YES];
 	} else {
-		theTransportView.superview.hidden = YES;
+		[[theTransportView superview] setHidden:YES];
 		[UIView animateWithDuration:0.2 animations:^{
-      musicArtworkBackgroundImageView.alpha = 1;
-    }];
-		musicArtworkBackgroundImageView.hidden = NO;
+			[musicArtworkBackgroundImageView setAlpha:1.0];
+    	}];
+		[musicArtworkBackgroundImageView setHidden:NO];
 	}
+
 	%orig;
+
 }
 
 %end
 
 %hook MusicLyricsBackgroundViewX
 
--(void)setAlpha:(CGFloat)arg1 {
-	if (arg1 > 0) {
+- (void)setAlpha:(CGFloat)alpha { // hide violet when lyrics view is enabled - iOS < 13.4
+
+	if (alpha > 0) {
 		[UIView animateWithDuration:0.2 animations:^{
-      musicArtworkBackgroundImageView.alpha = 0;
-    }];
-		musicArtworkBackgroundImageView.hidden = YES;
+      		[musicArtworkBackgroundImageView setAlpha:0.0];
+    	}];
+		[musicArtworkBackgroundImageView setHidden:YES];
 	} else {
-		theTransportView.superview.hidden = YES;
+		[[theTransportView superview] setHidden:YES];
 		[UIView animateWithDuration:0.2 animations:^{
-      musicArtworkBackgroundImageView.alpha = 1;
-    }];
-		musicArtworkBackgroundImageView.hidden = NO;
+      		[musicArtworkBackgroundImageView setAlpha:1.0];
+    	}];
+		[musicArtworkBackgroundImageView setHidden:NO];
 	}
-	%orig;
-}
-
-%end
-
-%hook QueueNextUpHeaderView
-
-- (void)layoutSubviews { // hide next up header background
 
 	%orig;
-
-	[self setBackgroundColor:[UIColor clearColor]];
 
 }
 
 %end
 
-%hook QueueHistoryView
+%hook QueueViewController
 
-- (void)layoutSubviews { // hide history header background
+- (void)viewWillAppear:(BOOL)animated {
 
 	%orig;
 
-	[self setBackgroundColor:[UIColor clearColor]];
+	[musicArtworkBackgroundImageView setHidden:YES];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+
+	%orig;
+
+	[musicArtworkBackgroundImageView setHidden:NO];
 
 }
 
@@ -290,7 +292,7 @@ BOOL enableMusicApplicationSection;
 	[preferences registerBool:&hideQueueButtonSwitch default:NO forKey:@"musicHideQueueButton"];
 
 	if (enabled) {
-		if (enableMusicApplicationSection) %init(VioletMusic, QueueNextUpHeaderView=objc_getClass("MusicApplication.NowPlayingQueueHeaderView"), QueueHistoryView=objc_getClass("MusicApplication.NowPlayingHistoryHeaderView"), ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"), MusicLyricsBackgroundViewX=objc_getClass("MusicApplication.LyricsBackgroundView"));
+		if (enableMusicApplicationSection) %init(VioletMusic, QueueViewController=objc_getClass("MusicApplication.NowPlayingQueueViewController"), ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"), MusicLyricsBackgroundViewX=objc_getClass("MusicApplication.LyricsBackgroundView"));
 		return;
     }
 

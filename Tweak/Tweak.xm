@@ -47,7 +47,7 @@ BOOL enableControlCenterSection;
 
 %hook MRPlatterViewController
 
-- (void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews { // add artwork background view
 
 	%orig;
 
@@ -130,6 +130,12 @@ BOOL enableControlCenterSection;
 	[MTLayer mt_setColorMatrixDrivenOpacity:1 removingIfIdentity:false];
 
 }
+
+%end
+
+%hook CSAdjunctItemView
+
+
 
 %end
 
@@ -328,7 +334,7 @@ BOOL enableControlCenterSection;
 
 %hook CSCoverSheetViewController
 
-- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility and xen html notification
+- (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
 
 	%orig;
 
