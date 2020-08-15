@@ -41,7 +41,7 @@ UIVisualEffectView* blurView;
 
     blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
     blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
-    [blurView setFrame:self.view.bounds];
+    [blurView setFrame:[[self view] bounds]];
     [blurView setAlpha:1.0];
     [[self view] addSubview:blurView];
 
