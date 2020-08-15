@@ -11,11 +11,14 @@ UIImage* currentArtwork;
 UIImageView* spotifyArtworkBackgroundImageView;
 UIVisualEffectView* spotifyBlurView;
 UIBlurEffect* spotifyBlur;
+UIView* spotifyDimView;
 
 // Spotify
 BOOL spotifyArtworkBackgroundSwitch = NO;
 NSString* spotifyArtworkBlurMode = @"0";
+NSString* spotifyArtworkBlurAmountValue = @"1.0";
 NSString* spotifyArtworkOpacityValue = @"1.0";
+NSString* spotifyArtworkDimValue = @"0.0";
 BOOL hideArtworkSwitch = NO;
 BOOL hideNextTrackButtonSwitch = NO;
 BOOL hidePreviousTrackButtonSwitch = NO;

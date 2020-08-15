@@ -27,7 +27,7 @@ UIVisualEffectView* blurView;
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,10,10)];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.titleLabel.text = @"1.0.1";
+        self.titleLabel.text = @"1.1";
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.navigationItem.titleView addSubview:self.titleLabel];
@@ -206,11 +206,11 @@ UIVisualEffectView* blurView;
 	message:@"Do You Really Want To Reset Your Preferences?"
 	preferredStyle:UIAlertControllerStyleActionSheet];
 	
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Yep" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Yaw" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
         [self resetPreferences];
 	}];
 
-	UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Nope" style:UIAlertActionStyleCancel handler:nil];
+	UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Naw" style:UIAlertActionStyleCancel handler:nil];
 
 	[resetAlert addAction:confirmAction];
 	[resetAlert addAction:cancelAction];
@@ -227,7 +227,7 @@ UIVisualEffectView* blurView;
 
     }
     
-    [self.enableSwitch setOn:NO animated: YES];
+    [[self enableSwitch] setOn:NO animated: YES];
     [self respring];
 
 }

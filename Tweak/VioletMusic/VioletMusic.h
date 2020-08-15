@@ -11,12 +11,16 @@ UIImage* currentArtwork;
 UIImageView* musicArtworkBackgroundImageView;
 UIVisualEffectView* musicBlurView;
 UIBlurEffect* musicBlur;
-UIView *theTransportView;
+UIView* musicDimView;
+
+UIView* theTransportView;
 
 // Music
 BOOL musicArtworkBackgroundSwitch = NO;
 NSString* musicArtworkBlurMode = @"0";
+NSString* musicArtworkBlurAmountValue = @"1.0";
 NSString* musicArtworkOpacityValue = @"1.0";
+NSString* musicArtworkDimValue = @"0.0";
 BOOL hideGrabberViewSwitch = NO;
 BOOL hideArtworkViewSwitch = NO;
 BOOL hideTimeControlSwitch = NO;

@@ -58,13 +58,29 @@ BOOL enableMusicApplicationSection;
 					musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 				else if ([musicArtworkBlurMode intValue] == 2)
 					musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+				else if ([musicArtworkBlurMode intValue] == 3)
+					musicBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 				musicBlurView = [[UIVisualEffectView alloc] initWithEffect:musicBlur];
 				[musicBlurView setFrame:[musicArtworkBackgroundImageView bounds]];
 				[musicBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 				[musicBlurView setClipsToBounds:YES];
+				[musicBlurView setAlpha:[musicArtworkBlurAmountValue doubleValue]];
 				[musicArtworkBackgroundImageView addSubview:musicBlurView];
 			}
 			[musicBlurView setHidden:NO];
+		}
+
+		if ([musicArtworkDimValue doubleValue] != 0.0) {
+			if (!musicDimView) musicDimView = [[UIView alloc] init];
+			[musicDimView setFrame:[musicArtworkBackgroundImageView bounds]];
+			[musicDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+			[musicDimView setClipsToBounds:YES];
+			[musicDimView setBackgroundColor:[UIColor blackColor]];
+			[musicDimView setAlpha:[musicArtworkDimValue doubleValue]];
+			[musicDimView setHidden:NO];
+
+			if (![musicDimView isDescendantOfView:musicArtworkBackgroundImageView])
+				[musicArtworkBackgroundImageView addSubview:musicDimView];
 		}
 
 		if (![musicArtworkBackgroundImageView isDescendantOfView:[self view]])
@@ -273,7 +289,9 @@ BOOL enableMusicApplicationSection;
 	// Music
 	[preferences registerBool:&musicArtworkBackgroundSwitch default:NO forKey:@"musicArtworkBackground"];
 	[preferences registerObject:&musicArtworkBlurMode default:@"0" forKey:@"musicArtworkBlur"];
+	[preferences registerObject:&musicArtworkBlurAmountValue default:@"1.0" forKey:@"musicArtworkBlurAmount"];
 	[preferences registerObject:&musicArtworkOpacityValue default:@"1.0" forKey:@"musicArtworkOpacity"];
+	[preferences registerObject:&musicArtworkDimValue default:@"0.0" forKey:@"musicArtworkDim"];
 	[preferences registerBool:&hideGrabberViewSwitch default:NO forKey:@"musicHideGrabberView"];
 	[preferences registerBool:&hideArtworkViewSwitch default:NO forKey:@"musicHideArtworkView"];
 	[preferences registerBool:&hideTimeControlSwitch default:NO forKey:@"musicHideTimeControl"];

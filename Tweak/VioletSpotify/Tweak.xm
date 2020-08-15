@@ -59,13 +59,29 @@ BOOL enableSpotifyApplicationSection;
 				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 			else if ([spotifyArtworkBlurMode intValue] == 2)
 				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			else if ([spotifyArtworkBlurMode intValue] == 3)
+				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 			spotifyBlurView = [[UIVisualEffectView alloc] initWithEffect:spotifyBlur];
 			[spotifyBlurView setFrame:[spotifyArtworkBackgroundImageView bounds]];
 			[spotifyBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[spotifyBlurView setClipsToBounds:YES];
+			[spotifyBlurView setAlpha:[spotifyArtworkBlurAmountValue doubleValue]];
 			[spotifyArtworkBackgroundImageView addSubview:spotifyBlurView];
 		}
 		[spotifyBlurView setHidden:NO];
+	}
+
+	if ([spotifyArtworkDimValue doubleValue] != 0.0) {
+		if (!spotifyDimView) spotifyDimView = [[UIView alloc] init];
+		[spotifyDimView setFrame:[spotifyArtworkBackgroundImageView bounds]];
+		[spotifyDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[spotifyDimView setClipsToBounds:YES];
+		[spotifyDimView setBackgroundColor:[UIColor blackColor]];
+		[spotifyDimView setAlpha:[spotifyArtworkDimValue doubleValue]];
+		[spotifyDimView setHidden:NO];
+
+		if (![spotifyDimView isDescendantOfView:spotifyArtworkBackgroundImageView])
+			[spotifyArtworkBackgroundImageView addSubview:spotifyDimView];
 	}
 
 	if (![spotifyArtworkBackgroundImageView isDescendantOfView:[self view]])
@@ -317,7 +333,9 @@ BOOL enableSpotifyApplicationSection;
 	// Spotify
 	[preferences registerBool:&spotifyArtworkBackgroundSwitch default:NO forKey:@"spotifyArtworkBackground"];
 	[preferences registerObject:&spotifyArtworkBlurMode default:@"0" forKey:@"spotifyArtworkBlur"];
+	[preferences registerObject:&spotifyArtworkBlurAmountValue default:@"1.0" forKey:@"spotifyArtworkBlurAmount"];
 	[preferences registerObject:&spotifyArtworkOpacityValue default:@"1.0" forKey:@"spotifyArtworkOpacity"];
+	[preferences registerObject:&spotifyArtworkDimValue default:@"0.0" forKey:@"spotifyArtworkDim"];
 	[preferences registerBool:&hideArtworkSwitch default:NO forKey:@"spotifyHideArtwork"];
 	[preferences registerBool:&hideNextTrackButtonSwitch default:NO forKey:@"spotifyHideNextTrackButton"];
 	[preferences registerBool:&hidePreviousTrackButtonSwitch default:NO forKey:@"spotifyHidePreviousTrackButton"];

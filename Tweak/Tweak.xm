@@ -29,13 +29,29 @@ BOOL enableControlCenterSection;
 				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 			else if ([lockscreenArtworkBlurMode intValue] == 2)
 				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			else if ([lockscreenArtworkBlurMode intValue] == 3)
+				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 			lsBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
 			[lsBlurView setFrame:[lsArtworkBackgroundImageView bounds]];
 			[lsBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[lsBlurView setClipsToBounds:YES];
+			[lsBlurView setAlpha:[lockscreenArtworkBlurAmountValue doubleValue]];
 			[lsArtworkBackgroundImageView addSubview:lsBlurView];
 		}
 		[lsBlurView setHidden:NO];
+	}
+
+	if ([lockscreenArtworkDimValue doubleValue] != 0.0) {
+		if (!lsDimView) lsDimView = [[UIView alloc] init];
+		[lsDimView setFrame:[lsArtworkBackgroundImageView bounds]];
+		[lsDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[lsDimView setClipsToBounds:YES];
+		[lsDimView setBackgroundColor:[UIColor blackColor]];
+		[lsDimView setAlpha:[lockscreenArtworkDimValue doubleValue]];
+		[lsDimView setHidden:NO];
+
+		if (![lsDimView isDescendantOfView:lsArtworkBackgroundImageView])
+			[lsArtworkBackgroundImageView addSubview:lsDimView];
 	}
 
 	if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]])
@@ -60,8 +76,10 @@ BOOL enableControlCenterSection;
 		}
 
 		if (!lockscreenPlayerArtworkBackgroundSwitch) return;
-		if (currentArtwork) [self clearMaterialViewBackground];
-		else [self setMaterialViewBackground];
+		if (currentArtwork)
+			[self clearMaterialViewBackground];
+		else
+			[self setMaterialViewBackground];
 		if (!lspArtworkBackgroundImageView) {
 			lspArtworkBackgroundImageView = [[UIImageView alloc] init];
 			[lspArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
@@ -79,26 +97,29 @@ BOOL enableControlCenterSection;
 					lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 				else if ([lockscreenPlayerArtworkBlurMode intValue] == 2)
 					lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+				else if ([lockscreenPlayerArtworkBlurMode intValue] == 3)
+					lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 				lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
 				[lspBlurView setFrame:[lspArtworkBackgroundImageView bounds]];
 				[lspBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 				[lspBlurView setClipsToBounds:YES];
+				[lspBlurView setAlpha:[lockscreenPlayerArtworkBlurAmountValue doubleValue]];
 				[lspArtworkBackgroundImageView addSubview:lspBlurView];
 			}
 			[lspBlurView setHidden:NO];
 		}
 
-		if (lockscreenArtworkDimSwitch) {
-			if (!dimView) dimView = [[UIView alloc] init];
-			[dimView setFrame:[lspArtworkBackgroundImageView bounds]];
-			[lspBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			[lspBlurView setClipsToBounds:YES];
-			[dimView setBackgroundColor:[UIColor blackColor]];
-			[dimView setAlpha:0.5];
-			[dimView setHidden:NO];
+		if ([lockscreenPlayerArtworkDimValue doubleValue] != 0.0) {
+			if (!lspDimView) lspDimView = [[UIView alloc] init];
+			[lspDimView setFrame:[lspArtworkBackgroundImageView bounds]];
+			[lspDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+			[lspDimView setClipsToBounds:YES];
+			[lspDimView setBackgroundColor:[UIColor blackColor]];
+			[lspDimView setAlpha:[lockscreenPlayerArtworkDimValue doubleValue]];
+			[lspDimView setHidden:NO];
 
-			if (![dimView isDescendantOfView:lspArtworkBackgroundImageView])
-				[lspArtworkBackgroundImageView addSubview:dimView];
+			if (![lspDimView isDescendantOfView:lspArtworkBackgroundImageView])
+				[lspArtworkBackgroundImageView addSubview:lspDimView];
 		}
 
 		if (![lspArtworkBackgroundImageView isDescendantOfView:AdjunctItemView])
@@ -146,12 +167,6 @@ BOOL enableControlCenterSection;
 
 %end
 
-%hook CSAdjunctItemView
-
-
-
-%end
-
 %end
 
 %group VioletHomescreen
@@ -177,13 +192,29 @@ BOOL enableControlCenterSection;
 				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 			else if ([homescreenArtworkBlurMode intValue] == 2)
 				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			else if ([homescreenArtworkBlurMode intValue] == 3)
+				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 			hsBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
 			[hsBlurView setFrame:[hsArtworkBackgroundImageView bounds]];
 			[hsBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[hsBlurView setClipsToBounds:YES];
+			[hsBlurView setAlpha:[homescreenArtworkBlurAmountValue doubleValue]];
 			[hsArtworkBackgroundImageView addSubview:hsBlurView];
 		}
 		[hsBlurView setHidden:NO];
+	}
+
+	if ([homescreenArtworkDimValue doubleValue] != 0.0) {
+		if (!hsDimView) hsDimView = [[UIView alloc] init];
+		[hsDimView setFrame:[hsArtworkBackgroundImageView bounds]];
+		[hsDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[hsDimView setClipsToBounds:YES];
+		[hsDimView setBackgroundColor:[UIColor blackColor]];
+		[hsDimView setAlpha:[homescreenArtworkDimValue doubleValue]];
+		[hsDimView setHidden:NO];
+
+		if (![hsDimView isDescendantOfView:hsArtworkBackgroundImageView])
+			[hsArtworkBackgroundImageView addSubview:hsDimView];
 	}
 
 	if (![hsArtworkBackgroundImageView isDescendantOfView:[self view]])
@@ -217,13 +248,29 @@ BOOL enableControlCenterSection;
 				ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
 			else if ([controlCenterArtworkBlurMode intValue] == 2)
 				ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			else if ([controlCenterArtworkBlurMode intValue] == 3)
+				ccBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 			ccBlurView = [[UIVisualEffectView alloc] initWithEffect:ccBlur];
 			[ccBlurView setFrame:[ccArtworkBackgroundImageView bounds]];
 			[ccBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[ccBlurView setClipsToBounds:YES];
+			[ccBlurView setAlpha:[controlCenterArtworkBlurAmountValue doubleValue]];
 			[ccArtworkBackgroundImageView addSubview:ccBlurView];
 		}
 		[ccBlurView setHidden:NO];
+	}
+
+	if ([controlCenterArtworkDimValue doubleValue] != 0.0) {
+		if (!ccDimView) ccDimView = [[UIView alloc] init];
+		[ccDimView setFrame:[ccArtworkBackgroundImageView bounds]];
+		[ccDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[ccDimView setClipsToBounds:YES];
+		[ccDimView setBackgroundColor:[UIColor blackColor]];
+		[ccDimView setAlpha:[controlCenterArtworkDimValue doubleValue]];
+		[ccDimView setHidden:NO];
+
+		if (![ccDimView isDescendantOfView:ccArtworkBackgroundImageView])
+			[ccArtworkBackgroundImageView addSubview:ccDimView];
 	}
 
 	if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
@@ -404,12 +451,15 @@ BOOL enableControlCenterSection;
 	if (enableLockscreenSection) {
 		[preferences registerBool:&lockscreenArtworkBackgroundSwitch default:NO forKey:@"lockscreenArtworkBackground"];
 		[preferences registerObject:&lockscreenArtworkBlurMode default:@"0" forKey:@"lockscreenArtworkBlur"];
+		[preferences registerObject:&lockscreenArtworkBlurAmountValue default:@"1.0" forKey:@"lockscreenArtworkBlurAmount"];
 		[preferences registerObject:&lockscreenArtworkOpacityValue default:@"1.0" forKey:@"lockscreenArtworkOpacity"];
+		[preferences registerObject:&lockscreenArtworkDimValue default:@"0.0" forKey:@"lockscreenArtworkDim"];
 		[preferences registerBool:&lockscreenPlayerArtworkBackgroundSwitch default:NO forKey:@"lockscreenPlayerArtworkBackground"];
 		[preferences registerObject:&lockscreenPlayerArtworkBlurMode default:@"0" forKey:@"lockscreenPlayerArtworkBlur"];
+		[preferences registerObject:&lockscreenPlayerArtworkBlurAmountValue default:@"1.0" forKey:@"lockscreenPlayerArtworkBlurAmount"];
 		[preferences registerObject:&lockscreenPlayerArtworkOpacityValue default:@"1.0" forKey:@"lockscreenPlayerArtworkOpacity"];
 		[preferences registerObject:&lockscreenPlayerArtworkCornerRadiusValue default:@"10.0" forKey:@"lockscreenPlayerArtworkCornerRadius"];
-		[preferences registerBool:&lockscreenArtworkDimSwitch default:NO forKey:@"lockscreenArtworkDim"];
+		[preferences registerObject:&lockscreenPlayerArtworkDimValue default:@"0.0" forKey:@"lockscreenPlayerArtworkDim"];
 		[preferences registerBool:&hideLockscreenPlayerBackgroundSwitch default:NO forKey:@"hideLockscreenPlayerBackground"];
 		[preferences registerBool:&roundLockScreenCompatibilitySwitch default:NO forKey:@"roundLockScreenCompatibility"];
 		[preferences registerBool:&hideXenHTMLWidgetsSwitch default:NO forKey:@"hideXenHTMLWidgets"];
@@ -419,7 +469,9 @@ BOOL enableControlCenterSection;
 	if (enableHomescreenSection) {
 		[preferences registerBool:&homescreenArtworkBackgroundSwitch default:NO forKey:@"homescreenArtworkBackground"];
 		[preferences registerObject:&homescreenArtworkBlurMode default:@"0" forKey:@"homescreenArtworkBlur"];
+		[preferences registerObject:&homescreenArtworkBlurAmountValue default:@"1.0" forKey:@"homescreenArtworkBlurAmount"];
 		[preferences registerObject:&homescreenArtworkOpacityValue default:@"1.0" forKey:@"homescreenArtworkOpacity"];
+		[preferences registerObject:&homescreenArtworkDimValue default:@"0.0" forKey:@"homescreenArtworkDim"];
 		[preferences registerBool:&zoomedViewSwitch default:YES forKey:@"zoomedView"];
 	}
 
@@ -427,7 +479,9 @@ BOOL enableControlCenterSection;
 	if (enableControlCenterSection) {
 		[preferences registerBool:&controlCenterArtworkBackgroundSwitch default:NO forKey:@"controlCenterArtworkBackground"];
 		[preferences registerObject:&controlCenterArtworkBlurMode default:@"0" forKey:@"controlCenterArtworkBlur"];
+		[preferences registerObject:&controlCenterArtworkBlurAmountValue default:@"1.0" forKey:@"controlCenterArtworkBlurAmount"];
 		[preferences registerObject:&controlCenterArtworkOpacityValue default:@"1.0" forKey:@"controlCenterArtworkOpacity"];
+		[preferences registerObject:&controlCenterArtworkDimValue default:@"0.0" forKey:@"controlCenterArtworkDim"];
 		[preferences registerBool:&controlCenterModuleArtworkBackgroundSwitch default:NO forKey:@"controlCenterModuleArtworkBackground"];
 		[preferences registerObject:&controlCenterModuleArtworkOpacityValue default:@"1.0" forKey:@"controlCenterModuleArtworkOpacity"];
 		[preferences registerObject:&controlCenterModuleArtworkCornerRadiusValue default:@"20.0" forKey:@"controlCenterModuleArtworkCornerRadius"];
