@@ -24,10 +24,13 @@ UIVisualEffectView* hsBlurView;
 UIBlurEffect* hsBlur;
 UIVisualEffectView* ccBlurView;
 UIBlurEffect* ccBlur;
+UIVisualEffectView* ccmBlurView;
+UIBlurEffect* ccmBlur;
 UIView* lsDimView;
 UIView* lspDimView;
 UIView* hsDimView;
 UIView* ccDimView;
+UIView* ccmDimView;
 
 // Lockscreen
 BOOL lockscreenArtworkBackgroundSwitch = NO;
@@ -60,7 +63,10 @@ NSString* controlCenterArtworkBlurAmountValue = @"1.0";
 NSString* controlCenterArtworkOpacityValue = @"1.0";
 NSString* controlCenterArtworkDimValue = @"1.0";
 BOOL controlCenterModuleArtworkBackgroundSwitch = NO;
+NSString* controlCenterModuleArtworkBlurMode = @"0";
+NSString* controlCenterModuleArtworkBlurAmountValue = @"1.0";
 NSString* controlCenterModuleArtworkOpacityValue = @"1.0";
+NSString* controlCenterModuleArtworkDimValue = @"1.0";
 NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 @interface CSCoverSheetViewController : UIViewController

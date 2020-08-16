@@ -4,7 +4,6 @@
 #import <CepheiPrefs/HBAppearanceSettings.h>
 #import <Cephei/HBPreferences.h>
 #import <Cephei/HBRespringController.h>
-// #import "../Tweak/Violet.h"
 #import <spawn.h>
 #import <MediaRemote/MediaRemote.h>
 

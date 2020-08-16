@@ -304,6 +304,37 @@ BOOL enableControlCenterSection;
 		[[ccmArtworkBackgroundImageView layer] setCornerRadius:[controlCenterModuleArtworkCornerRadiusValue doubleValue]];
 		[ccmArtworkBackgroundImageView setImage:currentArtwork];
 
+		if ([controlCenterModuleArtworkBlurMode intValue] != 0) {
+			if (!ccmBlur) {
+				if ([controlCenterModuleArtworkBlurMode intValue] == 1)
+					ccmBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+				else if ([controlCenterModuleArtworkBlurMode intValue] == 2)
+					ccmBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+				else if ([controlCenterModuleArtworkBlurMode intValue] == 3)
+					ccmBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+				ccmBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
+				[ccmBlurView setFrame:[ccmArtworkBackgroundImageView bounds]];
+				[ccmBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+				[ccmBlurView setClipsToBounds:YES];
+				[ccmBlurView setAlpha:[controlCenterModuleArtworkBlurAmountValue doubleValue]];
+				[ccmArtworkBackgroundImageView addSubview:ccmBlurView];
+			}
+			[ccmBlurView setHidden:NO];
+		}
+
+		if ([controlCenterModuleArtworkDimValue doubleValue] != 0.0) {
+			if (!ccmDimView) ccmDimView = [[UIView alloc] init];
+			[ccmDimView setFrame:[ccmArtworkBackgroundImageView bounds]];
+			[ccmDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+			[ccmDimView setClipsToBounds:YES];
+			[ccmDimView setBackgroundColor:[UIColor blackColor]];
+			[ccmDimView setAlpha:[controlCenterModuleArtworkDimValue doubleValue]];
+			[ccmDimView setHidden:NO];
+
+			if (![ccmDimView isDescendantOfView:ccmArtworkBackgroundImageView])
+				[ccmArtworkBackgroundImageView addSubview:ccmDimView];
+		}
+
 		if (![ccmArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccmArtworkBackgroundImageView atIndex:0];
 	}
@@ -483,7 +514,10 @@ BOOL enableControlCenterSection;
 		[preferences registerObject:&controlCenterArtworkOpacityValue default:@"1.0" forKey:@"controlCenterArtworkOpacity"];
 		[preferences registerObject:&controlCenterArtworkDimValue default:@"0.0" forKey:@"controlCenterArtworkDim"];
 		[preferences registerBool:&controlCenterModuleArtworkBackgroundSwitch default:NO forKey:@"controlCenterModuleArtworkBackground"];
+		[preferences registerObject:&controlCenterModuleArtworkBlurMode default:@"0" forKey:@"controlCenterModuleArtworkBlur"];
+		[preferences registerObject:&controlCenterModuleArtworkBlurAmountValue default:@"1.0" forKey:@"controlCenterModuleArtworkBlurAmount"];
 		[preferences registerObject:&controlCenterModuleArtworkOpacityValue default:@"1.0" forKey:@"controlCenterModuleArtworkOpacity"];
+		[preferences registerObject:&controlCenterModuleArtworkDimValue default:@"0.0" forKey:@"controlCenterModuleArtworkDim"];
 		[preferences registerObject:&controlCenterModuleArtworkCornerRadiusValue default:@"20.0" forKey:@"controlCenterModuleArtworkCornerRadius"];
 	}
 

@@ -84,7 +84,7 @@ UIImageView* artworkBackgroundImageView;
     ]];
 
     _table.tableHeaderView = self.headerView;
-/
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
