@@ -1,4 +1,5 @@
-#import "Violet.h"
+#import "Cyan.h"
+#import "MusicLyricsBackgroundView.h"
 
 BOOL enabled;
 BOOL enableLockscreenSection;
@@ -44,7 +45,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 // Lockscreen
 
-%group VioletLockscreen
+%group CyanLockscreen
 
 %hook CSCoverSheetViewController
 
@@ -54,42 +55,18 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 	if (!lockscreenArtworkBackgroundSwitch) return;
 	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
-	[lsArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[lsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[lsArtworkBackgroundImageView setHidden:YES];
-	[lsArtworkBackgroundImageView setClipsToBounds:YES];
-	[lsArtworkBackgroundImageView setAlpha:[lockscreenArtworkOpacityValue doubleValue]];
 
-	if ([lockscreenArtworkBlurMode intValue] != 0) {
-		if (!lsBlur) {
-			if ([lockscreenArtworkBlurMode intValue] == 1)
-				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-			else if ([lockscreenArtworkBlurMode intValue] == 2)
-				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-			else if ([lockscreenArtworkBlurMode intValue] == 3)
-				lsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-			lsBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
-			[lsBlurView setFrame:[lsArtworkBackgroundImageView bounds]];
-			[lsBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			[lsBlurView setClipsToBounds:YES];
-			[lsBlurView setAlpha:[lockscreenArtworkBlurAmountValue doubleValue]];
-			[lsArtworkBackgroundImageView addSubview:lsBlurView];
-		}
-		[lsBlurView setHidden:NO];
-	}
+	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+	[[NSBundle bundleWithPath:path] load];
 
-	if ([lockscreenArtworkDimValue doubleValue] != 0.0) {
-		if (!lsDimView) lsDimView = [[UIView alloc] init];
-		[lsDimView setFrame:[lsArtworkBackgroundImageView bounds]];
-		[lsDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[lsDimView setClipsToBounds:YES];
-		[lsDimView setBackgroundColor:[UIColor blackColor]];
-		[lsDimView setAlpha:[lockscreenArtworkDimValue doubleValue]];
-		[lsDimView setHidden:NO];
+	MusicLyricsBackgroundView *metalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+	[metalBackgroundView setBackgroundArtworkCatalog:[%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork]];
 
-		if (![lsDimView isDescendantOfView:lsArtworkBackgroundImageView])
-			[lsArtworkBackgroundImageView addSubview:lsDimView];
-	}
+	[metalBackgroundView setFrame:[lsArtworkBackgroundImageView bounds]];
+    [metalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [metalBackgroundView setClipsToBounds:YES];
+	[lsArtworkBackgroundImageView addSubview:metalBackgroundView];
 
 	if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:lsArtworkBackgroundImageView atIndex:0];
@@ -159,6 +136,17 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 				[lspArtworkBackgroundImageView addSubview:lspDimView];
 		}
 
+		NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+		path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+		[[NSBundle bundleWithPath:path] load];
+		MusicLyricsBackgroundView *metalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+[		metalBackgroundView setBackgroundArtworkCatalog:[%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork]];
+
+		[metalBackgroundView setFrame:[lspArtworkBackgroundImageView bounds]];
+    	[metalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    	[metalBackgroundView setClipsToBounds:YES];
+		[lspArtworkBackgroundImageView addSubview:metalBackgroundView];
+
 		if (![lspArtworkBackgroundImageView isDescendantOfView:AdjunctItemView])
 			[AdjunctItemView insertSubview:lspArtworkBackgroundImageView atIndex:0];		
 	}
@@ -206,7 +194,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 %end
 
-%group VioletHomescreen
+%group CyanHomescreen
 
 %hook SBIconController
 
@@ -393,7 +381,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 // Data
 
-%group VioletSpringBoardData
+%group CyanSpringBoardData
 
 %hook SBMediaController
 
@@ -508,7 +496,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 %ctor {
 
-	preferences = [[HBPreferences alloc] initWithIdentifier:@"love.litten.violetpreferences"];
+	preferences = [[HBPreferences alloc] initWithIdentifier:@"0xcc.woodfairy.cyanpreferences"];
 
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
 	[preferences registerBool:&enableLockscreenSection default:nil forKey:@"EnableLockscreenSection"];
@@ -559,10 +547,10 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	}
 
 	if (enabled) {
-		if (enableLockscreenSection) %init(VioletLockscreen);
-		if (enableHomescreenSection) %init(VioletHomescreen);
+		if (enableLockscreenSection) %init(CyanLockscreen);
+		if (enableHomescreenSection) %init(CyanHomescreen);
 		if (enableControlCenterSection) %init(ControlCenter);
-		%init(VioletSpringBoardData);
+		%init(CyanSpringBoardData);
 		if (roundLockScreenCompatibilitySwitch || hideXenHTMLWidgetsSwitch) %init(TweakCompatibility);
         return;
     }

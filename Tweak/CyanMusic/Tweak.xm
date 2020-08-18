@@ -1,11 +1,11 @@
-#import "VioletMusic.h"
+#import "CyanMusic.h"
 
 BOOL enabled;
 BOOL enableMusicApplicationSection;
 
 // Music Application
 
-%group VioletMusic
+%group CyanMusic
 
 %hook MusicNowPlayingControlsViewController
 
@@ -135,7 +135,7 @@ BOOL enableMusicApplicationSection;
 
 %hook MusicLyricsBackgroundView
 
-- (void)setAlpha:(CGFloat)alpha { // hide violet when lyrics view is enabled - iOS >= 13.4
+- (void)setAlpha:(CGFloat)alpha { // hide cyan when lyrics view is enabled - iOS >= 13.4
 
 	if (alpha > 0) {
 		[UIView animateWithDuration:0.2 animations:^{
@@ -158,7 +158,7 @@ BOOL enableMusicApplicationSection;
 
 %hook MusicLyricsBackgroundViewX
 
-- (void)setAlpha:(CGFloat)alpha { // hide violet when lyrics view is enabled - iOS < 13.4
+- (void)setAlpha:(CGFloat)alpha { // hide cyan when lyrics view is enabled - iOS < 13.4
 
 	if (alpha > 0) {
 		[UIView animateWithDuration:0.2 animations:^{
@@ -281,7 +281,7 @@ BOOL enableMusicApplicationSection;
 
 %ctor {
 
-	preferences = [[HBPreferences alloc] initWithIdentifier:@"love.litten.violetpreferences"];
+	preferences = [[HBPreferences alloc] initWithIdentifier:@"0xcc.woodfairy.cyanpreferences"];
 
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
 	[preferences registerBool:&enableMusicApplicationSection default:nil forKey:@"EnableMusicApplicationSection"];
@@ -310,7 +310,7 @@ BOOL enableMusicApplicationSection;
 	[preferences registerBool:&hideQueueButtonSwitch default:NO forKey:@"musicHideQueueButton"];
 
 	if (enabled) {
-		if (enableMusicApplicationSection) %init(VioletMusic, QueueViewController=objc_getClass("MusicApplication.NowPlayingQueueViewController"), ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"), MusicLyricsBackgroundViewX=objc_getClass("MusicApplication.LyricsBackgroundView"));
+		if (enableMusicApplicationSection) %init(CyanMusic, QueueViewController=objc_getClass("MusicApplication.NowPlayingQueueViewController"), ArtworkView=objc_getClass("MusicApplication.NowPlayingContentView"), TimeControl=objc_getClass("MusicApplication.PlayerTimeControl"), ContextualActionsButton=objc_getClass("MusicApplication.ContextualActionsButton"), MusicLyricsBackgroundViewX=objc_getClass("MusicApplication.LyricsBackgroundView"));
 		return;
     }
 

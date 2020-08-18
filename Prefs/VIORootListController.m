@@ -26,14 +26,14 @@ UIImageView* artworkBackgroundImageView;
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,10,10)];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.titleLabel.text = @"Violet";
+        self.titleLabel.text = @"Cyan";
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.navigationItem.titleView addSubview:self.titleLabel];
 
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,10,10)];
         self.iconView.contentMode = UIViewContentModeScaleAspectFit;
-        self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/VioletPrefs.bundle/icon@2x.png"];
+        self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/CyanPrefs.bundle/icon@2x.png"];
         self.iconView.translatesAutoresizingMaskIntoConstraints = NO;
         self.iconView.alpha = 0.0;
         [self.navigationItem.titleView addSubview:self.iconView];
@@ -71,7 +71,7 @@ UIImageView* artworkBackgroundImageView;
     self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,200)];
     self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,200,200)];
     self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/VioletPrefs.bundle/Banner.png"];
+    self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/CyanPrefs.bundle/Banner.png"];
     self.headerImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.headerImageView.clipsToBounds = YES;
 
@@ -171,12 +171,12 @@ UIImageView* artworkBackgroundImageView;
 
     [[self enableSwitch] setEnabled:NO];
 
-    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"];
+    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"];
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
     NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
-    HBPreferences *preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
+    HBPreferences *preferences = [[HBPreferences alloc] initWithIdentifier: @"0xcc.woodfairy.cyanpreferences"];
     
-    if (!([[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"])) {
+    if (!([[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"])) {
         enabled = YES;
         [preferences setBool:enabled forKey:@"Enabled"];
         [self respring];
@@ -198,12 +198,12 @@ UIImageView* artworkBackgroundImageView;
 
 - (void)setEnableSwitchState {
 
-    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"];
+    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"];
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
     NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"0xcc.woodfairy.cyanpreferences"];
     
-    if (!([[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"]))
+    if (!([[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"]))
         [[self enableSwitch] setOn:NO animated:YES];
     else if (!([allKeys containsObject:@"Enabled"]))
         [[self enableSwitch] setOn:NO animated:YES];
@@ -236,7 +236,7 @@ UIImageView* artworkBackgroundImageView;
 
 - (void)resetPrompt {
 
-    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"Violet"
+    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"Cyan"
 	message:@"Do You Really Want To Reset Your Preferences?"
 	preferredStyle:UIAlertControllerStyleActionSheet];
 	
@@ -255,7 +255,7 @@ UIImageView* artworkBackgroundImageView;
 
 - (void)resetPreferences {
 
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"0xcc.woodfairy.cyanpreferences"];
     for (NSString* key in [preferences dictionaryRepresentation]) {
         [preferences removeObjectForKey:key];
 
@@ -287,7 +287,7 @@ UIImageView* artworkBackgroundImageView;
     pid_t pid;
     const char* args[] = {"killall", "backboardd", NULL};
 
-    [HBRespringController respringAndReturnTo:[NSURL URLWithString:@"prefs:root=Violet"]];
+    [HBRespringController respringAndReturnTo:[NSURL URLWithString:@"prefs:root=Cyan"]];
 
     posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char *const *)args, NULL);
 

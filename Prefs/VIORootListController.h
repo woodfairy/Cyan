@@ -5,7 +5,7 @@
 #import <Cephei/HBPreferences.h>
 #import <Cephei/HBRespringController.h>
 #import <spawn.h>
-#import "../Tweak/Violet.h"
+#import "../Tweak/Cyan.h"
 
 @interface VIOAppearanceSettings : HBAppearanceSettings
 @end

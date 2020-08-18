@@ -1,11 +1,11 @@
-#import "VioletSpotify.h"
+#import "CyanSpotify.h"
 
 BOOL enabled;
 BOOL enableSpotifyApplicationSection;
 
 // Spotify Application
 
-%group VioletSpotify
+%group CyanSpotify
 
 %hook MPNowPlayingInfoCenter
 
@@ -13,7 +13,7 @@ BOOL enableSpotifyApplicationSection;
 	
 	%orig;
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"Violet-setSpotifyArtwork" object:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"Cyan-setSpotifyArtwork" object:nil];
 
 }
 
@@ -88,7 +88,7 @@ BOOL enableSpotifyApplicationSection;
 		[[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:0];
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:@"Violet-setSpotifyArtwork" object:nil]; // add notification observer to dynamically change artwork
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setArtwork) name:@"Cyan-setSpotifyArtwork" object:nil]; // add notification observer to dynamically change artwork
 
 }
 
@@ -325,7 +325,7 @@ BOOL enableSpotifyApplicationSection;
 
 %ctor {
 
-	preferences = [[HBPreferences alloc] initWithIdentifier:@"love.litten.violetpreferences"];
+	preferences = [[HBPreferences alloc] initWithIdentifier:@"0xcc.woodfairy.cyanpreferences"];
 
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
 	[preferences registerBool:&enableSpotifyApplicationSection default:nil forKey:@"EnableSpotifyApplicationSection"];
@@ -355,7 +355,7 @@ BOOL enableSpotifyApplicationSection;
 	[preferences registerBool:&hideCanvasSwitch default:NO forKey:@"spotifyHideCanvas"];
 
 	if (enabled) {
-		if (enableSpotifyApplicationSection) %init(VioletSpotify);
+		if (enableSpotifyApplicationSection) %init(CyanSpotify);
 		return;
     }
 

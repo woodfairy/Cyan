@@ -3,7 +3,7 @@ TARGET = iphone:clang::13.5
 
 include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = VioletMusic
+TWEAK_NAME = CyanMusic
 $(TWEAK_NAME)_FILES = Tweak.xm
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc
 $(TWEAK_NAME)_FRAMEWORKS = UIKit

@@ -55,12 +55,12 @@ UIVisualEffectView* blurView;
 
     [self setEnableSwitchState];
 
-    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/VioletSpringBoard.disabled"]) return;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/CyanSpringBoard.disabled"]) return;
     
     [[self enableSwitch] setEnabled:NO];
 
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Violet"
-	message:@"Control Center section disabled due to VioletSpringBoard being disabled with iCleaner Pro"
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Cyan"
+	message:@"Control Center section disabled due to CyanSpringBoard being disabled with iCleaner Pro"
 	preferredStyle:UIAlertControllerStyleAlert];
 	
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Okey" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
@@ -102,12 +102,12 @@ UIVisualEffectView* blurView;
 
 - (void)toggleState {
 
-    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"];
+    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"];
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
     NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
-    HBPreferences *preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
+    HBPreferences *preferences = [[HBPreferences alloc] initWithIdentifier: @"0xcc.woodfairy.cyanpreferences"];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"]) {
         enableControlCenterSection = YES;
         [preferences setBool:enableControlCenterSection forKey:@"EnableControlCenterSection"];
         [self toggleCellState:YES];
@@ -129,12 +129,12 @@ UIVisualEffectView* blurView;
 
 - (void)setEnableSwitchState {
 
-    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"];
+    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"];
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
     NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"0xcc.woodfairy.cyanpreferences"];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"]){
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"]){
         [[self enableSwitch] setOn:NO animated:YES];
         [self toggleCellState:NO];
     } else if (![allKeys containsObject:@"EnableControlCenterSection"]) {
@@ -152,12 +152,12 @@ UIVisualEffectView* blurView;
 
 - (void)setCellState {
 
-    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"];
+    NSString* path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"];
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
     NSSet* allKeys = [NSSet setWithArray:[dictionary allKeys]];
-    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"love.litten.violetpreferences"];
+    HBPreferences* preferences = [[HBPreferences alloc] initWithIdentifier: @"0xcc.woodfairy.cyanpreferences"];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/love.litten.violetpreferences.plist"]){
+    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/0xcc.woodfairy.cyanpreferences.plist"]){
         [self toggleCellState:NO];
     } else if (![allKeys containsObject:@"EnableControlCenterSection"]) {
         [self toggleCellState:NO];

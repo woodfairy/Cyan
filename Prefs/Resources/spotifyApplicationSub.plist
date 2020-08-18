@@ -21,13 +21,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyArtworkBackground</string>
 			<key>label</key>
 			<string>Artwork As Background</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -37,7 +37,7 @@
 			<key>detail</key>
 			<string>PSListItemsController</string>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>label</key>
 			<string>Blur:</string>
 			<key>key</key>
@@ -57,7 +57,7 @@
 				<string>Adaptive</string>
 			</array>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -71,7 +71,7 @@
 			<key>default</key>
 			<real>1.0</real>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyArtworkBlurAmount</string>
 			<key>min</key>
@@ -83,7 +83,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -97,7 +97,7 @@
 			<key>default</key>
 			<real>1.0</real>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyArtworkOpacity</string>
 			<key>min</key>
@@ -109,7 +109,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -123,7 +123,7 @@
 			<key>default</key>
 			<real>0.0</real>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyArtworkDim</string>
 			<key>min</key>
@@ -135,7 +135,7 @@
 			<key>isSegmented</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 
 		<dict>
@@ -150,13 +150,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideArtwork</string>
 			<key>label</key>
 			<string>Hide Artwork</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
         <dict>
 			<key>cell</key>
@@ -164,13 +164,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideNextTrackButton</string>
 			<key>label</key>
 			<string>Hide Next Track Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -178,13 +178,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHidePreviousTrackButton</string>
 			<key>label</key>
 			<string>Hide Previous Track Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -192,13 +192,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHidePlayButton</string>
 			<key>label</key>
 			<string>Hide Play/Pause Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -206,13 +206,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideShuffleButton</string>
 			<key>label</key>
 			<string>Hide Shuffle Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -220,13 +220,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideRepeatButton</string>
 			<key>label</key>
 			<string>Hide Repeat Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -234,13 +234,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideDevicesButton</string>
 			<key>label</key>
 			<string>Hide Devices Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -248,13 +248,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideQueueButton</string>
 			<key>label</key>
 			<string>Hide Queue Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -262,13 +262,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideSongTitle</string>
 			<key>label</key>
 			<string>Hide Song Title, Artist Name, Playlist Title</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -276,13 +276,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideTimeSlider</string>
 			<key>label</key>
 			<string>Hide Time Slider</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -290,13 +290,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideRemainingTimeLabel</string>
 			<key>label</key>
 			<string>Hide Remaining Time Label</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -304,13 +304,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideElapsedTimeLabel</string>
 			<key>label</key>
 			<string>Hide Elapsed Time Label</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -318,13 +318,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideLikeButton</string>
 			<key>label</key>
 			<string>Hide Like Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -332,13 +332,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideBackButton</string>
 			<key>label</key>
 			<string>Hide Back Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -346,13 +346,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideContextButton</string>
 			<key>label</key>
 			<string>Hide Context Button</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -360,13 +360,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHidePlaylistTitle</string>
 			<key>label</key>
 			<string>Hide Playlist Title</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -374,17 +374,17 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>love.litten.violetpreferences</string>
+			<string>0xcc.woodfairy.cyanpreferences</string>
 			<key>key</key>
 			<string>spotifyHideCanvas</string>
 			<key>label</key>
 			<string>Hide Canvas</string>
 			<key>PostNotification</key>
-			<string>love.litten.violetpreferences/ReloadPrefs</string>
+			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
 
 	</array>
 	<key>title</key>
-	<string>Violet</string>
+	<string>Cyan</string>
 </dict>
 </plist>

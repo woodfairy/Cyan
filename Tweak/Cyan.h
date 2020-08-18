@@ -52,7 +52,7 @@ UIView* ccmDimView;
 @interface MTMaterialLayer : CABackdropLayer
 @end
 
-@interface UIView (Violet)
+@interface UIView (Cyan)
 @property(nonatomic, assign, readwrite)MTMaterialView* backgroundMaterialView;
 @end
 

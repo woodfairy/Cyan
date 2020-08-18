@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>VioletPrefs</string>
+	<string>CyanPrefs</string>
 	<key>CFBundleIdentifier</key>
-	<string>love.litten.violetpreferences</string>
+	<string>0xcc.woodfairy.cyanpreferences</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
