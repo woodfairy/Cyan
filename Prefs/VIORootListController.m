@@ -64,29 +64,6 @@ UIImageView* artworkBackgroundImageView;
     
 }
 
-- (void)viewDidLoad {
-
-    [super viewDidLoad];
-
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,200)];
-    self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,200,200)];
-    self.headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/CyanPrefs.bundle/Banner.png"];
-    self.headerImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.headerImageView.clipsToBounds = YES;
-
-    [self.headerView addSubview:self.headerImageView];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.headerImageView.topAnchor constraintEqualToAnchor:self.headerView.topAnchor],
-        [self.headerImageView.leadingAnchor constraintEqualToAnchor:self.headerView.leadingAnchor],
-        [self.headerImageView.trailingAnchor constraintEqualToAnchor:self.headerView.trailingAnchor],
-        [self.headerImageView.bottomAnchor constraintEqualToAnchor:self.headerView.bottomAnchor],
-    ]];
-
-    _table.tableHeaderView = self.headerView;
-    
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     tableView.tableHeaderView = self.headerView;

@@ -26,6 +26,6 @@
 @end
 
 @interface MusicLyricsBackgroundView : UIView
-@property (nonatomic, readwrite) MPArtworkCatalog *backgroundArtworkCatalog;
+@property (nonatomic, readwrite, retain) MPArtworkCatalog *backgroundArtworkCatalog;
 -(void)setBackgroundArtworkCatalog:(MPArtworkCatalog *)arg1 ;
 @end

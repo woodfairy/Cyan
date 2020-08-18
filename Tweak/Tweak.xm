@@ -50,34 +50,12 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 %hook CSCoverSheetViewController
 
 - (void)viewDidLoad { // add artwork background view
-/*
 	%orig;
 
 	if (!lockscreenArtworkBackgroundSwitch) return;
 	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
 
-	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
-	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
-	[[NSBundle bundleWithPath:path] load];
-	if(currentArtwork)
-		lsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-	if(!lsMetalBackgroundView) lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
-	[lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
-	[lsMetalBackgroundView setFrame:[lspArtworkBackgroundImageView bounds]];
-    [lsMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [lsMetalBackgroundView setClipsToBounds:YES];
-	[lsArtworkBackgroundImageView addSubview:lsMetalBackgroundView];
-
-	if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]])
-		[[self view] insertSubview:lsArtworkBackgroundImageView atIndex:0];
-
-*/
-
-	%orig;
-
-	if (!lockscreenArtworkBackgroundSwitch) return;
-	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
-
+	// Metal Lyrics Background
 	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
 	[[NSBundle bundleWithPath:path] load];
@@ -85,15 +63,19 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	if(currentArtwork)
 		lsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 	if(!lsMetalBackgroundView) lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
-	[lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
 
+	[lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
 	[lsMetalBackgroundView setFrame:[lsArtworkBackgroundImageView bounds]];
     [lsMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [lsMetalBackgroundView setClipsToBounds:YES];
+
+	// add metal background as subview
 	[lsArtworkBackgroundImageView addSubview:lsMetalBackgroundView];
 
 	if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:lsArtworkBackgroundImageView atIndex:0];
+		// hide the view (else it will show up after respring even if nothing is playing)
+		[lsArtworkBackgroundImageView setHidden:YES];
 }
 
 %end
@@ -128,17 +110,22 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
 		[lspArtworkBackgroundImageView setImage:currentArtwork];
 		
+		// Metal Lyrics Background
 		NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 		path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
 		[[NSBundle bundleWithPath:path] load];
+
 		if(currentArtwork)
 			lspArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 		if(!lspMetalBackgroundView) lspMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+
 		[lspMetalBackgroundView setBackgroundArtworkCatalog:lspArtworkCatalog];
 		[lspMetalBackgroundView setFrame:[lspArtworkBackgroundImageView bounds]];
     	[lspMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     	[lspMetalBackgroundView setClipsToBounds:YES];
-	[	lspArtworkBackgroundImageView addSubview:lspMetalBackgroundView];
+
+		// add metal background as subview
+		[lspArtworkBackgroundImageView addSubview:lspMetalBackgroundView];
 
 		if (![lspArtworkBackgroundImageView isDescendantOfView:AdjunctItemView])
 			[AdjunctItemView insertSubview:lspArtworkBackgroundImageView atIndex:0];		
@@ -389,9 +376,6 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
 				if (currentArtwork) {
 					if (lockscreenArtworkBackgroundSwitch) {
-						[lsArtworkBackgroundImageView setImage:currentArtwork];
-						[lsArtworkBackgroundImageView setHidden:NO];
-						if ([lockscreenArtworkBlurMode intValue] != 0) [lsBlurView setHidden:NO];
 						lsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 						if(lsMetalBackgroundView) [lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
 						[lsArtworkBackgroundImageView setHidden:NO];
