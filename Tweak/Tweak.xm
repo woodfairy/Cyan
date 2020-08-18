@@ -99,7 +99,7 @@ BOOL enableControlCenterSection;
 					lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 				else if ([lockscreenPlayerArtworkBlurMode intValue] == 3)
 					lspBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-				lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
+				lspBlurView = [[UIVisualEffectView alloc] initWithEffect:lspBlur];
 				[lspBlurView setFrame:[lspArtworkBackgroundImageView bounds]];
 				[lspBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 				[lspBlurView setClipsToBounds:YES];
