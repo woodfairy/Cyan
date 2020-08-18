@@ -5,7 +5,7 @@
 #import <Cephei/HBPreferences.h>
 #import <Cephei/HBRespringController.h>
 #import <spawn.h>
-#import <MediaRemote/MediaRemote.h>
+#import "../Tweak/Violet.h"
 
 @interface VIOAppearanceSettings : HBAppearanceSettings
 @end

@@ -32,43 +32,6 @@ UIView* hsDimView;
 UIView* ccDimView;
 UIView* ccmDimView;
 
-// Lockscreen
-BOOL lockscreenArtworkBackgroundSwitch = NO;
-NSString* lockscreenArtworkBlurMode = @"0";
-NSString* lockscreenArtworkBlurAmountValue = @"1.0";
-NSString* lockscreenArtworkOpacityValue = @"1.0";
-NSString* lockscreenArtworkDimValue = @"0.0";
-BOOL lockscreenPlayerArtworkBackgroundSwitch = NO;
-NSString* lockscreenPlayerArtworkBlurMode = @"0";
-NSString* lockscreenPlayerArtworkBlurAmountValue = @"1.0";
-NSString* lockscreenPlayerArtworkOpacityValue = @"1.0";
-NSString* lockscreenPlayerArtworkCornerRadiusValue = @"10.0";
-NSString* lockscreenPlayerArtworkDimValue = @"0.0";
-BOOL hideLockscreenPlayerBackgroundSwitch = NO;
-BOOL roundLockScreenCompatibilitySwitch = NO;
-BOOL hideXenHTMLWidgetsSwitch = NO;
-
-// Homescreen
-BOOL homescreenArtworkBackgroundSwitch = NO;
-NSString* homescreenArtworkBlurMode = @"0";
-NSString* homescreenArtworkBlurAmountValue = @"1.0";
-NSString* homescreenArtworkOpacityValue = @"1.0";
-NSString* homescreenArtworkDimValue = @"0.0";
-BOOL zoomedViewSwitch = YES;
-
-// Control Center
-BOOL controlCenterArtworkBackgroundSwitch = NO;
-NSString* controlCenterArtworkBlurMode = @"0";
-NSString* controlCenterArtworkBlurAmountValue = @"1.0";
-NSString* controlCenterArtworkOpacityValue = @"1.0";
-NSString* controlCenterArtworkDimValue = @"1.0";
-BOOL controlCenterModuleArtworkBackgroundSwitch = NO;
-NSString* controlCenterModuleArtworkBlurMode = @"0";
-NSString* controlCenterModuleArtworkBlurAmountValue = @"1.0";
-NSString* controlCenterModuleArtworkOpacityValue = @"1.0";
-NSString* controlCenterModuleArtworkDimValue = @"1.0";
-NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
-
 @interface CSCoverSheetViewController : UIViewController
 @end
 
