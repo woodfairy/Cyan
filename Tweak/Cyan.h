@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Cephei/HBPreferences.h>
 #import <MediaRemote/MediaRemote.h>
+#import "MusicLyricsBackgroundView.h"
 
 HBPreferences* preferences;
 
@@ -8,6 +9,12 @@ extern BOOL enabled;
 extern BOOL enableLockscreenSection;
 extern BOOL enableHomescreenSection;
 extern BOOL enableControlCenterSection;
+
+MPArtworkCatalog* lsArtworkCatalog;
+MPArtworkCatalog* lspArtworkCatalog;
+
+MusicLyricsBackgroundView* lsMetalBackgroundView;
+MusicLyricsBackgroundView* lspMetalBackgroundView;
 
 UIImage* currentArtwork;
 UIImageView* lsArtworkBackgroundImageView;
