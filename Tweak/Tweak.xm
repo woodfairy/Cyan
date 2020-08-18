@@ -108,7 +108,6 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		[lspArtworkBackgroundImageView setFrame:[AdjunctItemView bounds]];
 		[lspArtworkBackgroundImageView setAlpha:[lockscreenPlayerArtworkOpacityValue doubleValue]];
 		[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
-		[lspArtworkBackgroundImageView setImage:currentArtwork];
 		
 		// Metal Lyrics Background
 		NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
