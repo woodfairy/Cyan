@@ -9,7 +9,7 @@ BOOL enableControlCenterSection;
 // Lockscreen
 BOOL lockscreenArtworkBackgroundSwitch = NO;
 NSString* lockscreenArtworkBlurMode = @"0";
-NSString* lockscreenArtworkBlurAmountValue = @"1.0";
+NSString* lockscreenArtworkBlurAmountValue = @"0.99";
 NSString* lockscreenArtworkOpacityValue = @"1.0";
 NSString* lockscreenArtworkDimValue = @"0.0";
 BOOL lockscreenPlayerArtworkBackgroundSwitch = NO;
@@ -105,8 +105,9 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 			[lspArtworkBackgroundImageView setHidden:NO];
 			[lspArtworkBackgroundImageView setClipsToBounds:YES];
 		}
+		
 		[lspArtworkBackgroundImageView setFrame:[AdjunctItemView bounds]];
-		[lspArtworkBackgroundImageView setAlpha:[lockscreenPlayerArtworkOpacityValue doubleValue]];
+		[lspArtworkBackgroundImageView setAlpha:[@"0.99" doubleValue]];
 		[[lspArtworkBackgroundImageView layer] setCornerRadius:[lockscreenPlayerArtworkCornerRadiusValue doubleValue]];
 		
 		// Metal Lyrics Background
@@ -158,7 +159,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 %new
 - (void)setMaterialViewBackground {
-
+	return;
 	UIView* AdjunctItemView = [[[[[self view] superview] superview] superview] superview];
 
 	UIView* platterView = MSHookIvar<UIView *>(AdjunctItemView, "_platterView");
