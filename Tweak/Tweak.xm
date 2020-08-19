@@ -64,10 +64,12 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		lsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 	if(!lsMetalBackgroundView) lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
 
-	[lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
+	if(lsArtworkCatalog)
+		[lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
+
 	[lsMetalBackgroundView setFrame:[lsArtworkBackgroundImageView bounds]];
-    [lsMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [lsMetalBackgroundView setClipsToBounds:YES];
+	[lsMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+	[lsMetalBackgroundView setClipsToBounds:YES];
 
 	// add metal background as subview
 	[lsArtworkBackgroundImageView addSubview:lsMetalBackgroundView];
@@ -119,10 +121,12 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 			lspArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 		if(!lspMetalBackgroundView) lspMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
 
-		[lspMetalBackgroundView setBackgroundArtworkCatalog:lspArtworkCatalog];
+		if(lspArtworkCatalog)
+			[lspMetalBackgroundView setBackgroundArtworkCatalog:lspArtworkCatalog];
+
 		[lspMetalBackgroundView setFrame:[lspArtworkBackgroundImageView bounds]];
-    	[lspMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    	[lspMetalBackgroundView setClipsToBounds:YES];
+		[lspMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[lspMetalBackgroundView setClipsToBounds:YES];
 
 		// add metal background as subview
 		[lspArtworkBackgroundImageView addSubview:lspMetalBackgroundView];
@@ -191,36 +195,23 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	[hsArtworkBackgroundImageView setClipsToBounds:YES];
 	[hsArtworkBackgroundImageView setAlpha:[homescreenArtworkOpacityValue doubleValue]];
 
-	if ([homescreenArtworkBlurMode intValue] != 0) {
-		if (!hsBlur) {
-			if ([homescreenArtworkBlurMode intValue] == 1)
-				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-			else if ([homescreenArtworkBlurMode intValue] == 2)
-				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-			else if ([homescreenArtworkBlurMode intValue] == 3)
-				hsBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-			hsBlurView = [[UIVisualEffectView alloc] initWithEffect:hsBlur];
-			[hsBlurView setFrame:[hsArtworkBackgroundImageView bounds]];
-			[hsBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			[hsBlurView setClipsToBounds:YES];
-			[hsBlurView setAlpha:[homescreenArtworkBlurAmountValue doubleValue]];
-			[hsArtworkBackgroundImageView addSubview:hsBlurView];
-		}
-		[hsBlurView setHidden:NO];
-	}
+	// Metal Lyrics Background
+	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+	[[NSBundle bundleWithPath:path] load];
 
-	if ([homescreenArtworkDimValue doubleValue] != 0.0) {
-		if (!hsDimView) hsDimView = [[UIView alloc] init];
-		[hsDimView setFrame:[hsArtworkBackgroundImageView bounds]];
-		[hsDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[hsDimView setClipsToBounds:YES];
-		[hsDimView setBackgroundColor:[UIColor blackColor]];
-		[hsDimView setAlpha:[homescreenArtworkDimValue doubleValue]];
-		[hsDimView setHidden:NO];
+	if(currentArtwork)
+		hsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+	if(!lspMetalBackgroundView) hsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
 
-		if (![hsDimView isDescendantOfView:hsArtworkBackgroundImageView])
-			[hsArtworkBackgroundImageView addSubview:hsDimView];
-	}
+	if(hsArtworkCatalog)
+		[hsMetalBackgroundView setBackgroundArtworkCatalog:hsArtworkCatalog];
+	[hsMetalBackgroundView setFrame:[hsArtworkBackgroundImageView bounds]];
+    [hsMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [hsMetalBackgroundView setClipsToBounds:YES];
+
+	// add metal background as subview
+	[hsArtworkBackgroundImageView addSubview:hsMetalBackgroundView];
 
 	if (![hsArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:hsArtworkBackgroundImageView atIndex:0];
@@ -386,8 +377,9 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 						[lspArtworkBackgroundImageView setHidden:NO];
 					}
 					if (homescreenArtworkBackgroundSwitch) {
+						hsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+						if(hsMetalBackgroundView) [hsMetalBackgroundView setBackgroundArtworkCatalog:hsArtworkCatalog];
 						[hsArtworkBackgroundImageView setHidden:NO];
-						if ([homescreenArtworkBlurMode intValue] != 0) [hsBlurView setHidden:NO];
 					}
 					if (controlCenterArtworkBackgroundSwitch) {
 						[ccArtworkBackgroundImageView setHidden:NO];

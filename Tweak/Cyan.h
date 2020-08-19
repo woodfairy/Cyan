@@ -12,9 +12,11 @@ extern BOOL enableControlCenterSection;
 
 MPArtworkCatalog* lsArtworkCatalog;
 MPArtworkCatalog* lspArtworkCatalog;
+MPArtworkCatalog* hsArtworkCatalog;
 
 MusicLyricsBackgroundView* lsMetalBackgroundView;
 MusicLyricsBackgroundView* lspMetalBackgroundView;
+MusicLyricsBackgroundView* hsMetalBackgroundView;
 
 UIImage* currentArtwork;
 UIImageView* lsArtworkBackgroundImageView;
