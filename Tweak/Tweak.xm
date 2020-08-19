@@ -5,6 +5,7 @@ BOOL enabled;
 BOOL enableLockscreenSection;
 BOOL enableHomescreenSection;
 BOOL enableControlCenterSection;
+BOOL ccWorkaround;
 
 // Lockscreen
 BOOL lockscreenArtworkBackgroundSwitch = NO;
@@ -60,12 +61,14 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
 	[[NSBundle bundleWithPath:path] load];
 
-	if(currentArtwork)
-		lsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-	if(!lsMetalBackgroundView) lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+	if(currentArtwork && !artworkCatalog)
+		artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 
-	if(lsArtworkCatalog)
-		[lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
+	if(!lsMetalBackgroundView)
+		lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+
+	if(artworkCatalog)
+		[lsMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
 
 	[lsMetalBackgroundView setFrame:[lsArtworkBackgroundImageView bounds]];
 	[lsMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -117,12 +120,14 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
 		[[NSBundle bundleWithPath:path] load];
 
-		if(currentArtwork)
-			lspArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-		if(!lspMetalBackgroundView) lspMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+		if(currentArtwork && !artworkCatalog)
+			artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+			
+		if(!lspMetalBackgroundView)
+			lspMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
 
-		if(lspArtworkCatalog)
-			[lspMetalBackgroundView setBackgroundArtworkCatalog:lspArtworkCatalog];
+		if(artworkCatalog)
+			[lspMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
 
 		[lspMetalBackgroundView setFrame:[lspArtworkBackgroundImageView bounds]];
 		[lspMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -200,12 +205,15 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
 	[[NSBundle bundleWithPath:path] load];
 
-	if(currentArtwork)
-		hsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-	if(!hsMetalBackgroundView) hsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+	if(currentArtwork && !artworkCatalog)
+		artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 
-	if(hsArtworkCatalog)
-		[hsMetalBackgroundView setBackgroundArtworkCatalog:hsArtworkCatalog];
+	if(!hsMetalBackgroundView)
+		hsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+
+	if(artworkCatalog)
+		[hsMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
+
 	[hsMetalBackgroundView setFrame:[hsArtworkBackgroundImageView bounds]];
     [hsMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [hsMetalBackgroundView setClipsToBounds:YES];
@@ -234,7 +242,6 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	if (!ccArtworkBackgroundImageView) ccArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
 	[ccArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[ccArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[ccArtworkBackgroundImageView setHidden:NO];
 	[ccArtworkBackgroundImageView setClipsToBounds:YES];
 	[ccArtworkBackgroundImageView setAlpha:[controlCenterArtworkOpacityValue doubleValue]];
 
@@ -269,15 +276,38 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 			[ccArtworkBackgroundImageView addSubview:ccDimView];
 	}
 
+	// Metal Lyrics Background
+	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+	[[NSBundle bundleWithPath:path] load];
+
+	if(currentArtwork && !artworkCatalog) 
+		artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+
+	if(!ccMetalBackgroundView)
+		ccMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+
+	if(artworkCatalog)
+		[ccMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
+
+	[ccMetalBackgroundView setFrame:[ccArtworkBackgroundImageView bounds]];
+    [ccMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [ccMetalBackgroundView setClipsToBounds:YES];
+
+	// add metal background as subview
+	[ccArtworkBackgroundImageView addSubview:ccMetalBackgroundView];
+
 	if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:1];
+	
+	[ccArtworkBackgroundImageView setHidden:!currentArtwork];
 
 }
 
 - (void)dismissAnimated:(BOOL)arg1 withCompletionHandler:(id)arg2 { // hide cc background earlier than it would otherwise
 
 	%orig;
-
+	
 	[ccArtworkBackgroundImageView setHidden:YES];
 
 }
@@ -305,12 +335,19 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
 		[[NSBundle bundleWithPath:path] load];
 
-		if(currentArtwork)
-			ccmArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-		if(!ccmMetalBackgroundView) ccmMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+		if(currentArtwork) {
+			if(!artworkCatalog)
+				artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+		} else {
+			[ccmArtworkBackgroundImageView setHidden:YES];
+		}
 
-		if(ccmArtworkCatalog)
-			[hsMetalBackgroundView setBackgroundArtworkCatalog:ccmArtworkCatalog];
+		if(!ccmMetalBackgroundView)
+			ccmMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+
+		if(artworkCatalog)
+			[ccmMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
+
 		[ccmMetalBackgroundView setFrame:[ccmArtworkBackgroundImageView bounds]];
     	[ccmMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     	[ccmMetalBackgroundView setClipsToBounds:YES];
@@ -320,8 +357,6 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 		if (![ccmArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccmArtworkBackgroundImageView atIndex:0];
-			// hide the view (else it will show up after respring even if nothing is playing)
-			[ccmArtworkBackgroundImageView setHidden:YES];
 	}
 
 }
@@ -355,28 +390,32 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 			currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
 				if (currentArtwork) {
+					artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 					if (lockscreenArtworkBackgroundSwitch) {
-						lsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-						if(lsMetalBackgroundView) [lsMetalBackgroundView setBackgroundArtworkCatalog:lsArtworkCatalog];
+						//artWorkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+						if(lsMetalBackgroundView && artworkCatalog) [lsMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
 						[lsArtworkBackgroundImageView setHidden:NO];
 					}
 					if (lockscreenPlayerArtworkBackgroundSwitch) {
-						lspArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-						if(lspMetalBackgroundView) [lspMetalBackgroundView setBackgroundArtworkCatalog:lspArtworkCatalog];
+						//lspArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+						if(lspMetalBackgroundView && artworkCatalog) [lspMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
 						[lspArtworkBackgroundImageView setHidden:NO];
 					}
 					if (homescreenArtworkBackgroundSwitch) {
-						hsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-						if(hsMetalBackgroundView) [hsMetalBackgroundView setBackgroundArtworkCatalog:hsArtworkCatalog];
+						//hsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+						if(hsMetalBackgroundView && artworkCatalog) [hsMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
 						[hsArtworkBackgroundImageView setHidden:NO];
 					}
 					if (controlCenterArtworkBackgroundSwitch) {
+						//ccArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+						if(ccMetalBackgroundView && artworkCatalog) [ccMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
+						//NSLog(@"SHOW in notif");
 						[ccArtworkBackgroundImageView setHidden:NO];
 					}
 					if (controlCenterModuleArtworkBackgroundSwitch) {
-						ccmArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-						if(ccmMetalBackgroundView) [ccmMetalBackgroundView setBackgroundArtworkCatalog:ccmArtworkCatalog];
-						[ccmArtworkBackgroundImageView setImage:currentArtwork];
+						//ccmArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+						if(ccmMetalBackgroundView && artworkCatalog) [ccmMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
+						[ccmArtworkBackgroundImageView setHidden:NO];
 					}
 				}
 			}
@@ -384,6 +423,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 			[lsArtworkBackgroundImageView setHidden:YES];
 			[lspArtworkBackgroundImageView setHidden:YES];
 			[hsArtworkBackgroundImageView setHidden:YES];
+			NSLog(@"HIDE in notif");
 			[ccArtworkBackgroundImageView setHidden:YES];
 			[ccmArtworkBackgroundImageView setHidden:YES];
 			[ccBlurView setHidden:YES];
@@ -453,6 +493,9 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 %end
 
 %ctor {
+
+	ccWorkaround = YES;
+	
 
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"0xcc.woodfairy.cyanpreferences"];
 
