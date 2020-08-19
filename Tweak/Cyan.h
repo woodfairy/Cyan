@@ -10,14 +10,12 @@ extern BOOL enableLockscreenSection;
 extern BOOL enableHomescreenSection;
 extern BOOL enableControlCenterSection;
 
-MPArtworkCatalog* lsArtworkCatalog;
-MPArtworkCatalog* lspArtworkCatalog;
-MPArtworkCatalog* hsArtworkCatalog;
-MPArtworkCatalog* ccmArtworkCatalog;
+MPArtworkCatalog* artworkCatalog;
 
 MusicLyricsBackgroundView* lsMetalBackgroundView;
 MusicLyricsBackgroundView* lspMetalBackgroundView;
 MusicLyricsBackgroundView* hsMetalBackgroundView;
+MusicLyricsBackgroundView* ccMetalBackgroundView;
 MusicLyricsBackgroundView* ccmMetalBackgroundView;
 
 UIImage* currentArtwork;
