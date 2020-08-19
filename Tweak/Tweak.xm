@@ -202,7 +202,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 	if(currentArtwork)
 		hsArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-	if(!lspMetalBackgroundView) hsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+	if(!hsMetalBackgroundView) hsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
 
 	if(hsArtworkCatalog)
 		[hsMetalBackgroundView setBackgroundArtworkCatalog:hsArtworkCatalog];
@@ -300,39 +300,28 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		[[ccmArtworkBackgroundImageView layer] setCornerRadius:[controlCenterModuleArtworkCornerRadiusValue doubleValue]];
 		[ccmArtworkBackgroundImageView setImage:currentArtwork];
 
-		if ([controlCenterModuleArtworkBlurMode intValue] != 0) {
-			if (!ccmBlur) {
-				if ([controlCenterModuleArtworkBlurMode intValue] == 1)
-					ccmBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-				else if ([controlCenterModuleArtworkBlurMode intValue] == 2)
-					ccmBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-				else if ([controlCenterModuleArtworkBlurMode intValue] == 3)
-					ccmBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-				ccmBlurView = [[UIVisualEffectView alloc] initWithEffect:lsBlur];
-				[ccmBlurView setFrame:[ccmArtworkBackgroundImageView bounds]];
-				[ccmBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-				[ccmBlurView setClipsToBounds:YES];
-				[ccmBlurView setAlpha:[controlCenterModuleArtworkBlurAmountValue doubleValue]];
-				[ccmArtworkBackgroundImageView addSubview:ccmBlurView];
-			}
-			[ccmBlurView setHidden:NO];
-		}
+		// Metal Lyrics Background
+		NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+		path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+		[[NSBundle bundleWithPath:path] load];
 
-		if ([controlCenterModuleArtworkDimValue doubleValue] != 0.0) {
-			if (!ccmDimView) ccmDimView = [[UIView alloc] init];
-			[ccmDimView setFrame:[ccmArtworkBackgroundImageView bounds]];
-			[ccmDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			[ccmDimView setClipsToBounds:YES];
-			[ccmDimView setBackgroundColor:[UIColor blackColor]];
-			[ccmDimView setAlpha:[controlCenterModuleArtworkDimValue doubleValue]];
-			[ccmDimView setHidden:NO];
+		if(currentArtwork)
+			ccmArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+		if(!ccmMetalBackgroundView) ccmMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
 
-			if (![ccmDimView isDescendantOfView:ccmArtworkBackgroundImageView])
-				[ccmArtworkBackgroundImageView addSubview:ccmDimView];
-		}
+		if(ccmArtworkCatalog)
+			[hsMetalBackgroundView setBackgroundArtworkCatalog:ccmArtworkCatalog];
+		[ccmMetalBackgroundView setFrame:[ccmArtworkBackgroundImageView bounds]];
+    	[ccmMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    	[ccmMetalBackgroundView setClipsToBounds:YES];
+
+		// add metal background as subview
+		[ccmArtworkBackgroundImageView addSubview:ccmMetalBackgroundView];
 
 		if (![ccmArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccmArtworkBackgroundImageView atIndex:0];
+			// hide the view (else it will show up after respring even if nothing is playing)
+			[lsArtworkBackgroundImageView setHidden:YES];
 	}
 
 }
@@ -385,6 +374,8 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 						[ccArtworkBackgroundImageView setHidden:NO];
 					}
 					if (controlCenterModuleArtworkBackgroundSwitch) {
+						ccmArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+						if(ccmMetalBackgroundView) [ccmMetalBackgroundView setBackgroundArtworkCatalog:ccmArtworkCatalog];
 						[ccmArtworkBackgroundImageView setImage:currentArtwork];
 					}
 				}
@@ -395,9 +386,6 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 			[hsArtworkBackgroundImageView setHidden:YES];
 			[ccArtworkBackgroundImageView setHidden:YES];
 			[ccmArtworkBackgroundImageView setHidden:YES];
-			[lsBlurView setHidden:YES];
-			[lspBlurView setHidden:YES];
-			[hsBlurView setHidden:YES];
 			[ccBlurView setHidden:YES];
 			currentArtwork = nil;
 			[lsArtworkBackgroundImageView setImage:nil];
