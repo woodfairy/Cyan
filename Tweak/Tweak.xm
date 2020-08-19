@@ -297,7 +297,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		[ccmArtworkBackgroundImageView setHidden:NO];
 		[ccmArtworkBackgroundImageView setClipsToBounds:YES];
 		[ccmArtworkBackgroundImageView setAlpha:[controlCenterModuleArtworkOpacityValue doubleValue]];
-		[[ccmArtworkBackgroundImageView layer] setCornerRadius:[controlCenterModuleArtworkCornerRadiusValue doubleValue]];
+		[[ccmArtworkBackgroundImageView layer] setCornerRadius:[[self moduleContentView] compactContinuousCornerRadius]];
 		[ccmArtworkBackgroundImageView setImage:currentArtwork];
 
 		// Metal Lyrics Background
@@ -321,7 +321,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		if (![ccmArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccmArtworkBackgroundImageView atIndex:0];
 			// hide the view (else it will show up after respring even if nothing is playing)
-			[lsArtworkBackgroundImageView setHidden:YES];
+			[ccmArtworkBackgroundImageView setHidden:YES];
 	}
 
 }
@@ -501,7 +501,6 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		[preferences registerObject:&controlCenterModuleArtworkBlurAmountValue default:@"1.0" forKey:@"controlCenterModuleArtworkBlurAmount"];
 		[preferences registerObject:&controlCenterModuleArtworkOpacityValue default:@"1.0" forKey:@"controlCenterModuleArtworkOpacity"];
 		[preferences registerObject:&controlCenterModuleArtworkDimValue default:@"0.0" forKey:@"controlCenterModuleArtworkDim"];
-		[preferences registerObject:&controlCenterModuleArtworkCornerRadiusValue default:@"20.0" forKey:@"controlCenterModuleArtworkCornerRadius"];
 	}
 
 	if (enabled) {
