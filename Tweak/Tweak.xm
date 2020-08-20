@@ -48,8 +48,41 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 %group CyanLockscreen
 
-%hook CSCoverSheetViewController
+%hook CSCoverSheetView
+-(void)updateUIForAuthenticated:(BOOL)arg1 { // request to install Music app if not installed
+	%orig;
 
+	if (arg1) {
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken, ^{
+			NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+			path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+			if (!path) {
+				UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Cyan"
+											message:@"Apple Music application is not installed on your device.\n Please install it in order to use Cyan."
+											preferredStyle:UIAlertControllerStyleAlert];
+
+				UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Install" style:UIAlertActionStyleDefault
+				handler:^(UIAlertAction * action) {
+					NSURL *URL = [NSURL URLWithString:@"https://apps.apple.com/us/app/apple-music/id1108187390"];
+					[[UIApplication sharedApplication] openURL:URL];
+					[[objc_getClass("SBLockScreenManager") sharedInstance] lockScreenViewControllerRequestsUnlock];
+				}];
+
+				UIAlertAction* dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault
+				handler:^(UIAlertAction * action) {}];
+
+				[alert addAction:defaultAction];
+				[alert addAction:dismissAction];
+				[[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+				return;
+			}
+		});
+	}
+}
+%end
+
+%hook CSCoverSheetViewController
 - (void)viewDidLoad { // add artwork background view
 	%orig;
 
@@ -59,6 +92,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	// Metal Lyrics Background
 	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+	if (!path) return; // return if Music app is not installed
 	[[NSBundle bundleWithPath:path] load];
 
 	if(currentArtwork && !artworkCatalog)

@@ -35,6 +35,14 @@ UIView* hsDimView;
 UIView* ccDimView;
 UIView* ccmDimView;
 
+@interface CSCoverSheetView : UIView
+-(BOOL)scrollToPageAtIndex:(unsigned long long)arg1 animated:(BOOL)arg2 withCompletion:(/*^block*/id)arg3 ;
+@end
+
+@interface SBLockScreenManager : NSObject
+-(void)lockScreenViewControllerRequestsUnlock;
+@end
+
 @interface CSCoverSheetViewController : UIViewController
 @end
 
