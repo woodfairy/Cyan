@@ -124,7 +124,7 @@ UIImage *wallpaperImage;
 	if(currentArtwork && !artworkCatalog)
 		artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 
-	if(!lsMetalBackgroundView)
+	if(!lsMetalBackgroundView) {
 		lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
 		[lsMetalBackgroundView.layer setOpaque:NO];
 		MTKView *view = [lsMetalBackgroundView subviews][0];
