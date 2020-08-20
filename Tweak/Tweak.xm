@@ -106,8 +106,11 @@ UIImage *wallpaperImage;
 	
 	lockScreen = self;
 	
-	if (!lockscreenArtworkBackgroundSwitch) return;
-	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
+	if (!lockscreenArtworkBackgroundSwitch)
+    return;
+
+	if (!lsArtworkBackgroundImageView)
+    lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
 
 	// Metal Lyrics Background
 	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
@@ -136,12 +139,15 @@ UIImage *wallpaperImage;
 	[lsMetalBackgroundView setClipsToBounds:YES];
 
 	// add metal background as subview
-	[lsArtworkBackgroundImageView addSubview:lsMetalBackgroundView];
+	if(![lsMetalBackgroundView isDescendantOfView:lsArtworkBackgroundImageView])
+		[lsArtworkBackgroundImageView addSubview:lsMetalBackgroundView];
+
+	[lsArtworkBackgroundImageView setHidden:YES];
+	[lsArtworkBackgroundImageView setImage:nil];
 
 	if (![lsArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:lsArtworkBackgroundImageView atIndex:0];
 		// hide the view (else it will show up after respring even if nothing is playing)
-		[lsArtworkBackgroundImageView setHidden:YES];
 }
 
 %new
@@ -167,7 +173,8 @@ UIImage *wallpaperImage;
 			[[platterView backgroundMaterialView] setHidden:YES];
 		}
 
-		if (!lockscreenPlayerArtworkBackgroundSwitch) return;
+		if (!lockscreenPlayerArtworkBackgroundSwitch) 
+			return;
 		if (currentArtwork)
 			[self clearMaterialViewBackground];
 		else
@@ -202,7 +209,8 @@ UIImage *wallpaperImage;
 		[lspMetalBackgroundView setClipsToBounds:YES];
 
 		// add metal background as subview
-		[lspArtworkBackgroundImageView addSubview:lspMetalBackgroundView];
+		if(![lspMetalBackgroundView isDescendantOfView:lspArtworkBackgroundImageView])
+			[lspArtworkBackgroundImageView addSubview:lspMetalBackgroundView];
 
 		if (![lspArtworkBackgroundImageView isDescendantOfView:AdjunctItemView])
 			[AdjunctItemView insertSubview:lspArtworkBackgroundImageView atIndex:0];		
@@ -259,9 +267,12 @@ UIImage *wallpaperImage;
 
 	%orig;
 
-	if (!homescreenArtworkBackgroundSwitch) return;
-	if (!hsArtworkBackgroundImageView) hsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
-	if (zoomedViewSwitch) hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
+	if (!homescreenArtworkBackgroundSwitch)
+		return;
+	if (!hsArtworkBackgroundImageView)
+		hsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
+	if (zoomedViewSwitch)
+		hsArtworkBackgroundImageView.bounds = CGRectInset(hsArtworkBackgroundImageView.frame, -50, -50);
 	[hsArtworkBackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[hsArtworkBackgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
 	[hsArtworkBackgroundImageView setHidden:YES];
@@ -287,7 +298,8 @@ UIImage *wallpaperImage;
     [hsMetalBackgroundView setClipsToBounds:YES];
 
 	// add metal background as subview
-	[hsArtworkBackgroundImageView addSubview:hsMetalBackgroundView];
+	if(![hsMetalBackgroundView isDescendantOfView:hsArtworkBackgroundImageView])
+		[hsArtworkBackgroundImageView addSubview:hsMetalBackgroundView];
 
 	if (![hsArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:hsArtworkBackgroundImageView atIndex:0];
@@ -363,7 +375,8 @@ UIImage *wallpaperImage;
     [ccMetalBackgroundView setClipsToBounds:YES];
 
 	// add metal background as subview
-	[ccArtworkBackgroundImageView addSubview:ccMetalBackgroundView];
+	if(![ccMetalBackgroundView isDescendantOfView:ccArtworkBackgroundImageView])
+		[ccArtworkBackgroundImageView addSubview:ccMetalBackgroundView];
 
 	if (![ccArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:ccArtworkBackgroundImageView atIndex:1];
@@ -396,7 +409,6 @@ UIImage *wallpaperImage;
 		[ccmArtworkBackgroundImageView setClipsToBounds:YES];
 		[ccmArtworkBackgroundImageView setAlpha:[controlCenterModuleArtworkOpacityValue doubleValue]];
 		[[ccmArtworkBackgroundImageView layer] setCornerRadius:[[self moduleContentView] compactContinuousCornerRadius]];
-		[ccmArtworkBackgroundImageView setImage:currentArtwork];
 
 		// Metal Lyrics Background
 		NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
@@ -421,7 +433,8 @@ UIImage *wallpaperImage;
     	[ccmMetalBackgroundView setClipsToBounds:YES];
 
 		// add metal background as subview
-		[ccmArtworkBackgroundImageView addSubview:ccmMetalBackgroundView];
+		if(![ccmMetalBackgroundView isDescendantOfView:ccmArtworkBackgroundImageView])
+			[ccmArtworkBackgroundImageView addSubview:ccmMetalBackgroundView];
 
 		if (![ccmArtworkBackgroundImageView isDescendantOfView:[self view]])
 			[[self view] insertSubview:ccmArtworkBackgroundImageView atIndex:0];
@@ -520,9 +533,7 @@ UIImage *wallpaperImage;
 %hook CSCoverSheetViewController
 
 - (void)viewWillAppear:(BOOL)animated { // roundlockscreen compatibility
-
 	%orig;
-
 	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
@@ -531,7 +542,6 @@ UIImage *wallpaperImage;
 - (void)viewWillDisappear:(BOOL)animated { // roundlockscreen compatibility
 
 	%orig;
-
 	if (roundLockScreenCompatibilitySwitch && [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/RoundLockScreen.dylib"])
 		[[lsArtworkBackgroundImageView layer] setCornerRadius:38];
 
@@ -564,10 +574,6 @@ UIImage *wallpaperImage;
 %end
 
 %ctor {
-
-	ccWorkaround = YES;
-	
-
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"0xcc.woodfairy.cyanpreferences"];
 
     [preferences registerBool:&enabled default:nil forKey:@"Enabled"];
