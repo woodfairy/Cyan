@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import <MetalKit/MetalKit.h>
 #import <Cephei/HBPreferences.h>
 #import <MediaRemote/MediaRemote.h>
 #import "MusicLyricsBackgroundView.h"
@@ -50,6 +51,10 @@ UIView* ccmDimView;
 @property(nonatomic, copy)NSString* label;
 - (void)setMaterialViewBackground;
 - (void)clearMaterialViewBackground;
+@end
+
+@interface CAMetalLayer ()
+-(void)setLowLatency:(BOOL)arg1 ;
 @end
 
 @interface MTMaterialView : UIView

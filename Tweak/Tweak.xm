@@ -22,6 +22,7 @@ NSString* lockscreenPlayerArtworkDimValue = @"0.0";
 BOOL hideLockscreenPlayerBackgroundSwitch = NO;
 BOOL roundLockScreenCompatibilitySwitch = NO;
 BOOL hideXenHTMLWidgetsSwitch = NO;
+CSCoverSheetViewController *lockScreen;
 
 // Homescreen
 BOOL homescreenArtworkBackgroundSwitch = NO;
@@ -47,6 +48,23 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 // Lockscreen
 
 %group CyanLockscreen
+
+UIImage *wallpaperImage;
+
+@interface SBFStaticWallpaperImageView : UIImageView
+@property (nonatomic,retain) UIImage *image; 
+@end
+
+%hook SBFStaticWallpaperImageView
+-(id)initWithImage:(UIImage *)image {
+	wallpaperImage = image;
+	return %orig(image);
+}
+-(void)setImage:(UIImage *)image {
+	wallpaperImage = image;
+	%orig(image);
+}
+%end
 
 %hook CSCoverSheetView
 -(void)updateUIForAuthenticated:(BOOL)arg1 { // request to install Music app if not installed
@@ -85,7 +103,9 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 %hook CSCoverSheetViewController
 - (void)viewDidLoad { // add artwork background view
 	%orig;
-
+	
+	lockScreen = self;
+	
 	if (!lockscreenArtworkBackgroundSwitch) return;
 	if (!lsArtworkBackgroundImageView) lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
 
@@ -95,11 +115,18 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	if (!path) return; // return if Music app is not installed
 	[[NSBundle bundleWithPath:path] load];
 
+	if (!currentArtwork && ![[%c(SBMediaController) sharedInstance] isPlaying])
+		currentArtwork = wallpaperImage;
+
 	if(currentArtwork && !artworkCatalog)
 		artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 
 	if(!lsMetalBackgroundView)
 		lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+		[lsMetalBackgroundView.layer setOpaque:NO];
+		MTKView *view = [lsMetalBackgroundView subviews][0];
+		[(CAMetalLayer*)[view layer] setLowLatency:NO];
+	}
 
 	if(artworkCatalog)
 		[lsMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
@@ -117,6 +144,13 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		[lsArtworkBackgroundImageView setHidden:YES];
 }
 
+%new
+-(void)updatePlaybackState {
+    MRMediaRemoteGetNowPlayingApplicationIsPlaying(dispatch_get_main_queue(), ^(Boolean isPlayingNow){
+		MTKView *view = [lsMetalBackgroundView subviews][0];
+        [view setPaused:!isPlayingNow];
+    });
+}
 %end
 
 %hook MRPlatterViewController
@@ -418,6 +452,9 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
     %orig;
 
+	MRMediaRemoteRegisterForNowPlayingNotifications(dispatch_get_main_queue());
+	[[NSNotificationCenter defaultCenter] addObserver:lockScreen selector:@selector(updatePlaybackState) name:(__bridge NSString *)kMRMediaRemoteNowPlayingApplicationIsPlayingDidChangeNotification object:nil];
+
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
 		if (information) {
 			NSDictionary* dict = (__bridge NSDictionary *)information;
@@ -454,7 +491,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 				}
 			}
 		} else {
-			[lsArtworkBackgroundImageView setHidden:YES];
+			//[lsMetalBackgroundView setHidden:YES];
 			[lspArtworkBackgroundImageView setHidden:YES];
 			[hsArtworkBackgroundImageView setHidden:YES];
 			NSLog(@"HIDE in notif");
