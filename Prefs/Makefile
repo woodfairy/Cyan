@@ -1,5 +1,5 @@
 ARCHS = arm64 arm64e
-TARGET = iphone:clang::13.4
+TARGET = iphone:clang:13.5:13.4
 
 include $(THEOS)/makefiles/common.mk
 
@@ -9,6 +9,7 @@ $(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
 $(BUNDLE_NAME)_FRAMEWORKS = UIKit
 $(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences MediaRemote
 $(BUNDLE_NAME)_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
+$(BUNDLE_NAME)_CFLAGS = -Wno-unguarded-availability-new -w
 
 include $(THEOS_MAKE_PATH)/bundle.mk
 

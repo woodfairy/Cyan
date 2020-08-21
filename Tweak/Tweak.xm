@@ -22,6 +22,7 @@ NSString* lockscreenPlayerArtworkDimValue = @"0.0";
 BOOL hideLockscreenPlayerBackgroundSwitch = NO;
 BOOL roundLockScreenCompatibilitySwitch = NO;
 BOOL hideXenHTMLWidgetsSwitch = NO;
+CSCoverSheetViewController *lockScreen;
 
 // Homescreen
 BOOL homescreenArtworkBackgroundSwitch = NO;
@@ -48,27 +49,87 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 %group CyanLockscreen
 
-%hook CSCoverSheetViewController
+UIImage *wallpaperImage;
 
-- (void)viewDidLoad { // add artwork background view
+@interface SBFStaticWallpaperImageView : UIImageView
+@property (nonatomic,retain) UIImage *image; 
+@end
+
+%hook SBFStaticWallpaperImageView
+-(id)initWithImage:(UIImage *)image {
+	wallpaperImage = image;
+	return %orig(image);
+}
+-(void)setImage:(UIImage *)image {
+	wallpaperImage = image;
+	%orig(image);
+}
+%end
+
+%hook CSCoverSheetView
+-(void)updateUIForAuthenticated:(BOOL)arg1 { // request to install Music app if not installed
 	%orig;
 
-	if (!lockscreenArtworkBackgroundSwitch) 
-		return;
+	if (arg1) {
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken, ^{
+			NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+			path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+			if (!path) {
+				UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Cyan"
+											message:@"Apple Music application is not installed on your device.\n Please install it in order to use Cyan."
+											preferredStyle:UIAlertControllerStyleAlert];
 
-	if (!lsArtworkBackgroundImageView) 
-		lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
+				UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Install" style:UIAlertActionStyleDefault
+				handler:^(UIAlertAction * action) {
+					NSURL *URL = [NSURL URLWithString:@"https://apps.apple.com/us/app/apple-music/id1108187390"];
+					[[UIApplication sharedApplication] openURL:URL];
+					[[objc_getClass("SBLockScreenManager") sharedInstance] lockScreenViewControllerRequestsUnlock];
+				}];
+
+				UIAlertAction* dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault
+				handler:^(UIAlertAction * action) {}];
+
+				[alert addAction:defaultAction];
+				[alert addAction:dismissAction];
+				[[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+				return;
+			}
+		});
+	}
+}
+%end
+
+%hook CSCoverSheetViewController
+- (void)viewDidLoad { // add artwork background view
+	%orig;
+	
+	lockScreen = self;
+	
+	if (!lockscreenArtworkBackgroundSwitch)
+    return;
+
+	if (!lsArtworkBackgroundImageView)
+    lsArtworkBackgroundImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
 
 	// Metal Lyrics Background
 	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+	if (!path) return; // return if Music app is not installed
 	[[NSBundle bundleWithPath:path] load];
+
+	if (!currentArtwork && ![[%c(SBMediaController) sharedInstance] isPlaying])
+		currentArtwork = wallpaperImage;
 
 	if(currentArtwork && !artworkCatalog)
 		artworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 
-	if(!lsMetalBackgroundView)
+	if(!lsMetalBackgroundView) {
 		lsMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+		[lsMetalBackgroundView.layer setOpaque:NO];
+		MTKView *view = [lsMetalBackgroundView subviews][0];
+		[(CAMetalLayer*)[view layer] setLowLatency:NO];
+	}
 
 	if(artworkCatalog)
 		[lsMetalBackgroundView setBackgroundArtworkCatalog:artworkCatalog];
@@ -89,6 +150,13 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		// hide the view (else it will show up after respring even if nothing is playing)
 }
 
+%new
+-(void)updatePlaybackState {
+    MRMediaRemoteGetNowPlayingApplicationIsPlaying(dispatch_get_main_queue(), ^(Boolean isPlayingNow){
+		MTKView *view = [lsMetalBackgroundView subviews][0];
+        [view setPaused:!isPlayingNow];
+    });
+}
 %end
 
 %hook MRPlatterViewController
@@ -397,6 +465,9 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
     %orig;
 
+	MRMediaRemoteRegisterForNowPlayingNotifications(dispatch_get_main_queue());
+	[[NSNotificationCenter defaultCenter] addObserver:lockScreen selector:@selector(updatePlaybackState) name:(__bridge NSString *)kMRMediaRemoteNowPlayingApplicationIsPlayingDidChangeNotification object:nil];
+
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
 		if (information) {
 			NSDictionary* dict = (__bridge NSDictionary *)information;
@@ -433,9 +504,10 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 				}
 			}
 		} else {
-			[lsArtworkBackgroundImageView setHidden:YES];
+			//[lsMetalBackgroundView setHidden:YES];
 			[lspArtworkBackgroundImageView setHidden:YES];
 			[hsArtworkBackgroundImageView setHidden:YES];
+			NSLog(@"HIDE in notif");
 			[ccArtworkBackgroundImageView setHidden:YES];
 			[ccmArtworkBackgroundImageView setHidden:YES];
 			[ccBlurView setHidden:YES];
@@ -500,8 +572,6 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 %end
 
 %end
-
-
 
 %ctor {
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"0xcc.woodfairy.cyanpreferences"];
