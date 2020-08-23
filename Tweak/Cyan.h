@@ -35,6 +35,11 @@ UIView* hsDimView;
 UIView* ccDimView;
 UIView* ccmDimView;
 
+@interface MTLTextureDescriptorInternal
+-(BOOL)validateWithDevice:(id)arg1 ;
+@end
+
+
 @interface CSCoverSheetViewController : UIViewController
 @end
 

@@ -31,9 +31,9 @@ BOOL enableSpotifyApplicationSection;
 			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
 				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 				if (currentArtwork) {
-					[spotifyArtworkBackgroundImageView setImage:currentArtwork];
+					spotifyArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+					if(spotifyMetalBackgroundView && spotifyArtworkCatalog) [spotifyMetalBackgroundView setBackgroundArtworkCatalog:spotifyArtworkCatalog];
 					[spotifyArtworkBackgroundImageView setHidden:NO];
-					if ([spotifyArtworkBlurMode intValue] != 0) [spotifyBlurView setHidden:NO];
 				}
 			}
       	}
@@ -82,6 +82,43 @@ BOOL enableSpotifyApplicationSection;
 
 		if (![spotifyDimView isDescendantOfView:spotifyArtworkBackgroundImageView])
 			[spotifyArtworkBackgroundImageView addSubview:spotifyDimView];
+	}
+	
+
+	// Metal Lyrics Background
+	NSLog(@"proxy %@", %c(LSApplicationProxy));
+	NSLog(@"proxy for id %@", [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"]);
+	NSLog(@"bundleURL %@", [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL);
+	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
+	NSLog(@"path %@", path);
+	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+	NSLog(@"path %@", path);
+	NSBundle *bundle = [NSBundle bundleWithPath:@"/Library/Frameworks/MusicApplication.framework"];
+	NSLog(@"bundle %@", bundle);
+	[bundle load];
+
+	if(currentArtwork && !spotifyArtworkCatalog)
+		spotifyArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
+			
+	if(!spotifyMetalBackgroundView)
+		spotifyMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+
+	if(spotifyArtworkCatalog)
+		[spotifyMetalBackgroundView setBackgroundArtworkCatalog:spotifyArtworkCatalog];
+
+	[spotifyMetalBackgroundView setFrame:[spotifyArtworkBackgroundImageView bounds]];
+	[spotifyMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+	[spotifyMetalBackgroundView setClipsToBounds:YES];
+
+	NSLog(@"metal %@", spotifyMetalBackgroundView);
+	NSLog(@"artworkcatalog %@", spotifyArtworkCatalog);
+
+	// add metal background as subview
+	if(![spotifyMetalBackgroundView isDescendantOfView:spotifyArtworkBackgroundImageView]) {
+		NSLog(@"add as subview");
+		NSLog(@"metal %@", spotifyMetalBackgroundView);
+		NSLog(@"artworkcatalog %@", spotifyArtworkCatalog);
+		[spotifyArtworkBackgroundImageView addSubview:spotifyMetalBackgroundView];
 	}
 
 	if (![spotifyArtworkBackgroundImageView isDescendantOfView:[self view]])

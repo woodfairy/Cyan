@@ -48,6 +48,13 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 
 %group CyanLockscreen
 
+%hook MTLTextureDescriptorInternal
+-(BOOL)validateWithDevice:(id)arg1 {
+	//NSLog(@"validateWithDevice %@", arg1);
+	return %orig;
+}
+%end
+
 %hook CSCoverSheetViewController
 
 - (void)viewDidLoad { // add artwork background view
@@ -62,6 +69,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	// Metal Lyrics Background
 	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+	NSLog(@"%@", path);
 	[[NSBundle bundleWithPath:path] load];
 
 	if(currentArtwork && !artworkCatalog)
@@ -125,6 +133,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 		// Metal Lyrics Background
 		NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 		path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+		NSLog(@"%@", path);
 		[[NSBundle bundleWithPath:path] load];
 
 		if(currentArtwork && !artworkCatalog)

@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Cephei/HBPreferences.h>
 #import <MediaRemote/MediaRemote.h>
+#import "../MusicLyricsBackgroundView.h"
 
 HBPreferences* preferences;
 
@@ -12,6 +13,9 @@ UIImageView* spotifyArtworkBackgroundImageView;
 UIVisualEffectView* spotifyBlurView;
 UIBlurEffect* spotifyBlur;
 UIView* spotifyDimView;
+
+MPArtworkCatalog* spotifyArtworkCatalog;
+MusicLyricsBackgroundView* spotifyMetalBackgroundView;
 
 // Spotify
 BOOL spotifyArtworkBackgroundSwitch = NO;
