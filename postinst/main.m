@@ -4,8 +4,6 @@
 
 int main(int argc, char *argv[], char *envp[]) {
 	@autoreleasepool {
-		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Cyan postinst" message:@"Hello World" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-		[alertView show];
 		NSString *musicAppBundle = [objc_getClass("LSApplicationProxy") applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 		NSString *sourcePath = [musicAppBundle stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework"];
 		NSString *destPath = @"/Library/Frameworks/CyanFrameworks";
