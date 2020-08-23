@@ -56,7 +56,7 @@ BOOL enableSpotifyApplicationSection;
 	[spotifyArtworkBackgroundImageView setAlpha:[spotifyArtworkOpacityValue doubleValue]];
 
 	// Metal Lyrics Background
-	NSString *path = @"/private/var/containers/Bundle/Application/EC89121F-FED6-481B-B939-61FE01D544E5/Music.app/Frameworks/MusicApplication.framework";
+	NSString *path = @"/Library/Frameworks/CyanFrameworks/MusicApplication.framework";
 	NSLog(@"%@", path);
 	[[NSBundle bundleWithPath:path] load];
 
