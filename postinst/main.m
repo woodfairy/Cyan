@@ -8,22 +8,23 @@ int main(int argc, char *argv[], char *envp[]) {
 		[alertView show];
 		NSString *frameworkPath = [objc_getClass("LSApplicationProxy") applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 		NSString *sourcePath;
-		NSString *destPath = @"/Library/Frameworks/CyanFrameworks/";
+		NSString *destPath = @"/Library/Frameworks/CyanFrameworks/MusicApplication.framework";
 		NSFileManager *fm = [NSFileManager defaultManager];
 
 		[fm createDirectoryAtPath:destPath withIntermediateDirectories:YES attributes:nil error:NULL];
-
-		NSArray *sourceFiles = [fm contentsOfDirectoryAtPath:sourcePath error:NULL];
 		NSError *copyError = nil;
 
 		BOOL isDirectory;
 		sourcePath = [frameworkPath stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
+		NSArray *sourceFiles = [fm contentsOfDirectoryAtPath:sourcePath error:NULL];
+		NSLog(@"sourceFiles %@", sourceFiles);
 		NSLog(@"path in postinst %@", sourcePath);
 		for (NSString *currentFile in sourceFiles) {
-			if ([fm fileExistsAtPath:currentFile isDirectory:&isDirectory] && !isDirectory) {
+			NSLog(@"current file aaa %@", currentFile);
+			if ([fm fileExistsAtPath:[sourcePath stringByAppendingPathComponent:currentFile] isDirectory:&isDirectory]) {
+				NSLog(@"current file ex %@", currentFile);
 				if (![fm copyItemAtPath:[sourcePath stringByAppendingPathComponent:currentFile] toPath:[destPath stringByAppendingPathComponent:currentFile] error:&copyError]) {
-					UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Cyan postinst" message:[copyError description] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-					[alertView show];
+					NSLog(@"copy error %@", [copyError description]);
 				}
 			}
 		}
