@@ -33,7 +33,9 @@ BOOL enableSpotifyApplicationSection;
 				if (currentArtwork) {
 					spotifyArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
 					if(spotifyMetalBackgroundView && spotifyArtworkCatalog) [spotifyMetalBackgroundView setBackgroundArtworkCatalog:spotifyArtworkCatalog];
+					[spotifyArtworkBackgroundImageView setImage:currentArtwork];
 					[spotifyArtworkBackgroundImageView setHidden:NO];
+					if ([spotifyArtworkBlurMode intValue] != 0) [spotifyBlurView setHidden:NO];
 				}
 			}
       	}
@@ -53,49 +55,10 @@ BOOL enableSpotifyApplicationSection;
 	[spotifyArtworkBackgroundImageView setClipsToBounds:YES];
 	[spotifyArtworkBackgroundImageView setAlpha:[spotifyArtworkOpacityValue doubleValue]];
 
-	if ([spotifyArtworkBlurMode intValue] != 0) {
-		if (!spotifyBlur) {
-			if ([spotifyArtworkBlurMode intValue] == 1)
-				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-			else if ([spotifyArtworkBlurMode intValue] == 2)
-				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-			else if ([spotifyArtworkBlurMode intValue] == 3)
-				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-			spotifyBlurView = [[UIVisualEffectView alloc] initWithEffect:spotifyBlur];
-			[spotifyBlurView setFrame:[spotifyArtworkBackgroundImageView bounds]];
-			[spotifyBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			[spotifyBlurView setClipsToBounds:YES];
-			[spotifyBlurView setAlpha:[spotifyArtworkBlurAmountValue doubleValue]];
-			[spotifyArtworkBackgroundImageView addSubview:spotifyBlurView];
-		}
-		[spotifyBlurView setHidden:NO];
-	}
-
-	if ([spotifyArtworkDimValue doubleValue] != 0.0) {
-		if (!spotifyDimView) spotifyDimView = [[UIView alloc] init];
-		[spotifyDimView setFrame:[spotifyArtworkBackgroundImageView bounds]];
-		[spotifyDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[spotifyDimView setClipsToBounds:YES];
-		[spotifyDimView setBackgroundColor:[UIColor blackColor]];
-		[spotifyDimView setAlpha:[spotifyArtworkDimValue doubleValue]];
-		[spotifyDimView setHidden:NO];
-
-		if (![spotifyDimView isDescendantOfView:spotifyArtworkBackgroundImageView])
-			[spotifyArtworkBackgroundImageView addSubview:spotifyDimView];
-	}
-	
-
 	// Metal Lyrics Background
-	NSLog(@"proxy %@", %c(LSApplicationProxy));
-	NSLog(@"proxy for id %@", [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"]);
-	NSLog(@"bundleURL %@", [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL);
-	NSString *path = [%c(LSApplicationProxy) applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
-	NSLog(@"path %@", path);
-	path = [path stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
-	NSLog(@"path %@", path);
-	NSBundle *bundle = [NSBundle bundleWithPath:@"/Library/Frameworks/MusicApplication.framework"];
-	NSLog(@"bundle %@", bundle);
-	[bundle load];
+	NSString *path = @"/Library/Frameworks/CyanFrameworks/MusicApplication.framework";
+	NSLog(@"%@", path);
+	//[[NSBundle bundleWithPath:path] load];
 
 	if(currentArtwork && !spotifyArtworkCatalog)
 		spotifyArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
@@ -110,16 +73,9 @@ BOOL enableSpotifyApplicationSection;
 	[spotifyMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[spotifyMetalBackgroundView setClipsToBounds:YES];
 
-	NSLog(@"metal %@", spotifyMetalBackgroundView);
-	NSLog(@"artworkcatalog %@", spotifyArtworkCatalog);
-
 	// add metal background as subview
-	if(![spotifyMetalBackgroundView isDescendantOfView:spotifyArtworkBackgroundImageView]) {
-		NSLog(@"add as subview");
-		NSLog(@"metal %@", spotifyMetalBackgroundView);
-		NSLog(@"artworkcatalog %@", spotifyArtworkCatalog);
+	if(![spotifyMetalBackgroundView isDescendantOfView:spotifyArtworkBackgroundImageView])
 		[spotifyArtworkBackgroundImageView addSubview:spotifyMetalBackgroundView];
-	}
 
 	if (![spotifyArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:0];

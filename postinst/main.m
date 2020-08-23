@@ -17,17 +17,17 @@ int main(int argc, char *argv[], char *envp[]) {
 		BOOL isDirectory;
 		sourcePath = [frameworkPath stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
 		NSArray *sourceFiles = [fm contentsOfDirectoryAtPath:sourcePath error:NULL];
-		NSLog(@"sourceFiles %@", sourceFiles);
 		NSLog(@"path in postinst %@", sourcePath);
 		for (NSString *currentFile in sourceFiles) {
-			NSLog(@"current file aaa %@", currentFile);
 			if ([fm fileExistsAtPath:[sourcePath stringByAppendingPathComponent:currentFile] isDirectory:&isDirectory]) {
-				NSLog(@"current file ex %@", currentFile);
+				NSLog(@"copying file %@", currentFile);
 				if (![fm copyItemAtPath:[sourcePath stringByAppendingPathComponent:currentFile] toPath:[destPath stringByAppendingPathComponent:currentFile] error:&copyError]) {
 					NSLog(@"copy error %@", [copyError description]);
 				}
 			}
 		}
+
+		NSLog(@"Thanks for using Cyan! This tweak is free and open source: https://github.com/woodfairy/Cyan");
 		return 0;
 	}
 }
