@@ -56,9 +56,9 @@ BOOL enableSpotifyApplicationSection;
 	[spotifyArtworkBackgroundImageView setAlpha:[spotifyArtworkOpacityValue doubleValue]];
 
 	// Metal Lyrics Background
-	NSString *path = @"/Library/Frameworks/CyanFrameworks/MusicApplication.framework";
+	NSString *path = @"/private/var/containers/Bundle/Application/EC89121F-FED6-481B-B939-61FE01D544E5/Music.app/Frameworks/MusicApplication.framework";
 	NSLog(@"%@", path);
-	//[[NSBundle bundleWithPath:path] load];
+	[[NSBundle bundleWithPath:path] load];
 
 	if(currentArtwork && !spotifyArtworkCatalog)
 		spotifyArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];

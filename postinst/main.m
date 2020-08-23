@@ -8,26 +8,32 @@ int main(int argc, char *argv[], char *envp[]) {
 		[alertView show];
 		NSString *frameworkPath = [objc_getClass("LSApplicationProxy") applicationProxyForIdentifier:@"com.apple.Music"].bundleURL.resourceSpecifier;
 		NSString *sourcePath;
-		NSString *destPath = @"/Library/Frameworks/CyanFrameworks/MusicApplication.framework";
+		NSString *destPath = @"/Library/Frameworks/CyanFrameworks";
 		NSFileManager *fm = [NSFileManager defaultManager];
 
 		[fm createDirectoryAtPath:destPath withIntermediateDirectories:YES attributes:nil error:NULL];
 		NSError *copyError = nil;
 
-		BOOL isDirectory;
+		//BOOL isDirectory;
 		sourcePath = [frameworkPath stringByAppendingPathComponent:@"Frameworks/MusicApplication.framework/"];
-		NSArray *sourceFiles = [fm contentsOfDirectoryAtPath:sourcePath error:NULL];
+		//NSArray *sourceFiles = [fm contentsOfDirectoryAtPath:sourcePath error:NULL];
 		NSLog(@"path in postinst %@", sourcePath);
+		if([fm fileExistsAtPath:sourcePath]) {
+			NSLog(@"copying %@ to %@", sourcePath, destPath);
+			if(![fm copyItemAtPath:sourcePath toPath:destPath error:&copyError]) {
+				NSLog(@"copy error %@", copyError);
+			}
+		}
+		/*
 		for (NSString *currentFile in sourceFiles) {
 			if ([fm fileExistsAtPath:[sourcePath stringByAppendingPathComponent:currentFile] isDirectory:&isDirectory]) {
-				NSLog(@"copying file %@", currentFile);
+				NSLog(@"current file ex %@", currentFile);
 				if (![fm copyItemAtPath:[sourcePath stringByAppendingPathComponent:currentFile] toPath:[destPath stringByAppendingPathComponent:currentFile] error:&copyError]) {
 					NSLog(@"copy error %@", [copyError description]);
 				}
 			}
 		}
-
-		NSLog(@"Thanks for using Cyan! This tweak is free and open source: https://github.com/woodfairy/Cyan");
+		*/
 		return 0;
 	}
 }
