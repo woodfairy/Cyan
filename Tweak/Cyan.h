@@ -10,6 +10,8 @@ extern BOOL enableLockscreenSection;
 extern BOOL enableHomescreenSection;
 extern BOOL enableControlCenterSection;
 
+NSBundle* musicAppBundle;
+
 MPArtworkCatalog* artworkCatalog;
 
 MusicLyricsBackgroundView* lsMetalBackgroundView;
@@ -19,15 +21,21 @@ MusicLyricsBackgroundView* ccMetalBackgroundView;
 MusicLyricsBackgroundView* ccmMetalBackgroundView;
 
 UIImage* currentArtwork;
-UIImageView* lsArtworkBackgroundImageView;
-UIImageView* lspArtworkBackgroundImageView;
-UIImageView* hsArtworkBackgroundImageView;
-UIImageView* ccArtworkBackgroundImageView;
-UIImageView* ccmArtworkBackgroundImageView;
-UIImageView* musicArtworkBackgroundImageView;
+UIView* lsArtworkBackgroundView;
+UIView* lspArtworkBackgroundView;
+UIView* hsArtworkBackgroundView;
+UIView* ccArtworkBackgroundView;
+UIView* ccmArtworkBackgroundView;
+UIView* musicArtworkBackgroundView;
+UIVisualEffectView* lsBlurView;
+UIVisualEffectView* lspBlurView;
+UIVisualEffectView* hsBlurView;
 UIVisualEffectView* ccBlurView;
-UIBlurEffect* ccBlur;
 UIVisualEffectView* ccmBlurView;
+UIBlurEffect* lsBlur;
+UIBlurEffect* lspBlur;
+UIBlurEffect* hsBlur;
+UIBlurEffect* ccBlur;
 UIBlurEffect* ccmBlur;
 UIView* lsDimView;
 UIView* lspDimView;

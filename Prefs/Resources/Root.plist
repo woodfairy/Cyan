@@ -4,7 +4,12 @@
 <dict>
 	<key>items</key>
 	<array>
-	
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Original tweak (Violet) made by</string>
+		</dict>
 		<dict>
 			<key>cellClass</key>
 			<string>DuoTwitterCell</string>
@@ -19,7 +24,24 @@
 			<key>height</key>
 			<real>57</real>
 		</dict>
-
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Lyrics background modifications made by</string>
+		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>label</key>
+            <string>@woodfairyd</string>
+            <key>cellClass</key>
+            <string>HBTwitterCell</string>
+            <key>label</key>
+            <string>woodfairy</string>
+            <key>user</key>
+            <string>woodfairyd</string>
+        </dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -131,32 +153,32 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Dress</string>
+			<string>Violet</string>
 			<key>subtitle</key>
-			<string>Dress up your lockscreen</string>
+			<string>Sweet addition to your wallpaper</string>
 			<key>icon</key>
-			<string>Dress.png</string>
+			<string>Violet.png</string>
 			<key>url</key>
-			<string>https://repo.litten.love/depictions/drs/</string>
+			<string>https://repo.litten.love/depictions/vio/</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Avrora</string>
+			<string>CantReachMe</string>
 			<key>subtitle</key>
-			<string>Make some of your app labels useful</string>
+			<string>Custom actions for the reachability gesture</string>
 			<key>icon</key>
-			<string>Avrora.png</string>
+			<string>icon.png</string>
 			<key>url</key>
-			<string>https://repo.litten.love/depictions/ava/</string>
+			<string>https://repo.nepeta.me/depiction/0xcc.woodfairy.cantreachme</string>
 		</dict>
 
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Cyan By Litten, Artworks By taki</string>
+			<string>Violet By Litten, Artworks By taki, Cyan By woodfairy</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
@@ -176,7 +198,7 @@
 			<key>label</key>
 			<string>Source Code</string>
 			<key>subtitle</key>
-			<string>GitHub 🎀</string>
+			<string>GitHub</string>
 			<key>url</key>
 			<string>https://github.com/woodfairy/Cyan</string>
 		</dict>
@@ -189,17 +211,6 @@
 			<string>Appreciated 💝</string>
 			<key>url</key>
 			<string>https://paypal.me/Litteeen</string>
-		</dict>
-
-		<dict>
-			<key>cell</key>
-			<key>PSGroupCell</key>
-			<key>footerText</key>
-			<string>princess of daydreaming</string>
-			<key>isStaticText</key>
-			<true/>
-			<key>footerAlignment</key>
-			<real>1</real>
 		</dict>
 
 	</array>

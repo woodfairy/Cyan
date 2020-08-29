@@ -21,7 +21,7 @@
 			<key>key</key>
 			<string>lockscreenArtworkBackground</string>
 			<key>label</key>
-			<string>Artwork As Background</string>
+			<string>Cyan Lyrics Background</string>
 			<key>PostNotification</key>
 			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
@@ -85,7 +85,7 @@
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
-			<string>Artwork Opacity</string>
+			<string>Opacity</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -111,7 +111,7 @@
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
-			<string>Artwork Dim</string>
+			<string>Dim</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -150,7 +150,7 @@
 			<key>key</key>
 			<string>lockscreenPlayerArtworkBackground</string>
 			<key>label</key>
-			<string>Artwork As Background</string>
+			<string>Cyan Lyrics Background</string>
 			<key>PostNotification</key>
 			<string>0xcc.woodfairy.cyanpreferences/ReloadPrefs</string>
 		</dict>
@@ -214,7 +214,7 @@
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
-			<string>Artwork Opacity</string>
+			<string>Opacity</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -240,7 +240,7 @@
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
-			<string>Artwork Corner Radius</string>
+			<string>Corner Radius</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -266,7 +266,7 @@
 			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
-			<string>Artwork Dim</string>
+			<string>Dim</string>
 		</dict>
 		<dict>
 			<key>cell</key>

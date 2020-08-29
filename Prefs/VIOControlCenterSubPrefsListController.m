@@ -15,7 +15,7 @@ UIVisualEffectView* blurView;
         VIOAppearanceSettings *appearanceSettings = [[VIOAppearanceSettings alloc] init];
         self.hb_appearanceSettings = appearanceSettings;
         self.enableSwitch = [[UISwitch alloc] init];
-        self.enableSwitch.onTintColor = [UIColor colorWithRed: 0.64 green: 0.49 blue: 1.00 alpha: 1.00];
+        self.enableSwitch.onTintColor = [UIColor colorWithRed:0.76 green:0.92 blue:0.89 alpha:1.00];
         [self.enableSwitch addTarget:self action:@selector(toggleState) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem* switchy = [[UIBarButtonItem alloc] initWithCustomView: self.enableSwitch];
         self.navigationItem.rightBarButtonItem = switchy;

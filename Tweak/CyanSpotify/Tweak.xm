@@ -31,8 +31,6 @@ BOOL enableSpotifyApplicationSection;
 			if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
 				currentArtwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
 				if (currentArtwork) {
-					spotifyArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-					if(spotifyMetalBackgroundView && spotifyArtworkCatalog) [spotifyMetalBackgroundView setBackgroundArtworkCatalog:spotifyArtworkCatalog];
 					[spotifyArtworkBackgroundImageView setImage:currentArtwork];
 					[spotifyArtworkBackgroundImageView setHidden:NO];
 					if ([spotifyArtworkBlurMode intValue] != 0) [spotifyBlurView setHidden:NO];
@@ -55,27 +53,36 @@ BOOL enableSpotifyApplicationSection;
 	[spotifyArtworkBackgroundImageView setClipsToBounds:YES];
 	[spotifyArtworkBackgroundImageView setAlpha:[spotifyArtworkOpacityValue doubleValue]];
 
-	// Metal Lyrics Background
-	NSString *path = @"/Library/Frameworks/CyanFrameworks/MusicApplication.framework";
-	NSLog(@"%@", path);
-	[[NSBundle bundleWithPath:path] load];
+	if ([spotifyArtworkBlurMode intValue] != 0) {
+		if (!spotifyBlur) {
+			if ([spotifyArtworkBlurMode intValue] == 1)
+				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+			else if ([spotifyArtworkBlurMode intValue] == 2)
+				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+			else if ([spotifyArtworkBlurMode intValue] == 3)
+				spotifyBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+			spotifyBlurView = [[UIVisualEffectView alloc] initWithEffect:spotifyBlur];
+			[spotifyBlurView setFrame:[spotifyArtworkBackgroundImageView bounds]];
+			[spotifyBlurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+			[spotifyBlurView setClipsToBounds:YES];
+			[spotifyBlurView setAlpha:[spotifyArtworkBlurAmountValue doubleValue]];
+			[spotifyArtworkBackgroundImageView addSubview:spotifyBlurView];
+		}
+		[spotifyBlurView setHidden:NO];
+	}
 
-	if(currentArtwork && !spotifyArtworkCatalog)
-		spotifyArtworkCatalog = [%c(MPArtworkCatalog) staticArtworkCatalogWithImage:currentArtwork];
-			
-	if(!spotifyMetalBackgroundView)
-		spotifyMetalBackgroundView = [%c(MusicLyricsBackgroundView) new];
+	if ([spotifyArtworkDimValue doubleValue] != 0.0) {
+		if (!spotifyDimView) spotifyDimView = [[UIView alloc] init];
+		[spotifyDimView setFrame:[spotifyArtworkBackgroundImageView bounds]];
+		[spotifyDimView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[spotifyDimView setClipsToBounds:YES];
+		[spotifyDimView setBackgroundColor:[UIColor blackColor]];
+		[spotifyDimView setAlpha:[spotifyArtworkDimValue doubleValue]];
+		[spotifyDimView setHidden:NO];
 
-	if(spotifyArtworkCatalog)
-		[spotifyMetalBackgroundView setBackgroundArtworkCatalog:spotifyArtworkCatalog];
-
-	[spotifyMetalBackgroundView setFrame:[spotifyArtworkBackgroundImageView bounds]];
-	[spotifyMetalBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[spotifyMetalBackgroundView setClipsToBounds:YES];
-
-	// add metal background as subview
-	if(![spotifyMetalBackgroundView isDescendantOfView:spotifyArtworkBackgroundImageView])
-		[spotifyArtworkBackgroundImageView addSubview:spotifyMetalBackgroundView];
+		if (![spotifyDimView isDescendantOfView:spotifyArtworkBackgroundImageView])
+			[spotifyArtworkBackgroundImageView addSubview:spotifyDimView];
+	}
 
 	if (![spotifyArtworkBackgroundImageView isDescendantOfView:[self view]])
 		[[self view] insertSubview:spotifyArtworkBackgroundImageView atIndex:0];

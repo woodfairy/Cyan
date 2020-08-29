@@ -8,6 +8,8 @@ HBPreferences* preferences;
 extern BOOL enabled;
 extern BOOL enableSpotifyApplicationSection;
 
+NSBundle* musicAppBundle;
+
 UIImage* currentArtwork;
 UIImageView* spotifyArtworkBackgroundImageView;
 UIVisualEffectView* spotifyBlurView;
