@@ -33,8 +33,6 @@
 		<dict>
             <key>cell</key>
             <string>PSButtonCell</string>
-            <key>label</key>
-            <string>@woodfairyd</string>
             <key>cellClass</key>
             <string>HBTwitterCell</string>
             <key>label</key>

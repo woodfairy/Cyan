@@ -70,6 +70,7 @@ NSString* controlCenterModuleArtworkCornerRadiusValue = @"20.0";
 	[lsArtworkBackgroundView setContentMode:UIViewContentModeScaleAspectFill];
 	[lsArtworkBackgroundView setHidden:YES];
 	[lsArtworkBackgroundView setClipsToBounds:YES];
+	lockscreenArtworkOpacityValue = [lockscreenArtworkOpacityValue doubleValue] == 1 ? @"0.99" : lockscreenArtworkOpacityValue;
 	[lsArtworkBackgroundView setAlpha:[lockscreenArtworkOpacityValue doubleValue]];
 
 	if ([lockscreenArtworkBlurMode intValue] != 0) {
